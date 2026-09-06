@@ -1,7 +1,13 @@
 "use client";
 
 import { FormEvent, useState } from "react";
-import { products } from "@/lib/data/products";
+
+const childAgeOptions = [
+  { value: "0-2", label: "0–2 tuổi" },
+  { value: "3-5", label: "3–5 tuổi" },
+  { value: "6-8", label: "6–8 tuổi" },
+  { value: "khac", label: "Ngoài độ tuổi trên / muốn tìm hiểu thêm" },
+];
 
 type Status = "idle" | "submitting" | "success" | "error";
 
@@ -20,7 +26,7 @@ export function QuoteForm() {
       name: String(data.get("name") ?? ""),
       phone: String(data.get("phone") ?? ""),
       email: String(data.get("email") ?? ""),
-      product: String(data.get("product") ?? ""),
+      childAge: String(data.get("childAge") ?? ""),
       message: String(data.get("message") ?? ""),
     };
 
@@ -115,21 +121,21 @@ export function QuoteForm() {
         </div>
 
         <div className="sm:col-span-2">
-          <label htmlFor="product" className="text-sm font-medium text-foreground">
-            Sản phẩm quan tâm
+          <label htmlFor="childAge" className="text-sm font-medium text-foreground">
+            Độ tuổi của con
           </label>
           <select
-            id="product"
-            name="product"
+            id="childAge"
+            name="childAge"
             className="mt-2 w-full rounded-lg border border-border bg-background px-4 py-3 text-sm text-foreground focus-visible:border-primary"
             defaultValue=""
           >
             <option value="" disabled>
-              Chọn sản phẩm
+              Chọn độ tuổi
             </option>
-            {products.map((product) => (
-              <option key={product.slug} value={product.name}>
-                {product.name} — {product.category}
+            {childAgeOptions.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
               </option>
             ))}
           </select>

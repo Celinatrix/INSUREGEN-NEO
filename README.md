@@ -1,16 +1,18 @@
-# INSUREGEN NEO
+# INSUREGEN NEO — Family Care Wallet
 
-Website bảo hiểm số cho dự án INSUREGEN NEO — xây dựng bằng Next.js 16 (App Router) + TypeScript + Tailwind CSS v4.
+Website cho sản phẩm **Family Care Wallet**: bảo hiểm chi trả bằng dịch vụ chăm sóc thật (thay vì tiền mặt) khi cha hoặc mẹ tạm thời không thể chăm con vì lý do sức khỏe. Xây dựng bằng Next.js 16 (App Router) + TypeScript + Tailwind CSS v4.
 
 ## Trạng thái hiện tại
 
-Toàn bộ nội dung sản phẩm, số liệu và câu chuyện thương hiệu trong repo này là **placeholder** (dữ liệu mẫu hợp lý về bảo hiểm), chờ nội dung thật từ dự án. Cấu trúc trang, component và design system đã sẵn sàng — chỉ cần thay dữ liệu.
+Cơ chế sản phẩm (đánh giá chức năng chăm sóc, Care Units, mạng lưới đối tác) được dựng dựa trên tài liệu thiết kế sản phẩm thật của dự án. Số liệu thống kê thị trường, câu chuyện thương hiệu, mốc phát triển và testimonial vẫn là **placeholder hợp lý**, chờ xác nhận/nội dung chính thức.
 
-Nội dung placeholder nằm ở:
-- `src/lib/data/products.ts` — 6 sản phẩm bảo hiểm mẫu
-- `src/lib/data/content.ts` — số liệu, quy trình, testimonial, bài viết kiến thức
+Dữ liệu sản phẩm nằm ở:
+- `src/lib/data/care-wallet.ts` — mô tả sản phẩm, vấn đề giải quyết, 6 hoạt động chăm sóc, cách hoạt động, ví dụ minh họa, mạng lưới đối tác, FAQ, và mục "sắp ra mắt"
+- `src/lib/data/content.ts` — số liệu thống kê, trust points, testimonial, bài viết kiến thức
 - `src/app/layout.tsx` — metadata SEO mặc định
 - `src/components/layout/Footer.tsx` — thông tin pháp lý, liên hệ
+
+**Quan trọng**: mục "Đang nghiên cứu — sắp ra mắt" (bảo vệ người chăm sóc & ông bà cao tuổi, mô hình ADL) tương ứng với phần "Under Consideration" trong tài liệu gốc — **chưa được chốt vào phạm vi sản phẩm**. Trang web chỉ nhắc đến như hướng nghiên cứu, không cho đăng ký. Không đưa tính năng này thành sản phẩm bán chính thức cho đến khi có xác nhận rõ ràng từ đội sản phẩm.
 
 ## Design system
 
@@ -22,13 +24,12 @@ Token màu & shadow được khai báo trong `src/app/globals.css` (`@theme inli
 
 | Route | Nội dung |
 |---|---|
-| `/` | Trang chủ: hero, trust signals, sản phẩm nổi bật, quy trình, testimonial, CTA |
-| `/san-pham` | Danh sách toàn bộ sản phẩm bảo hiểm |
-| `/san-pham/[slug]` | Chi tiết từng sản phẩm (quyền lợi, FAQ, form báo giá) |
-| `/ve-chung-toi` | Giới thiệu, cam kết, mốc phát triển |
-| `/kien-thuc` | Danh sách bài viết kiến thức bảo hiểm |
-| `/lien-he` | Thông tin liên hệ + form nhận báo giá |
-| `/api/quote` (POST) | API nhận yêu cầu báo giá (hiện chỉ validate + log; **cần nối CRM/email thật**) |
+| `/` | Trang chủ: hero, vì sao khác biệt, 6 hoạt động chăm sóc + đối tác, quy trình 5 bước, testimonial, CTA |
+| `/san-pham` | Trang chi tiết Family Care Wallet: vấn đề, cách hoạt động, ví dụ minh họa, mạng lưới đối tác, đối tượng phù hợp, FAQ |
+| `/ve-chung-toi` | Giới thiệu, cam kết, hành trình phát triển, mục "sắp ra mắt" |
+| `/kien-thuc` | Bài viết kiến thức về khoảng trống chăm sóc gia đình & Care Units |
+| `/lien-he` | Thông tin liên hệ + form nhận tư vấn (chọn độ tuổi con) |
+| `/api/quote` (POST) | API nhận yêu cầu tư vấn (hiện chỉ validate + log; **cần nối CRM/email thật**) |
 
 ## Bắt đầu phát triển
 
@@ -41,11 +42,13 @@ Mở [http://localhost:3000](http://localhost:3000).
 
 ## Việc cần làm trước khi go-live
 
-1. **Thay nội dung thật**: sản phẩm, số liệu, giấy phép kinh doanh, thông tin liên hệ.
-2. **Nối API `/api/quote` với hệ thống thật**: email (SendGrid/SES), CRM, hoặc lưu database — hiện tại chỉ log ra console.
-3. **Ảnh & OG image**: thêm ảnh sản phẩm/đội ngũ thật, tạo `opengraph-image` cho SEO chia sẻ mạng xã hội.
-4. **Tên miền & GitHub**: tạo repo GitHub và deploy (Vercel được khuyến nghị cho Next.js) — cả hai bước này cần xác nhận thủ công vì đụng đến tài khoản của bạn.
-5. **Rà soát pháp lý**: nội dung điều khoản, chính sách bảo mật, số giấy phép hiện là placeholder — cần bộ phận pháp chế cung cấp nội dung chính thức.
+1. **Xác nhận số liệu thị trường**: các số liệu trích dẫn (tỷ lệ hộ gia đình, tỷ lệ nhập viện...) lấy từ tài liệu nghiên cứu — cần dẫn nguồn chính thức hoặc xác nhận lại trước khi công bố.
+2. **Thay testimonial placeholder**: các trích dẫn khách hàng hiện là minh họa hư cấu — **phải thay bằng phản hồi thật có sự đồng ý của khách hàng** trước khi ra mắt, tránh rủi ro quảng cáo sai sự thật.
+3. **Chốt phạm vi mục "sắp ra mắt"**: xác nhận với đội sản phẩm trước khi mở rộng nội dung về bảo vệ người chăm sóc/ông bà cao tuổi.
+4. **Nối API `/api/quote` với hệ thống thật**: email (SendGrid/SES), CRM, hoặc lưu database — hiện tại chỉ log ra console.
+5. **Ảnh & OG image**: thêm hình ảnh thật, tạo `opengraph-image` cho SEO chia sẻ mạng xã hội.
+6. **Tên miền & GitHub**: tạo repo GitHub và deploy (Vercel được khuyến nghị cho Next.js) — cần xác nhận thủ công vì đụng đến tài khoản của bạn.
+7. **Rà soát pháp lý**: điều khoản, chính sách bảo mật, số giấy phép kinh doanh hiện là placeholder — cần bộ phận pháp chế cung cấp nội dung chính thức, đặc biệt vì đây là sản phẩm bảo hiểm với cơ chế chi trả mới (Care Units) cần tuân thủ quy định bảo hiểm hiện hành.
 
 ## Deploy lên Vercel
 

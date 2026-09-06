@@ -1,8 +1,5 @@
 import Link from "next/link";
 import { Container } from "@/components/ui/Container";
-import { products } from "@/lib/data/products";
-
-const productLinks = products.slice(0, 5);
 
 export function Footer() {
   return (
@@ -13,8 +10,8 @@ export function Footer() {
             INSUREGEN <span className="text-neo-cyan">NEO</span>
           </span>
           <p className="mt-4 max-w-sm text-sm leading-relaxed text-navy-muted">
-            Nền tảng bảo hiểm số thế hệ mới, đồng hành bảo vệ tài chính cho cá
-            nhân, gia đình và doanh nghiệp Việt Nam.
+            Family Care Wallet — chi trả bằng dịch vụ chăm sóc thật khi cha
+            hoặc mẹ tạm thời không thể chăm con vì lý do sức khỏe.
           </p>
           <p className="mt-6 text-xs text-navy-muted">
             Giấy phép hoạt động kinh doanh bảo hiểm số 000/GP-BTC do Bộ Tài
@@ -25,13 +22,26 @@ export function Footer() {
         <div>
           <h3 className="text-sm font-semibold text-white">Sản phẩm</h3>
           <ul className="mt-4 space-y-3 text-sm text-navy-muted">
-            {productLinks.map((product) => (
-              <li key={product.slug}>
-                <Link href={`/san-pham/${product.slug}`} className="hover:text-white">
-                  {product.name}
-                </Link>
-              </li>
-            ))}
+            <li>
+              <Link href="/san-pham" className="hover:text-white">
+                Family Care Wallet
+              </Link>
+            </li>
+            <li>
+              <Link href="/san-pham#cach-hoat-dong" className="hover:text-white">
+                Cách hoạt động
+              </Link>
+            </li>
+            <li>
+              <Link href="/san-pham#doi-tac" className="hover:text-white">
+                Mạng lưới đối tác
+              </Link>
+            </li>
+            <li>
+              <Link href="/san-pham#faq" className="hover:text-white">
+                Câu hỏi thường gặp
+              </Link>
+            </li>
           </ul>
         </div>
 

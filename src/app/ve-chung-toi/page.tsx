@@ -1,18 +1,38 @@
 import type { Metadata } from "next";
 import { Container } from "@/components/ui/Container";
 import { stats, trustPoints } from "@/lib/data/content";
+import { comingSoon } from "@/lib/data/care-wallet";
 
 export const metadata: Metadata = {
   title: "Về chúng tôi",
   description:
-    "Tìm hiểu sứ mệnh, năng lực tài chính và cam kết minh bạch của INSUREGEN NEO trong lĩnh vực bảo hiểm số.",
+    "Tìm hiểu sứ mệnh và cách tiếp cận của INSUREGEN NEO trong việc xây dựng Family Care Wallet.",
 };
 
 const milestones = [
-  { year: "2019", title: "Thành lập", detail: "Ra mắt với sản phẩm bảo hiểm sức khỏe đầu tiên." },
-  { year: "2021", title: "Mở rộng mạng lưới", detail: "Liên kết bảo lãnh viện phí trực tiếp với hơn 100 bệnh viện." },
-  { year: "2023", title: "Số hóa toàn diện", detail: "Triển khai quy trình bồi thường và ký hợp đồng điện tử." },
-  { year: "2026", title: "INSUREGEN NEO", detail: "Tái định vị thương hiệu, phục vụ hơn 2,4 triệu khách hàng." },
+  {
+    year: "2024",
+    title: "Nghiên cứu thị trường",
+    detail:
+      "Khảo sát cấu trúc hộ gia đình đô thị và mức độ sử dụng dịch vụ y tế theo độ tuổi tại Việt Nam.",
+  },
+  {
+    year: "2025",
+    title: "Thiết kế khung đánh giá chức năng",
+    detail:
+      "Xây dựng mô hình đánh giá khả năng chăm sóc con (FIS) dựa trên bằng chứng y khoa khách quan, tham khảo các mô hình bảo hiểm chăm sóc quốc tế.",
+  },
+  {
+    year: "2025",
+    title: "Hình thành mạng lưới đối tác",
+    detail:
+      "Hợp tác cùng Thanh Tâm Care, Vi Easy Care và Việc Nhà VN để đảm bảo Care Units có thể quy đổi thành dịch vụ thật.",
+  },
+  {
+    year: "2026",
+    title: "Ra mắt Family Care Wallet",
+    detail: "Giới thiệu sản phẩm đầu tiên đến các gia đình tại đô thị lớn.",
+  },
 ];
 
 export default function AboutPage() {
@@ -24,12 +44,13 @@ export default function AboutPage() {
             Về chúng tôi
           </p>
           <h1 className="text-balance mt-3 text-4xl font-semibold tracking-tight text-foreground">
-            Xây dựng sự an tâm bằng công nghệ và sự minh bạch
+            Bắt đầu từ một câu hỏi đơn giản: ai chăm con khi cha mẹ không thể?
           </h1>
           <p className="mt-4 text-base leading-relaxed text-muted-foreground">
-            INSUREGEN NEO được thành lập với sứ mệnh giúp mọi người dễ dàng
-            tiếp cận các giải pháp bảo hiểm phù hợp, với quy trình rõ ràng và
-            tốc độ xử lý bồi thường vượt trội.
+            INSUREGEN NEO xây dựng Family Care Wallet dựa trên quan sát rằng
+            phần lớn gia đình đô thị hiện nay không có ông bà hỗ trợ tại chỗ.
+            Chúng tôi tin bảo hiểm chăm sóc gia đình nên trả bằng dịch vụ thật,
+            đúng nhu cầu thật — không phải một khoản tiền mặt chung chung.
           </p>
         </div>
 
@@ -67,7 +88,7 @@ export default function AboutPage() {
           </h2>
           <ol className="mt-8 space-y-8 border-l border-border pl-8">
             {milestones.map((milestone) => (
-              <li key={milestone.year} className="relative">
+              <li key={milestone.title} className="relative">
                 <span
                   aria-hidden="true"
                   className="absolute -left-[calc(2rem+5px)] top-1.5 h-2.5 w-2.5 rounded-full bg-primary"
@@ -82,6 +103,21 @@ export default function AboutPage() {
               </li>
             ))}
           </ol>
+        </div>
+
+        <div className="mt-20 rounded-3xl border border-dashed border-border bg-muted/40 p-8 md:p-10">
+          <span className="inline-flex items-center rounded-full bg-muted px-3 py-1 text-xs font-medium text-muted-foreground">
+            {comingSoon.badge}
+          </span>
+          <h2 className="mt-4 text-2xl font-semibold tracking-tight text-foreground">
+            {comingSoon.title}
+          </h2>
+          <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground">
+            {comingSoon.description}
+          </p>
+          <p className="mt-4 text-xs italic leading-relaxed text-muted-foreground">
+            {comingSoon.disclaimer}
+          </p>
         </div>
       </Container>
     </div>

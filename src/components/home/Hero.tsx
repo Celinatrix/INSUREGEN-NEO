@@ -17,29 +17,29 @@ export function Hero() {
         <div className="grid gap-16 md:grid-cols-[1.1fr_0.9fr] md:items-center">
           <div>
             <span className="inline-flex items-center rounded-full border border-navy-border bg-white/5 px-4 py-1.5 text-xs font-medium uppercase tracking-wide text-neo-cyan">
-              Bảo hiểm số thế hệ mới
+              Family Care Wallet
             </span>
             <h1 className="text-balance mt-6 text-4xl font-semibold leading-tight tracking-tight text-white md:text-6xl">
-              Bảo vệ những gì quan trọng nhất, ngay từ hôm nay
+              Khi bạn không thể chăm con, ai đó vẫn cần làm điều đó
             </h1>
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-navy-muted">
-              INSUREGEN NEO kết hợp năng lực tài chính vững chắc với công nghệ
-              bồi thường số hóa, mang đến sự an tâm tức thì cho cá nhân, gia
-              đình và doanh nghiệp.
+              Family Care Wallet đánh giá đúng phần chăm sóc con bị thiếu hụt
+              khi cha hoặc mẹ gặp sự cố sức khỏe, và chi trả bằng dịch vụ
+              chăm sóc thật thay vì một khoản tiền mặt chung chung.
             </p>
             <div className="mt-10 flex flex-col gap-4 sm:flex-row">
               <Button href="/lien-he" variant="on-dark">
-                Nhận báo giá miễn phí
+                Nhận tư vấn miễn phí
               </Button>
               <Button href="/san-pham" variant="ghost" className="border-navy-border text-white hover:bg-white/10">
-                Khám phá sản phẩm
+                Tìm hiểu cách hoạt động
               </Button>
             </div>
           </div>
 
           <div className="glass-panel rounded-3xl p-6 shadow-elevated md:p-8">
             <p className="text-sm font-medium uppercase tracking-wide text-neo-cyan">
-              Chỉ số đáng tin cậy
+              Family Care Wallet trong con số
             </p>
             <dl className="mt-6 grid grid-cols-2 gap-6">
               {stats.map((stat) => (

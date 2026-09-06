@@ -12,22 +12,22 @@ const ibmPlexSans = IBM_Plex_Sans({
 
 export const metadata: Metadata = {
   title: {
-    default: "INSUREGEN NEO — Bảo hiểm số thế hệ mới",
+    default: "INSUREGEN NEO — Family Care Wallet",
     template: "%s | INSUREGEN NEO",
   },
   description:
-    "INSUREGEN NEO cung cấp giải pháp bảo hiểm sức khỏe, nhân thọ, xe cơ giới, nhà ở, du lịch và doanh nghiệp với công nghệ bồi thường số hóa và mạng lưới bảo lãnh viện phí toàn quốc.",
+    "Family Care Wallet chi trả bằng dịch vụ chăm sóc thật khi cha hoặc mẹ tạm thời không thể chăm con vì lý do sức khỏe, thông qua đánh giá chức năng chăm sóc khách quan và mạng lưới đối tác dịch vụ.",
   keywords: [
-    "bảo hiểm",
-    "bảo hiểm sức khỏe",
-    "bảo hiểm nhân thọ",
-    "bảo hiểm xe cơ giới",
+    "bảo hiểm chăm sóc gia đình",
+    "Family Care Wallet",
+    "bảo hiểm cho gia đình có con nhỏ",
+    "dịch vụ chăm sóc trẻ em",
     "INSUREGEN NEO",
   ],
   openGraph: {
-    title: "INSUREGEN NEO — Bảo hiểm số thế hệ mới",
+    title: "INSUREGEN NEO — Family Care Wallet",
     description:
-      "Giải pháp bảo hiểm toàn diện cho cá nhân, gia đình và doanh nghiệp với công nghệ bồi thường số hóa.",
+      "Chi trả bằng dịch vụ chăm sóc thật khi cha hoặc mẹ tạm thời không thể chăm con vì lý do sức khỏe.",
     locale: "vi_VN",
     type: "website",
   },

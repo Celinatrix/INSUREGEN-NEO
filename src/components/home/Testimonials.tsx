@@ -1,5 +1,5 @@
 import { Container } from "@/components/ui/Container";
-import { testimonials, partners } from "@/lib/data/content";
+import { testimonials } from "@/lib/data/content";
 
 export function Testimonials() {
   return (
@@ -7,10 +7,10 @@ export function Testimonials() {
       <Container>
         <div className="max-w-2xl">
           <p className="text-sm font-semibold uppercase tracking-wide text-primary">
-            Khách hàng nói gì
+            Gia đình nói gì
           </p>
           <h2 className="text-balance mt-3 text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
-            Được tin dùng bởi hàng triệu khách hàng
+            Được thiết kế từ những tình huống có thật
           </h2>
         </div>
 
@@ -31,22 +31,6 @@ export function Testimonials() {
               </figcaption>
             </figure>
           ))}
-        </div>
-
-        <div className="mt-16 border-t border-border pt-10">
-          <p className="text-center text-xs font-medium uppercase tracking-wide text-muted-foreground">
-            Đồng hành cùng các đối tác uy tín
-          </p>
-          <div className="mt-6 flex flex-wrap items-center justify-center gap-x-10 gap-y-4">
-            {partners.map((partner) => (
-              <span
-                key={partner}
-                className="text-sm font-semibold text-muted-foreground/70"
-              >
-                {partner}
-              </span>
-            ))}
-          </div>
         </div>
       </Container>
     </section>

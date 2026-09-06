@@ -10,7 +10,7 @@ export function TrustSection() {
             Vì sao chọn INSUREGEN NEO
           </p>
           <h2 className="text-balance mt-3 text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
-            Năng lực tài chính vững chắc, cam kết rõ ràng
+            Khác với bảo hiểm truyền thống, ngay từ cách thiết kế
           </h2>
         </div>
 

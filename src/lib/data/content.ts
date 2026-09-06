@@ -1,103 +1,72 @@
 export const stats = [
-  { value: "2,4 triệu+", label: "Khách hàng đang được bảo vệ" },
-  { value: "200+", label: "Bệnh viện bảo lãnh viện phí trực tiếp" },
-  { value: "97,8%", label: "Tỷ lệ hồ sơ bồi thường được chi trả" },
-  { value: "< 48 giờ", label: "Thời gian xử lý bồi thường trung bình" },
+  { value: "6", label: "Hoạt động chăm sóc được đánh giá chuẩn hóa" },
+  { value: "3", label: "Đối tác dịch vụ chăm sóc đã kiểm định" },
+  { value: "0–8 tuổi", label: "Độ tuổi con được thiết kế quyền lợi phù hợp" },
+  { value: "< 48 giờ", label: "Thời gian xử lý đánh giá quyền lợi trung bình" },
 ];
 
 export const trustPoints = [
   {
-    title: "Được cấp phép & giám sát",
+    title: "Đánh giá khách quan, không chỉ dựa vào bệnh danh",
     detail:
-      "Hoạt động theo giấy phép của Bộ Tài chính, tuân thủ đầy đủ quy định về dự phòng nghiệp vụ và biên khả năng thanh toán.",
+      "Quyền lợi được xác định dựa trên bằng chứng y khoa về khả năng vận động, sức mạnh, sự tỉnh táo... ánh xạ trực tiếp sang từng hoạt động chăm sóc con cụ thể.",
   },
   {
-    title: "Tái bảo hiểm với đối tác quốc tế",
+    title: "Quyền lợi đi thẳng vào nhu cầu thực tế",
     detail:
-      "Hợp tác tái bảo hiểm với các tập đoàn tái bảo hiểm hàng đầu để đảm bảo khả năng chi trả cho mọi tổn thất lớn.",
+      "Thay vì một khoản tiền mặt cố định, Care Units được quy đổi đúng theo mức độ và thời gian ảnh hưởng, sau khi đã cân đối khả năng hỗ trợ của người còn lại trong gia đình.",
   },
   {
-    title: "Minh bạch điều khoản",
+    title: "Mạng lưới đối tác được kiểm định chất lượng",
     detail:
-      "Toàn bộ quy tắc, điều khoản và biểu phí được công bố công khai, không có điều kiện ẩn trong hợp đồng.",
-  },
-];
-
-export const process = [
-  {
-    step: "01",
-    title: "Chọn sản phẩm phù hợp",
-    detail: "Trả lời một số câu hỏi ngắn để hệ thống gợi ý gói bảo hiểm phù hợp với nhu cầu.",
-  },
-  {
-    step: "02",
-    title: "Nhận báo giá tức thì",
-    detail: "So sánh quyền lợi và mức phí theo thời gian thực, không phát sinh chi phí ẩn.",
-  },
-  {
-    step: "03",
-    title: "Ký hợp đồng điện tử",
-    detail: "Hoàn tất định danh và ký hợp đồng trực tuyến trong vài phút.",
-  },
-  {
-    step: "04",
-    title: "Đồng hành & bồi thường",
-    detail: "Theo dõi hợp đồng, gửi yêu cầu bồi thường và nhận hỗ trợ 24/7 qua ứng dụng.",
+      "Dịch vụ chăm sóc trẻ, hậu sản và hỗ trợ việc nhà được thực hiện bởi các đối tác đã qua kiểm định, đảm bảo chất lượng và an toàn cho gia đình.",
   },
 ];
 
 export const testimonials = [
   {
     quote:
-      "Hồ sơ bồi thường của gia đình tôi được xử lý trong hai ngày, không cần bổ sung giấy tờ nhiều lần như trước đây.",
+      "Lúc tôi phải bó bột chân, điều lo nhất không phải là viện phí mà là ai đưa đón và tắm rửa cho con mỗi ngày. Family Care Wallet giúp tôi đặt được người hỗ trợ ngay trong tuần đó.",
     name: "Nguyễn Thu Hà",
-    role: "Khách hàng NEO Care",
+    role: "Phụ huynh có con 2 tuổi",
   },
   {
     quote:
-      "Bảng minh họa quyền lợi rất rõ ràng, tôi hiểu chính xác mình đang trả phí cho những gì.",
+      "Tôi bất ngờ vì hệ thống hỏi rất cụ thể về việc tôi có bế được con không, có tự tắm cho con được không — chứ không chỉ hỏi tôi bị bệnh gì. Cảm giác quyền lợi rất sát với hoàn cảnh thật.",
     name: "Trần Minh Đức",
-    role: "Khách hàng NEO Shield",
+    role: "Phụ huynh có con 4 tuổi",
   },
   {
     quote:
-      "Đội ngũ tư vấn doanh nghiệp hỗ trợ thiết kế gói bảo hiểm riêng cho 120 nhân sự của công ty rất chuyên nghiệp.",
+      "Đội ngũ hỗ trợ tận tình khi tôi cần đặt dịch vụ trông trẻ gấp qua Vi Easy Care. Quy trình đặt dịch vụ từ ví điện tử rất nhanh gọn.",
     name: "Phạm Ngọc Lan",
-    role: "Giám đốc Nhân sự, đối tác doanh nghiệp",
+    role: "Phụ huynh có 2 con nhỏ",
   },
-];
-
-export const partners = [
-  "Đối tác Tái bảo hiểm A",
-  "Ngân hàng Đối tác B",
-  "Bệnh viện Liên kết C",
-  "Tập đoàn Tài chính D",
-  "Mạng lưới Gara E",
 ];
 
 export const insights = [
   {
-    slug: "chon-goi-bao-hiem-suc-khoe-phu-hop",
-    title: "Cách chọn gói bảo hiểm sức khỏe phù hợp với từng giai đoạn cuộc sống",
+    slug: "khoang-trong-cham-soc-gia-dinh-la-gi",
+    title: "Khoảng trống chăm sóc gia đình là gì và vì sao ngày càng đáng lo?",
     excerpt:
-      "Những tiêu chí quan trọng cần cân nhắc khi lựa chọn quyền lợi nội trú, ngoại trú và bệnh hiểm nghèo.",
-    category: "Sức khỏe",
+      "Khi gia đình hạt nhân trở thành xu hướng chủ đạo, ai sẽ thay thế cha mẹ chăm con lúc ốm đau bất ngờ?",
+    category: "Kiến thức nền tảng",
     readTime: "6 phút đọc",
   },
   {
-    slug: "5-dieu-can-biet-truoc-khi-mua-bao-hiem-nhan-tho",
-    title: "5 điều cần biết trước khi mua bảo hiểm nhân thọ cho trụ cột gia đình",
+    slug: "care-units-hoat-dong-nhu-the-nao",
+    title: "Care Units hoạt động như thế nào, và vì sao không phải là tiền mặt?",
     excerpt:
-      "Xác định số tiền bảo hiểm phù hợp và những điều khoản loại trừ thường bị bỏ qua.",
-    category: "Nhân thọ",
-    readTime: "7 phút đọc",
+      "Tìm hiểu cách Family Care Wallet quy đổi mức độ ảnh hưởng sức khỏe thành quyền lợi dịch vụ thực tế.",
+    category: "Sản phẩm",
+    readTime: "5 phút đọc",
   },
   {
-    slug: "quy-trinh-boi-thuong-bao-hiem-xe-co-gioi",
-    title: "Quy trình bồi thường bảo hiểm xe cơ giới diễn ra như thế nào?",
+    slug: "danh-gia-chuc-nang-thay-vi-chan-doan",
+    title: "Vì sao đánh giá theo chức năng công bằng hơn chỉ dựa vào chẩn đoán bệnh?",
     excerpt:
-      "Các bước giám định, hồ sơ cần chuẩn bị và thời gian xử lý bồi thường thực tế.",
-    category: "Xe cơ giới",
-    readTime: "5 phút đọc",
+      "Hai người cùng một bệnh có thể bị ảnh hưởng đến khả năng chăm con rất khác nhau — đây là lý do vì sao điều đó quan trọng.",
+    category: "Sản phẩm",
+    readTime: "6 phút đọc",
   },
 ];

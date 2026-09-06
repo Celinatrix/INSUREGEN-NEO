@@ -16,14 +16,14 @@ export function CtaSection() {
           />
           <div className="relative">
             <h2 className="text-balance mx-auto max-w-2xl text-3xl font-semibold tracking-tight text-white md:text-4xl">
-              Sẵn sàng bảo vệ tương lai của bạn?
+              Sẵn sàng để gia đình bạn luôn có người thay thế khi cần?
             </h2>
             <p className="mx-auto mt-4 max-w-xl text-base text-navy-muted">
-              Nhận tư vấn miễn phí và báo giá cá nhân hóa trong vòng chưa đầy 5 phút.
+              Nhận tư vấn miễn phí về Family Care Wallet trong vòng chưa đầy 5 phút.
             </p>
             <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
               <Button href="/lien-he" variant="on-dark">
-                Nhận báo giá miễn phí
+                Nhận tư vấn miễn phí
               </Button>
               <Button
                 href="/ve-chung-toi"
