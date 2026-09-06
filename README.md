@@ -1,36 +1,58 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# INSUREGEN NEO
 
-## Getting Started
+Website bảo hiểm số cho dự án INSUREGEN NEO — xây dựng bằng Next.js 16 (App Router) + TypeScript + Tailwind CSS v4.
 
-First, run the development server:
+## Trạng thái hiện tại
+
+Toàn bộ nội dung sản phẩm, số liệu và câu chuyện thương hiệu trong repo này là **placeholder** (dữ liệu mẫu hợp lý về bảo hiểm), chờ nội dung thật từ dự án. Cấu trúc trang, component và design system đã sẵn sàng — chỉ cần thay dữ liệu.
+
+Nội dung placeholder nằm ở:
+- `src/lib/data/products.ts` — 6 sản phẩm bảo hiểm mẫu
+- `src/lib/data/content.ts` — số liệu, quy trình, testimonial, bài viết kiến thức
+- `src/app/layout.tsx` — metadata SEO mặc định
+- `src/components/layout/Footer.tsx` — thông tin pháp lý, liên hệ
+
+## Design system
+
+Được tạo bằng skill `ui-ux-pro-max` (pattern "Trust & Authority", style "Accessible & Ethical" pha thêm glassmorphism cho khối hero/CTA). Xem chi tiết tại [`design-system/insuregen-neo/MASTER.md`](./design-system/insuregen-neo/MASTER.md).
+
+Token màu & shadow được khai báo trong `src/app/globals.css` (`@theme inline`), dùng trực tiếp qua class Tailwind: `bg-primary`, `text-accent`, `bg-navy`, `text-neo-cyan`, `shadow-card`, `shadow-elevated`...
+
+## Cấu trúc trang
+
+| Route | Nội dung |
+|---|---|
+| `/` | Trang chủ: hero, trust signals, sản phẩm nổi bật, quy trình, testimonial, CTA |
+| `/san-pham` | Danh sách toàn bộ sản phẩm bảo hiểm |
+| `/san-pham/[slug]` | Chi tiết từng sản phẩm (quyền lợi, FAQ, form báo giá) |
+| `/ve-chung-toi` | Giới thiệu, cam kết, mốc phát triển |
+| `/kien-thuc` | Danh sách bài viết kiến thức bảo hiểm |
+| `/lien-he` | Thông tin liên hệ + form nhận báo giá |
+| `/api/quote` (POST) | API nhận yêu cầu báo giá (hiện chỉ validate + log; **cần nối CRM/email thật**) |
+
+## Bắt đầu phát triển
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Mở [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Việc cần làm trước khi go-live
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. **Thay nội dung thật**: sản phẩm, số liệu, giấy phép kinh doanh, thông tin liên hệ.
+2. **Nối API `/api/quote` với hệ thống thật**: email (SendGrid/SES), CRM, hoặc lưu database — hiện tại chỉ log ra console.
+3. **Ảnh & OG image**: thêm ảnh sản phẩm/đội ngũ thật, tạo `opengraph-image` cho SEO chia sẻ mạng xã hội.
+4. **Tên miền & GitHub**: tạo repo GitHub và deploy (Vercel được khuyến nghị cho Next.js) — cả hai bước này cần xác nhận thủ công vì đụng đến tài khoản của bạn.
+5. **Rà soát pháp lý**: nội dung điều khoản, chính sách bảo mật, số giấy phép hiện là placeholder — cần bộ phận pháp chế cung cấp nội dung chính thức.
 
-## Learn More
+## Deploy lên Vercel
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm install -g vercel
+vercel login
+vercel
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Hoặc kết nối repo GitHub với Vercel để tự động deploy mỗi lần push.
