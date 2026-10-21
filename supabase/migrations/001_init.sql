@@ -57,7 +57,8 @@ create table if not exists public.grants (
   hours integer not null check (hours >= 0),
   services text[] not null,
   used integer not null default 0 check (used >= 0 and used <= hours),
-  housekeeping_used integer not null default 0 check (housekeeping_used >= 0)
+  housekeeping_used integer not null default 0 check (housekeeping_used >= 0),
+  expires_on date not null
 );
 
 create table if not exists public.bookings (
@@ -65,7 +66,7 @@ create table if not exists public.bookings (
   created_at timestamptz not null default now(),
   wallet_id uuid not null references public.wallets(id) on delete cascade,
   service text not null check (service in ('childcare','meals','transport','housekeeping')),
-  service_hours integer not null check (service_hours between 1 and 24),
+  service_hours integer not null check (service_hours between 1 and 24), -- giờ, hoặc số chuyến với đưa đón
   credits integer not null,
   service_date date not null,
   allocation jsonb not null

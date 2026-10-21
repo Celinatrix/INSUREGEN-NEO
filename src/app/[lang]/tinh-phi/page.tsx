@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getDict, hasLocale, vnd, vndShort } from "@/i18n";
 import { PricingCalculator } from "@/components/PricingCalculator";
-import { ILLUSTRATED_PAIRS } from "@/lib/pricing";
 import { CHILD_BANDS, LIFE, RIDER_RATES } from "@/lib/product";
 
 export async function generateMetadata({ params }: PageProps<"/[lang]/tinh-phi">): Promise<Metadata> {
@@ -17,7 +16,6 @@ export default async function PricingPage({ params }: PageProps<"/[lang]/tinh-ph
   if (!hasLocale(lang)) notFound();
   const d = getDict(lang);
   const t = d.pricing;
-  const pairs = ILLUSTRATED_PAIRS.map((p) => `${p.fatherAge}/${p.motherAge}`).join(", ");
 
   return (
     <>
@@ -34,7 +32,6 @@ export default async function PricingPage({ params }: PageProps<"/[lang]/tinh-ph
           t={t}
           sumLabel={vndShort(lang, LIFE.sumAssured)}
           termYears={LIFE.termYears}
-          pairs={pairs}
           adviserHref={`/${lang}#dang-ky`}
         />
         <div className="box">

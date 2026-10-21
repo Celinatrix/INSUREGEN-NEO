@@ -9,7 +9,7 @@ Next.js 16 (App Router) · TypeScript · Tailwind v4 · Supabase · Vercel. Giao
 | Đường dẫn | Nội dung |
 |---|---|
 | `/vi`, `/en` | Trang giới thiệu: vấn đề, bảo vệ liên tục, Lộ trình A/B, dịch vụ, bồi thường 6 bước, minh bạch, hỏi đáp, form tư vấn |
-| `/[lang]/tinh-phi` | Tính phí theo tuổi bố, mẹ, con nhỏ nhất (gọi `/api/pricing`) |
+| `/[lang]/tinh-phi` | Tính phí theo tuổi bố, mẹ, con nhỏ nhất (gọi `/api/pricing`), kèm bảng độ nhạy |
 | `/[lang]/cis` | Máy tính Điểm Tác động Chăm sóc (CIS) cho Lộ trình B |
 | `/[lang]/vi-cham-soc` | Ví dùng thử: gửi hồ sơ bồi thường, AI đọc giấy ra viện, đặt dịch vụ bằng Care Hours |
 
@@ -32,7 +32,8 @@ Next.js 16 (App Router) · TypeScript · Tailwind v4 · Supabase · Vercel. Giao
 - `src/lib/product.ts` — **nguồn số liệu duy nhất**: quyền lợi, mức Lộ trình A/B, trọng số CIS, dịch vụ, biểu phí. Sửa ở đây, mọi trang và API tự cập nhật.
 - `src/lib/rules.ts` — quy tắc tính giờ, trợ cấp, CIS, trừ giờ khi đặt dịch vụ (dọn nhà ≤ 30% mỗi lần cấp, đưa đón 2 giờ/giờ, FIFO).
 - `src/lib/claims.ts` — đánh giá hồ sơ: hạn mức 120 giờ/năm, 30 ngày trợ cấp/năm, loại trừ thai sản, gắn cờ trùng thời gian/ngày tương lai/nằm viện dài bất thường.
-- `src/lib/pricing.ts` — định phí. Phí bổ trợ tra bảng mục 4.2.3. **Phí nhân thọ hiện chỉ có 4 cặp tuổi trong báo cáo** (25/25, 34/30, 40/30, 40/40); sẽ tính mọi cặp tuổi khi có file Excel định phí.
+- `src/lib/actuarial.ts` — định phí nhân thọ chung cho mọi cặp tuổi 25–40, tái lập file `Joint_Life_TPD_20pct_Higher_Corrected` (CSO 1980, TPD SOA × 1,2, lãi suất 4,5%, phí gộp với hoa hồng 40/20/15%). Kèm các kịch bản độ nhạy của file `Sensitivity_Analysis`.
+- `src/lib/pricing.ts` — ghép phí nhân thọ với phí bổ trợ (bảng mục 4.2.3, khớp sheet Family Tariffs).
 - `src/i18n/vi.ts`, `src/i18n/en.ts` — toàn bộ chữ trên trang, song ngữ.
 
 ## Chạy trên máy
@@ -40,7 +41,7 @@ Next.js 16 (App Router) · TypeScript · Tailwind v4 · Supabase · Vercel. Giao
 ```bash
 npm install
 npm run dev     # http://localhost:3000
-npm test        # kiểm tra quy tắc theo số liệu báo cáo
+npm test        # kiểm tra quy tắc và định phí theo số liệu báo cáo và file Excel
 ```
 
 Không cần cấu hình gì: khi chưa có Supabase, máy chủ lưu tạm trong bộ nhớ.
@@ -57,8 +58,8 @@ Không cần cấu hình gì: khi chưa có Supabase, máy chủ lưu tạm tron
 
 Khóa `service_role` chỉ nằm ở máy chủ, không bao giờ gửi xuống trình duyệt. Các bảng bật RLS và không mở quyền cho khóa anon.
 
-## Việc cần xác nhận trước khi trình bày
+## Quy tắc bổ trợ đã áp dụng (sheet Benefit Terms)
 
-Xem danh sách ở cuối tin nhắn bàn giao hoặc hỏi nhóm sản phẩm: cách đếm ngày nằm viện, trợ cấp cho lần nằm viện dưới 3 ngày, giờ tặng có áp giới hạn dọn nhà không, thông tin liên hệ thật.
+Trợ cấp theo đêm nằm viện (kể cả 1–2 đêm), mức ICU 60 giờ cần ít nhất 2 ngày nằm viện, đưa đón tính 2 giờ cho mỗi chuyến một chiều, mỗi lần cấp giờ dùng trong 90 ngày, chờ 30 ngày với bệnh (tai nạn áp dụng ngay), loại trừ thai sản. Chưa làm: khóa một lộ trình cho mỗi đợt bệnh và gộp lần tái nhập viện trong 30 ngày.
 
 Family Reconnect là sản phẩm ý tưởng cho cuộc thi học thuật, chưa được cấp phép kinh doanh. Mọi số liệu là minh họa.

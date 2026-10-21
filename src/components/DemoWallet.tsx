@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent } from "react";
 import { useSearchParams } from "next/navigation";
 import type { Dict, Locale } from "@/i18n";
-import { ACTIVITIES, CHILD_BANDS, CREDITS_PER_SERVICE_HOUR, SERVICES, childBandFor, type ChildBand, type Service, type Severity } from "@/lib/product";
+import { ACTIVITIES, CHILD_BANDS, CREDITS_PER_SERVICE_UNIT, SERVICE_UNIT, SERVICES, childBandFor, type ChildBand, type Service, type Severity } from "@/lib/product";
 import type { Ratings } from "@/lib/rules";
 
 type T = {
@@ -27,7 +27,7 @@ type Claim = {
   flags: string[];
   created_at: string;
 };
-type GrantView = { id: string; kind: "claim" | "gift"; parent: "father" | "mother" | null; hours: number; remaining: number; services: Service[]; created_at: string };
+type GrantView = { id: string; kind: "claim" | "gift"; parent: "father" | "mother" | null; expires_on: string; expired: boolean; hours: number; remaining: number; services: Service[]; created_at: string };
 type Booking = { id: string; service: Service; service_hours: number; credits: number; service_date: string; created_at: string };
 type Wallet = {
   id: string;
@@ -181,7 +181,11 @@ export function DemoWallet({ lang, t }: { lang: Locale; t: T }) {
     setWallet(j.wallet);
     setBookMsg({
       kind: "ok",
-      text: fill(d.booked, { service: t.services[service].toLowerCase(), h: serviceHours, n: j.booking.credits }),
+      text: fill(d.booked, {
+        service: t.services[service].toLowerCase(),
+        h: `${serviceHours} ${SERVICE_UNIT[service] === "trip" ? t.units.trips : t.units.hours}`,
+        n: j.booking.credits,
+      }),
     });
   }
 
@@ -192,7 +196,7 @@ export function DemoWallet({ lang, t }: { lang: Locale; t: T }) {
       items.push({
         at: g.created_at,
         title: g.kind === "gift" || !g.parent ? d.gift : `${d.grant} · ${d.parents[g.parent]}`,
-        sub: g.services.map((s) => t.services[s]).join(", "),
+        sub: `${g.services.map((s) => t.services[s]).join(", ")} · ${fill(d.expires, { d: g.expires_on })}`,
         delta: `+${g.hours}`,
         plus: true,
       });
@@ -201,7 +205,7 @@ export function DemoWallet({ lang, t }: { lang: Locale; t: T }) {
       items.push({
         at: b.created_at,
         title: `${d.booking} · ${t.services[b.service]}`,
-        sub: `${b.service_date} · ${b.service_hours} ${t.units.hours}`,
+        sub: `${b.service_date} · ${b.service_hours} ${SERVICE_UNIT[b.service] === "trip" ? t.units.trips : t.units.hours}`,
         delta: `−${b.credits}`,
         plus: false,
       });
@@ -213,7 +217,8 @@ export function DemoWallet({ lang, t }: { lang: Locale; t: T }) {
   if (!wallet) return <p className="notice">{d.loading}</p>;
 
   const band = childBandFor(wallet.youngestChildAge);
-  const cost = serviceHours * CREDITS_PER_SERVICE_HOUR[service];
+  const cost = serviceHours * CREDITS_PER_SERVICE_UNIT[service];
+  const isTrip = SERVICE_UNIT[service] === "trip";
   const nf = lang === "vi" ? "vi-VN" : "en-US";
 
   return (
@@ -331,9 +336,9 @@ export function DemoWallet({ lang, t }: { lang: Locale; t: T }) {
                 </select>
               </div>
               <div className="field">
-                <label htmlFor="shours">{d.serviceHours}</label>
+                <label htmlFor="shours">{isTrip ? d.serviceTrips : d.serviceHours}</label>
                 <input id="shours" type="number" min={1} max={24} className="input" value={serviceHours}
-                  onChange={(e) => setServiceHours(Math.max(1, Math.min(24, Math.floor(Number(e.target.value) || 1))))} />
+                  onChange={(e) => setServiceHours(Math.max(1, Math.min(isTrip ? 10 : 24, Math.floor(Number(e.target.value) || 1))))} />
               </div>
             </div>
             <div className="field">

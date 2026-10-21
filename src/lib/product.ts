@@ -33,6 +33,10 @@ export const RIDER = {
   giftHoursPerFamilyYear: 1, // quà tặng hằng năm (3.2)
   housekeepingMaxShareOfGrant: 0.3, // dọn nhà tối đa 30% mỗi lần cấp (Phụ lục B.3)
   pathwayBMinConsecutiveDays: 2, // F2/F3 ít nhất 2 ngày liên tiếp (3.2)
+  grantValidityDays: 90, // mỗi lần cấp giờ có hiệu lực 90 ngày (Benefit Terms: Care Wallet)
+  giftValidityDays: 365, // giờ tặng dùng trong năm bổ trợ, không cộng dồn
+  illnessWaitingDays: 30, // chờ 30 ngày với bệnh; tai nạn áp dụng ngay (Benefit Terms)
+  icuTopTierMinDays: 2, // 48 giờ ICU cần ít nhất 2 ngày nằm viện có hồ sơ
 } as const;
 
 // Bảng 3.2 — Lộ trình A: theo số ngày nằm viện, hoặc từ 48 giờ ICU
@@ -79,12 +83,19 @@ export const CIS_WEIGHTS: Record<ChildBand, Record<Activity, number>> = {
 export const SERVICES = ["childcare", "meals", "transport", "housekeeping"] as const;
 export type Service = (typeof SERVICES)[number];
 
-// Care Hours tiêu hao cho mỗi giờ dịch vụ (3.2)
-export const CREDITS_PER_SERVICE_HOUR: Record<Service, number> = {
+// Care Hours tiêu hao cho mỗi đơn vị dịch vụ (Benefit Terms: Service unlocks):
+// 1 giờ trông trẻ / nấu ăn / dọn nhà = 1; 1 chuyến đưa đón một chiều có người đi kèm = 2.
+export const CREDITS_PER_SERVICE_UNIT: Record<Service, number> = {
   childcare: 1,
   meals: 1,
-  transport: 2, // đưa đón có người đi kèm
+  transport: 2,
   housekeeping: 1,
+};
+export const SERVICE_UNIT: Record<Service, "hour" | "trip"> = {
+  childcare: "hour",
+  meals: "hour",
+  transport: "trip",
+  housekeeping: "hour",
 };
 
 // Phụ lục B.3 — Lộ trình B mở dịch vụ theo hoạt động ở mức F2/F3

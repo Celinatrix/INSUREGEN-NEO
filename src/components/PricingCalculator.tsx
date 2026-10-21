@@ -4,13 +4,13 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import type { Dict, Locale } from "@/i18n";
 import type { Quote } from "@/lib/pricing";
+import { LifeSensitivity } from "./LifeSensitivity";
 
 type Props = {
   lang: Locale;
   t: Dict["pricing"];
   sumLabel: string;
   termYears: number;
-  pairs: string;
   adviserHref: string;
 };
 
@@ -43,7 +43,7 @@ function Stepper({ id, label, value, min, max, onChange }: { id: string; label: 
   );
 }
 
-export function PricingCalculator({ lang, t, sumLabel, termYears, pairs, adviserHref }: Props) {
+export function PricingCalculator({ lang, t, sumLabel, termYears, adviserHref }: Props) {
   const [father, setFather] = useState(34);
   const [mother, setMother] = useState(30);
   const [child, setChild] = useState(3);
@@ -73,7 +73,10 @@ export function PricingCalculator({ lang, t, sumLabel, termYears, pairs, adviser
     };
   }, [father, mother, child, t]);
 
+  const validAges = [father, mother].every((a) => Number.isInteger(a) && a >= 25 && a <= 40);
+
   return (
+    <>
     <form className="est" onSubmit={(e) => e.preventDefault()} noValidate>
       <div className="est-in">
         <div className="row2">
@@ -97,27 +100,27 @@ export function PricingCalculator({ lang, t, sumLabel, termYears, pairs, adviser
           <>
             <div>
               <div className="est-per">{t.total}</div>
-              <div className="est-range">{q.total !== null ? short(lang, q.total) : "—"}</div>
-              {q.monthly !== null && <div className="est-per">{t.monthly.replace("{m}", short(lang, q.monthly))}</div>}
+              <div className="est-range">{short(lang, q.total)}</div>
+              <div className="est-per">{t.monthly.replace("{m}", short(lang, q.monthly))}</div>
             </div>
             <ul className="breakdown">
-              <li><span>{t.lifeRow.replace("{sum}", sumLabel)}</span><span>{q.life !== null ? full(lang, q.life) : "—"}</span></li>
+              <li><span>{t.lifeRow.replace("{sum}", sumLabel)}</span><span>{full(lang, q.life)}</span></li>
               <li><span>{t.riderRow}</span><span>{full(lang, q.rider)}</span></li>
+              <li><span>{t.lifeNet}</span><span>{full(lang, q.lifeNet)}</span></li>
             </ul>
-            {q.life === null ? (
-              <p className="notice warn">{t.lifePending.replace("{pairs}", pairs)}</p>
-            ) : (
-              <p className="fine">
-                {t.income
-                  .replace("{share}", `${((q.shareOfBenchmarkIncome ?? 0) * 100).toLocaleString(nf(lang), { maximumFractionDigits: 1, minimumFractionDigits: 1 })}%`)
-                  .replace("{need}", short(lang, q.incomeNeededAtCap ?? 0))}
-              </p>
-            )}
+            <p className="fine">
+              {t.income
+                .replace("{share}", `${(q.shareOfBenchmarkIncome * 100).toLocaleString(nf(lang), { maximumFractionDigits: 1, minimumFractionDigits: 1 })}%`)
+                .replace("{need}", short(lang, q.incomeNeededAtCap))}
+            </p>
+            <p className="fine">{t.engineNote}</p>
           </>
         )}
         <p className="fine">{t.underwriting}</p>
         <Link className="btn btn-primary" href={adviserHref}>{t.adviser}</Link>
       </div>
     </form>
+    {validAges && <LifeSensitivity lang={lang} t={t.sens} fatherAge={father} motherAge={mother} />}
+    </>
   );
 }

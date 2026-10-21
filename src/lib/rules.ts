@@ -2,7 +2,7 @@
 import {
   ACTIVITIES,
   CIS_WEIGHTS,
-  CREDITS_PER_SERVICE_HOUR,
+  CREDITS_PER_SERVICE_UNIT,
   PATHWAY_A_ICU_HOURS_FOR_TOP_TIER,
   PATHWAY_A_TIERS,
   PATHWAY_B_TIERS,
@@ -16,9 +16,11 @@ import {
   type Severity,
 } from "./product.ts";
 
-/** Lộ trình A: số Care Hours theo số ngày nằm viện và giờ ICU. */
+/** Lộ trình A: số Care Hours theo số ngày nằm viện (số đêm) và giờ ICU. */
 export function pathwayAHours(inpatientDays: number, icuHours = 0): number {
-  if (icuHours >= PATHWAY_A_ICU_HOURS_FOR_TOP_TIER) return PATHWAY_A_TIERS[0].hours;
+  if (icuHours >= PATHWAY_A_ICU_HOURS_FOR_TOP_TIER && inpatientDays >= RIDER.icuTopTierMinDays) {
+    return PATHWAY_A_TIERS[0].hours;
+  }
   for (const tier of PATHWAY_A_TIERS) if (inpatientDays >= tier.minDays) return tier.hours;
   return 0;
 }
@@ -67,27 +69,34 @@ export type Grant = {
   used: number; // Care Hours đã dùng
   housekeepingUsed: number; // Care Hours đã dùng cho dọn nhà
   createdAt: string;
+  expiresOn: string; // YYYY-MM-DD, ngày cuối còn dùng được
   capHousekeeping?: boolean; // mặc định true; giờ tặng hằng năm không áp giới hạn 30%
 };
+
+const day = (iso: string) => iso.slice(0, 10);
+/** Lần cấp còn dùng được cho một ngày dịch vụ. */
+export const usableOn = (g: Grant, date: string) => day(g.createdAt) <= date && date <= g.expiresOn;
 
 export type Allocation = { grantId: string; credits: number }[];
 
 /**
- * Trừ Care Hours cho một lần đặt dịch vụ, ưu tiên lần cấp cũ nhất (FIFO).
- * Tôn trọng dịch vụ được mở của từng lần cấp và giới hạn dọn nhà 30% mỗi lần cấp.
+ * Trừ Care Hours cho một lần đặt dịch vụ, ưu tiên lần cấp sắp hết hạn trước (rồi cũ nhất).
+ * Tôn trọng dịch vụ được mở, hạn dùng 90 ngày của từng lần cấp và giới hạn dọn nhà 30% mỗi lần cấp.
  */
 export function allocateBooking(
   grants: Grant[],
   service: Service,
-  serviceHours: number,
+  units: number, // số giờ, hoặc số chuyến với đưa đón
+  serviceDate: string,
 ): { ok: true; credits: number; allocation: Allocation } | { ok: false; credits: number; reason: string } {
-  const credits = serviceHours * CREDITS_PER_SERVICE_HOUR[service];
-  if (!Number.isFinite(serviceHours) || serviceHours <= 0) {
+  const credits = units * CREDITS_PER_SERVICE_UNIT[service];
+  if (!Number.isFinite(units) || units <= 0) {
     return { ok: false, credits, reason: "invalid_hours" };
   }
-  const ordered = [...grants]
-    .filter((g) => g.services.includes(service))
-    .sort((a, b) => a.createdAt.localeCompare(b.createdAt));
+  const unlocked = grants.filter((g) => g.services.includes(service));
+  const ordered = unlocked
+    .filter((g) => usableOn(g, serviceDate))
+    .sort((a, b) => a.expiresOn.localeCompare(b.expiresOn) || a.createdAt.localeCompare(b.createdAt));
   let need = credits;
   const allocation: Allocation = [];
   for (const g of ordered) {
@@ -106,13 +115,17 @@ export function allocateBooking(
     return {
       ok: false,
       credits,
-      reason: ordered.length === 0 ? "service_not_unlocked" : "insufficient_hours",
+      reason: unlocked.length === 0 ? "service_not_unlocked" : ordered.length === 0 ? "expired_or_not_yet" : "insufficient_hours",
     };
   }
   return { ok: true, credits, allocation };
 }
 
-/** Tổng số dư khả dụng của ví. */
-export function walletBalance(grants: Grant[]) {
-  return grants.reduce((s, g) => s + (g.hours - g.used), 0);
+/** Tổng số dư còn hạn của ví vào một ngày. */
+export function walletBalance(grants: Grant[], date: string) {
+  return grants.filter((g) => date <= g.expiresOn).reduce((s, g) => s + (g.hours - g.used), 0);
+}
+
+export function addDays(date: string, n: number) {
+  return new Date(Date.parse(`${date.slice(0, 10)}T00:00:00Z`) + n * 86_400_000).toISOString().slice(0, 10);
 }

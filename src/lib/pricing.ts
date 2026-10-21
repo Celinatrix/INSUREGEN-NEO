@@ -1,19 +1,20 @@
 // Định phí minh họa Family Reconnect.
-// Phí bổ trợ: tra bảng mục 4.2.3 (đầy đủ cho mọi tuổi).
-// Phí nhân thọ: hiện chỉ có 4 cặp tuổi minh họa trong báo cáo. Khi có bảng tính định phí
-// (CSO 1980, TPD × 1,2, lãi suất 4,5%, phí và hoa hồng theo năm), hàm lifePremium sẽ tính cho mọi cặp tuổi.
+// Phí bổ trợ: tra bảng mục 4.2.3 (khớp sheet Family Tariffs của file định phí bổ trợ).
+// Phí nhân thọ: tính trực tiếp bằng engine trong actuarial.ts (CSO 1980, TPD × 1,2, lãi suất 4,5%,
+// phí và hoa hồng theo năm), khớp file Excel định phí cho mọi cặp tuổi 25–40.
 import { ELIGIBILITY, LIFE_PREMIUM_POINTS, RIDER_RATES, childBandFor } from "./product.ts";
+import { jointLife, type LifeAssumptions } from "./actuarial.ts";
 
 export type QuoteInput = { fatherAge: number; motherAge: number; youngestChildAge: number };
 
 export type Quote = {
-  life: number | null;
+  life: number;
   rider: number;
-  total: number | null;
-  monthly: number | null;
-  shareOfBenchmarkIncome: number | null;
-  incomeNeededAtCap: number | null;
-  lifeSource: "report_point" | "unavailable";
+  total: number;
+  monthly: number;
+  shareOfBenchmarkIncome: number;
+  incomeNeededAtCap: number;
+  lifeNet: number;
 };
 
 export type QuoteError = { error: string; field?: keyof QuoteInput };
@@ -36,25 +37,27 @@ export function riderPremium(fatherAge: number, motherAge: number, youngestChild
   return RIDER_RATES[older >= 40 ? "40-49" : "25-39"][childBandFor(youngestChildAge)];
 }
 
-export function lifePremium(fatherAge: number, motherAge: number): number | null {
-  return LIFE_PREMIUM_POINTS[`${fatherAge}-${motherAge}`] ?? null;
+export function lifePremium(fatherAge: number, motherAge: number, over: Partial<LifeAssumptions> = {}): number {
+  return jointLife(fatherAge, motherAge, over).gross;
 }
 
 export function quote(input: QuoteInput): Quote {
-  const life = lifePremium(input.fatherAge, input.motherAge);
+  const lifeRes = jointLife(input.fatherAge, input.motherAge);
+  const life = Math.round(lifeRes.gross); // làm tròn đến đồng như biểu phí
   const rider = riderPremium(input.fatherAge, input.motherAge, input.youngestChildAge);
-  const total = life === null ? null : life + rider;
+  const total = life + rider;
   return {
     life,
+    lifeNet: Math.round(lifeRes.net),
     rider,
     total,
-    monthly: total === null ? null : total / 12,
-    shareOfBenchmarkIncome: total === null ? null : total / ELIGIBILITY.benchmarkIncome,
-    incomeNeededAtCap: total === null ? null : total / ELIGIBILITY.premiumIncomeCap,
-    lifeSource: life === null ? "unavailable" : "report_point",
+    monthly: total / 12,
+    shareOfBenchmarkIncome: total / ELIGIBILITY.benchmarkIncome,
+    incomeNeededAtCap: total / ELIGIBILITY.premiumIncomeCap,
   };
 }
 
+// Các cặp tuổi có số minh họa trong báo cáo (dùng để kiểm tra engine).
 export const ILLUSTRATED_PAIRS = Object.keys(LIFE_PREMIUM_POINTS).map((k) => {
   const [f, m] = k.split("-").map(Number);
   return { fatherAge: f, motherAge: m };

@@ -66,15 +66,18 @@ function parseDate(s: string): number | null {
   return Number.isNaN(t) ? null : t;
 }
 
-/** Số ngày nằm viện = số đêm giữa ngày nhập và ngày ra, tối thiểu 1. */
+/** Số ngày nằm viện = số đêm nằm viện giữa ngày nhập và ngày ra (Benefit Terms: "overnight inpatient day"). */
 export function inpatientDays(admission: string, discharge: string): number | null {
   const a = parseDate(admission);
   const b = parseDate(discharge);
   if (a === null || b === null || b < a) return null;
-  return Math.max(1, Math.round((b - a) / DAY));
+  return Math.round((b - a) / DAY);
 }
 
-export function evaluateClaim(input: ClaimInput, prior: PriorClaim[], today: string): ClaimResult {
+/**
+ * @param policyStart ngày bắt đầu quyền lợi bổ trợ (YYYY-MM-DD), để áp thời gian chờ 30 ngày với bệnh.
+ */
+export function evaluateClaim(input: ClaimInput, prior: PriorClaim[], today: string, policyStart: string): ClaimResult {
   const sameParent = prior.filter((p) => p.parent === input.parent && p.status !== "rejected");
   const grantedThisYear = sameParent.reduce((s, p) => s + p.hoursAwarded, 0);
   const cashDaysThisYear = sameParent.reduce((s, p) => s + p.cashDays, 0);
@@ -99,6 +102,17 @@ export function evaluateClaim(input: ClaimInput, prior: PriorClaim[], today: str
   if (input.pathway === "A") {
     const days = inpatientDays(input.admissionDate, input.dischargeDate);
     if (days === null) return { ...base, status: "rejected", reasons: ["dates_invalid"] };
+    const start = parseDate(policyStart);
+    if (start !== null && (parseDate(input.admissionDate) ?? 0) < start) {
+      return { ...base, status: "rejected", reasons: ["before_policy_start"], inpatientDays: days };
+    }
+    if (
+      input.reason === "illness" &&
+      start !== null &&
+      (parseDate(input.admissionDate) ?? 0) < start + RIDER.illnessWaitingDays * DAY
+    ) {
+      return { ...base, status: "rejected", reasons: ["waiting_period"], inpatientDays: days };
+    }
     const todayT = parseDate(today) ?? Date.now();
     const flags: string[] = [];
     if ((parseDate(input.dischargeDate) ?? 0) > todayT) flags.push("future_date");
@@ -117,7 +131,8 @@ export function evaluateClaim(input: ClaimInput, prior: PriorClaim[], today: str
     const hours = capToAnnualLimit(eligible, grantedThisYear);
     const cash = hospitalCash(days, cashDaysThisYear);
     const reasons: string[] = [];
-    if (eligible === 0) reasons.push("stay_too_short");
+    if (days === 0) reasons.push("no_overnight");
+    else if (eligible === 0) reasons.push("stay_too_short");
     else if (hours < eligible) reasons.push("annual_limit_reached");
     return {
       ...base,

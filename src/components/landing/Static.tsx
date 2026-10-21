@@ -5,7 +5,8 @@ import {
   ACTIVITIES,
   CHILD_BANDS,
   CIS_WEIGHTS,
-  CREDITS_PER_SERVICE_HOUR,
+  CREDITS_PER_SERVICE_UNIT,
+  SERVICE_UNIT,
   MARKET,
   PATHWAY_A_TIERS,
   PATHWAY_B_TIERS,
@@ -147,6 +148,7 @@ export function WalletSection({ lang, d }: { lang: Locale; d: Dict }) {
             <ul>{w.asideA.map((x) => <li key={x}>{x}</li>)}</ul>
             <h3>{w.b}</h3>
             <ul>{w.asideB.map((x) => <li key={x}>{x}</li>)}</ul>
+            <p className="fine">{w.validity}</p>
           </aside>
         </div>
         <div className="cis">
@@ -211,7 +213,7 @@ export function Services({ d }: { d: Dict }) {
               <img className="svc-photo" src={SERVICE_IMG[k]} alt="" loading="lazy" width={640} height={400} />
               <h3>{s.names[k]}</h3>
               <ul>{s.bullets[k].map((b) => <li key={b}>{b}</li>)}</ul>
-              <p className="rate">{fmt(s.rate, { n: CREDITS_PER_SERVICE_HOUR[k] })}</p>
+              <p className="rate">{fmt(SERVICE_UNIT[k] === "trip" ? s.rateTrip : s.rate, { n: CREDITS_PER_SERVICE_UNIT[k] })}</p>
             </article>
           ))}
         </div>

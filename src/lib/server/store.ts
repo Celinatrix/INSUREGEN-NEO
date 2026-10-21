@@ -52,6 +52,7 @@ export type GrantRow = {
   services: Service[];
   used: number;
   housekeeping_used: number;
+  expires_on: string;
   created_at: string;
 };
 
@@ -91,6 +92,7 @@ export const toGrant = (g: GrantRow): Grant => ({
   used: g.used,
   housekeepingUsed: g.housekeeping_used,
   createdAt: g.created_at,
+  expiresOn: g.expires_on,
   capHousekeeping: g.kind !== "gift",
 });
 

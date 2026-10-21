@@ -1,13 +1,19 @@
 // Nghiệp vụ ví Care Hours: tạo ví, nhận hồ sơ bồi thường, đặt dịch vụ.
 import { ELIGIBILITY, RIDER, SERVICES, type Service } from "../product.ts";
-import { allocateBooking, walletBalance } from "../rules.ts";
+import { addDays, allocateBooking, walletBalance } from "../rules.ts";
 import { evaluateClaim, type ClaimInput, type Parent, type PriorClaim } from "../claims.ts";
 import { getStore, toGrant, type WalletSnapshot } from "./store.ts";
 
 const GIFT_SERVICES: Service[] = ["childcare", "meals", "housekeeping"];
 
+const today = () => new Date().toISOString().slice(0, 10);
+
+/** Ví dùng thử coi như hợp đồng đã hiệu lực được một năm, để thời gian chờ không chặn bản demo. */
+export const demoPolicyStart = (walletCreatedAt: string) => addDays(walletCreatedAt, -365);
+
 export function summarize(s: WalletSnapshot) {
   const grants = s.grants.map(toGrant);
+  const now = today();
   const limitLeft = (p: Parent) =>
     RIDER.careHoursPerParentYear -
     s.claims.filter((c) => c.parent === p && c.status !== "rejected").reduce((x, c) => x + c.hours_awarded, 0);
@@ -15,11 +21,12 @@ export function summarize(s: WalletSnapshot) {
     id: s.wallet.id,
     createdAt: s.wallet.created_at,
     youngestChildAge: s.wallet.youngest_child_age,
-    balance: walletBalance(grants),
+    policyStart: demoPolicyStart(s.wallet.created_at),
+    balance: walletBalance(grants, now),
     cashPaid: s.claims.reduce((x, c) => x + c.cash_amount, 0),
     limitLeft: { father: limitLeft("father"), mother: limitLeft("mother") },
     claims: s.claims,
-    grants: s.grants.map((g) => ({ ...g, remaining: g.hours - g.used })),
+    grants: s.grants.map((g) => ({ ...g, remaining: g.hours - g.used, expired: now > g.expires_on })),
     bookings: s.bookings,
     storage: getStore().kind,
   };
@@ -37,6 +44,7 @@ export async function createWallet(youngestChildAge: number) {
     services: GIFT_SERVICES,
     used: 0,
     housekeeping_used: 0,
+    expires_on: addDays(w.created_at, RIDER.giftValidityDays - 1),
   });
   return (await store.getWallet(w.id))!;
 }
@@ -88,8 +96,7 @@ export async function submitClaim(walletId: string, input: ClaimInput) {
     hoursAwarded: c.hours_awarded,
     cashDays: c.cash_days,
   }));
-  const today = new Date().toISOString().slice(0, 10);
-  const r = evaluateClaim(input, prior, today);
+  const r = evaluateClaim(input, prior, today(), demoPolicyStart(snap.wallet.created_at));
   const claim = await store.insertClaim({
     wallet_id: walletId,
     parent: input.parent,
@@ -119,6 +126,7 @@ export async function submitClaim(walletId: string, input: ClaimInput) {
       services: r.services,
       used: 0,
       housekeeping_used: 0,
+      expires_on: addDays(claim.created_at, RIDER.grantValidityDays - 1),
     });
   }
   return { result: r, claim, wallet: summarize((await store.getWallet(walletId))!) };
@@ -126,13 +134,14 @@ export async function submitClaim(walletId: string, input: ClaimInput) {
 
 export async function book(walletId: string, service: string, serviceHours: number, serviceDate: string) {
   if (!(SERVICES as readonly string[]).includes(service)) return { error: "invalid_service" as const };
-  if (!Number.isInteger(serviceHours) || serviceHours < 1 || serviceHours > 24) return { error: "invalid_hours" as const };
+  const maxUnits = service === "transport" ? 10 : 24;
+  if (!Number.isInteger(serviceHours) || serviceHours < 1 || serviceHours > maxUnits) return { error: "invalid_hours" as const };
   if (!/^\d{4}-\d{2}-\d{2}$/.test(serviceDate)) return { error: "invalid_date" as const };
   const store = getStore();
   const snap = await store.getWallet(walletId);
   if (!snap) return null;
   const grants = snap.grants.map(toGrant);
-  const a = allocateBooking(grants, service as Service, serviceHours);
+  const a = allocateBooking(grants, service as Service, serviceHours, serviceDate);
   if (!a.ok) return { error: a.reason };
   for (const part of a.allocation) {
     const gr = snap.grants.find((x) => x.id === part.grantId)!;
