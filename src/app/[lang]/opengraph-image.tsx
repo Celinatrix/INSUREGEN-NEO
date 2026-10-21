@@ -36,7 +36,11 @@ export default async function Image({ params }: { params: Promise<{ lang: string
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: 18, fontSize: 34, fontWeight: 700 }}>
-          <div style={{ width: 56, height: 56, borderRadius: 16, background: "#E3BB63", display: "flex" }} />
+          <svg width="64" height="64" viewBox="0 0 32 32">
+            <rect width="32" height="32" rx="9" fill="#24396A" />
+            <path d="M21 7.6 10.6 15.4M21 15.2l-6.4 5" stroke="#C22938" strokeWidth="4.8" strokeLinecap="round" fill="none" />
+            <circle cx="19.2" cy="24" r="2.4" fill="#FFFFFF" />
+          </svg>
           Family Reconnect
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>

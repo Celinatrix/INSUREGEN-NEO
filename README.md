@@ -1,4 +1,6 @@
-# Family Reconnect
+<p align="center"><img src="public/logo.svg" width="96" alt="Logo Family Reconnect"></p>
+
+<h1 align="center">Family Reconnect</h1>
 
 **Khi bố mẹ cần nghỉ ngơi, gia đình vẫn vận hành.**
 
