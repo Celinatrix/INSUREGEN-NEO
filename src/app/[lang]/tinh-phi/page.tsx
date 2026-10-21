@@ -33,6 +33,7 @@ export default async function PricingPage({ params }: PageProps<"/[lang]/tinh-ph
           sumLabel={vndShort(lang, LIFE.sumAssured)}
           termYears={LIFE.termYears}
           adviserHref={`/${lang}#dang-ky`}
+          basisHref={`/${lang}/co-so-dinh-phi`}
         />
         <div className="box">
           <h3>{t.riderTable}</h3>

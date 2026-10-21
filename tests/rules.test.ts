@@ -94,3 +94,22 @@ test("Grants expire after 90 days", () => {
   const r = allocateBooking(g, "childcare", 2, "2027-03-31");
   assert.ok(r.ok);
 });
+
+test("Underwriting loads and illustration", async () => {
+  const { loadedLife, illustrate, affordability } = await import("../src/lib/pricing.ts");
+  assert.deepEqual(loadedLife(20_000_000, { smoker: "none", fatherOccupation: 1, motherOccupation: 1 }), [20_000_000, 20_000_000]);
+  // smoker +20–35%, father class 3: +1–1.5‰ × 2bn = 2–3m
+  assert.deepEqual(loadedLife(20_000_000, { smoker: "father", fatherOccupation: 3, motherOccupation: 1 }), [26_000_000, 30_000_000]);
+  const rows = illustrate({ fatherAge: 34, motherAge: 30, youngestChildAge: 3 });
+  assert.equal(rows.length, 10);
+  assert.equal(rows[0].totalLow, 22_607_760);
+  assert.equal(rows[3].rider, 1_807_952); // child 6, older parent 37
+  assert.equal(rows[6].rider, 1_833_607); // child 9, father 40 → older band
+  assert.equal(rows[9].rider, 1_833_607); // child 12, still renews
+  assert.equal(rows[0].surrenderValue, 0);
+  const late = illustrate({ fatherAge: 30, motherAge: 30, youngestChildAge: 8 });
+  assert.equal(late[5].rider, null); // child 13 → no renewal
+  const a = affordability(30_000_000, 33_000_000, 250_000_000);
+  assert.equal(a.overCap, true);
+  assert.equal(a.belowMinIncome, false);
+});

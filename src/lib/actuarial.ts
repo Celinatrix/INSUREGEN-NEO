@@ -123,3 +123,84 @@ export const LIFE_SCENARIOS: { key: "optimistic" | "base" | "prudent" | "adverse
   { key: "adverse", over: { interest: 0.05, mortalityMult: 1.2, tpdMult: 1.5, adminPerYear: 150_000, claimExpense: 0.03 } },
   { key: "severe", over: { interest: 0.04, mortalityMult: 1.5, tpdMult: 2, adminPerYear: 200_000, claimExpense: 0.05, reinsurance: 0.05 } },
 ];
+
+/** Bảng tỷ lệ dùng để định phí (sau hệ số TPD), cho trang Cơ sở định phí. */
+export function rateTable(tpdLoad = BASE_LIFE.tpdLoad) {
+  return RATES.map(([age, tpdM, dM, tpdF, dF]) => ({
+    age,
+    tpdMaleBase: tpdM,
+    tpdMale: tpdM * tpdLoad,
+    deathMale: dM,
+    tpdFemaleBase: tpdF,
+    tpdFemale: tpdF * tpdLoad,
+    deathFemale: dF,
+  }));
+}
+
+export type ReserveRow = {
+  t: number; // đầu năm hợp đồng t (0 = ngày phát hành)
+  fatherAge: number;
+  motherAge: number;
+  inForce: number; // xác suất cả hai chưa gặp biến cố
+  firstEventProb: number; // q của năm t
+  epvBenefits: number;
+  epvPremiums: number;
+  reserve: number; // dự phòng phí gộp (có thể âm)
+  reserveFloored: number; // max(0, dự phòng) — chỉ minh họa
+};
+
+/**
+ * Dự phòng phí gộp tương lai đầu mỗi năm — tái lập sheet Gross_Reserve_Calculation:
+ * V_t = EPV(quyền lợi) + EPV(tái BH, chi phí bồi thường, quản lý, hoa hồng, khai thác tại t=0) − EPV(phí gộp).
+ * Biên rủi ro và lợi nhuận không tính vào dòng tiền dự phòng.
+ */
+export function grossReserves(fatherAge: number, motherAge: number, over: Partial<LifeAssumptions> = {}): ReserveRow[] {
+  const a = { ...BASE_LIFE, ...over };
+  const P = jointLife(fatherAge, motherAge, a).gross;
+  const v = 1 / (1 + a.interest);
+  const n = a.termYears;
+  const tp: number[] = [1];
+  const q: number[] = [];
+  for (let t = 0; t < n; t++) {
+    const fx = BY_AGE.get(fatherAge + t)!;
+    const my = BY_AGE.get(motherAge + t)!;
+    const tpdX = fx[1] * a.tpdLoad * a.tpdMult;
+    const dX = fx[2] * a.mortalityMult;
+    const tpdY = my[3] * a.tpdLoad * a.tpdMult;
+    const dY = my[4] * a.mortalityMult;
+    const qx = tpdX + dX - tpdX * dX;
+    const qy = tpdY + dY - tpdY * dY;
+    q.push(qx + qy - qx * qy);
+    tp.push(tp[t] * (1 - q[t]));
+  }
+  const comm = (s: number) => (s === 0 ? a.commission[0] : s === 1 ? a.commission[1] : a.commission[2]);
+  const rows: ReserveRow[] = [];
+  for (let t = 0; t <= n; t++) {
+    let fb = 0, fp = 0, adm = 0, com = 0;
+    for (let s = t; s < n; s++) {
+      fb += tp[s] * q[s] * v ** (s - t + 1);
+      fp += tp[s] * v ** (s - t);
+      adm += tp[s] * v ** (s - t);
+      com += tp[s] * v ** (s - t) * comm(s);
+    }
+    const k = tp[t];
+    const epvB = t === n ? 0 : (a.sumAssured * fb) / k;
+    const epvP = t === n ? 0 : (P * fp) / k;
+    const reserve =
+      t === n
+        ? 0
+        : epvB + a.reinsurance * epvP + a.claimExpense * epvB + (a.adminPerYear * adm) / k + (P * com) / k + (t === 0 ? a.acquisition : 0) - epvP;
+    rows.push({
+      t,
+      fatherAge: fatherAge + t,
+      motherAge: motherAge + t,
+      inForce: k,
+      firstEventProb: t < n ? q[t] : 0,
+      epvBenefits: epvB,
+      epvPremiums: epvP,
+      reserve,
+      reserveFloored: Math.max(0, reserve),
+    });
+  }
+  return rows;
+}

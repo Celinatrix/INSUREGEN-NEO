@@ -120,6 +120,17 @@ export const LIFE_PREMIUM_POINTS: Record<string, number> = {
   "40-40": 38_893_158.89,
 };
 
+// Bảng 5.2 — khung thẩm định đề xuất
+export const UNDERWRITING = {
+  // Người hút thuốc: +20–35% phí nhân thọ (áp một lần nếu bố hoặc mẹ hút thuốc — cần nhóm xác nhận)
+  smokerLoad: [0.2, 0.35] as [number, number],
+  // Nhóm nghề: phụ phí ‰ số tiền bảo hiểm mỗi năm, tính cho từng bố/mẹ
+  occupationPerMille: { 1: [0, 0], 2: [0, 0], 3: [1, 1.5], 4: [2, 5] } as Record<1 | 2 | 3 | 4, [number, number]>,
+  // Rượu bia: trên 21 đơn vị/tuần (nam) hoặc 14 (nữ) thì chuyển thẩm định chuyên sâu
+  alcoholReferUnits: { male: 21, female: 14 },
+  medicalTests: { "25-30": "blood_urine", "31-40": "blood_urine_ecg_ultrasound" },
+} as const;
+
 export const MARKET = {
   twoGenerationShare: 0.55,
   admissionProb3y: 0.26,

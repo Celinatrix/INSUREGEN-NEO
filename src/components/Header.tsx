@@ -23,12 +23,12 @@ export function Header({ lang, nav }: { lang: Locale; nav: Dict["nav"] }) {
   const home = `/${lang}`;
   const links = [
     { href: `${home}#van-de`, label: nav.problem },
-    { href: `${home}#bao-ve`, label: nav.protection },
     { href: `${home}#vi-cham-soc`, label: nav.wallet },
     { href: `${home}#boi-thuong`, label: nav.claims },
     { href: `${home}/tinh-phi`, label: nav.pricing },
     { href: `${home}/cis`, label: nav.cis },
     { href: `${home}/vi-cham-soc`, label: nav.demo },
+    { href: `${home}/co-so-dinh-phi`, label: nav.basis },
   ];
   const switchHref = (l: Locale) => pathname.replace(/^\/(vi|en)(?=\/|$)/, `/${l}`);
 

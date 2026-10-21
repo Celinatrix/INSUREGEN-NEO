@@ -125,7 +125,7 @@ section{padding-block:clamp(64px, 9vw, 120px);scroll-margin-top:72px}
 .lang-switch button[aria-pressed="true"]{background:var(--navy);color:var(--navy-ink)}
 .menu-btn{display:none}
 .nav-cta{white-space:nowrap}
-@media (max-width: 1240px){
+@media (max-width: 1400px){
   .nav-links{display:none;position:absolute;left:0;right:0;top:100%;flex-direction:column;background:var(--bg);border-bottom:1px solid var(--line);padding:8px var(--gutter) 16px;margin:0}
   .nav-links.open{display:flex}
   .nav-links a{font-size:17px}
@@ -494,3 +494,4 @@ section{padding-block:clamp(64px, 9vw, 120px);scroll-margin-top:72px}
 .rung:has(.cash){grid-template-columns:minmax(0,1fr) auto}
 .nav-links .mobile-only{display:none}
 @media (max-width: 400px){ .nav-links .mobile-only{display:flex} }
+.tbl.nowrap td{white-space:nowrap}
