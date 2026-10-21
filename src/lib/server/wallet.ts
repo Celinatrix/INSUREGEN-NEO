@@ -143,13 +143,17 @@ export async function book(walletId: string, service: string, serviceHours: numb
   const grants = snap.grants.map(toGrant);
   const a = allocateBooking(grants, service as Service, serviceHours, serviceDate);
   if (!a.ok) return { error: a.reason };
+  // Trừ giờ từng phần; nếu một lượt đặt khác vừa trừ trước thì hoàn lại phần đã trừ và báo xung đột.
+  const done: { id: string; used: number; hk: number; newUsed: number }[] = [];
   for (const part of a.allocation) {
     const gr = snap.grants.find((x) => x.id === part.grantId)!;
-    await store.updateGrantUsage(
-      gr.id,
-      gr.used + part.credits,
-      gr.housekeeping_used + (service === "housekeeping" ? part.credits : 0),
-    );
+    const newUsed = gr.used + part.credits;
+    const newHk = gr.housekeeping_used + (service === "housekeeping" ? part.credits : 0);
+    if (!(await store.updateGrantUsage(gr.id, gr.used, newUsed, newHk))) {
+      for (const d of done) await store.updateGrantUsage(d.id, d.newUsed, d.used, d.hk);
+      return { error: "conflict" as const };
+    }
+    done.push({ id: gr.id, used: gr.used, hk: gr.housekeeping_used, newUsed });
   }
   const booking = await store.insertBooking({
     wallet_id: walletId,

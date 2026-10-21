@@ -491,6 +491,7 @@ const vi = {
       insufficient_hours: "Số dư không đủ, hoặc đã chạm giới hạn dọn nhà 30% của lần cấp.",
       service_not_unlocked: "Dịch vụ này chưa được mở cho các lần cấp hiện có.",
       expired_or_not_yet: "Không có lần cấp nào còn hạn vào ngày đã chọn (mỗi lần cấp dùng trong 90 ngày).",
+      conflict: "Ví vừa được cập nhật ở lượt đặt khác. Tải lại và thử lại.",
       invalid_hours: "Số giờ không hợp lệ.",
     },
     history: "Lịch sử ví",

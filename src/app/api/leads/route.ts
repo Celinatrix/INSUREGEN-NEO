@@ -1,8 +1,11 @@
 import { CITIES, CONSENT_VERSION, normalizePhone, validateLead, type LeadInput } from "@/lib/lead";
 import { getStore } from "@/lib/server/store";
 import { rateLimited } from "@/lib/server/rateLimit";
+import { rejectJsonWrite } from "@/lib/security";
 
 export async function POST(request: Request) {
+  const bad = rejectJsonWrite(request);
+  if (bad) return bad;
   if (rateLimited(request, "leads", 5, 10 * 60_000)) {
     return Response.json({ error: "rate_limited" }, { status: 429 });
   }

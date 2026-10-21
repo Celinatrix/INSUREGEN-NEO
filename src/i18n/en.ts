@@ -492,6 +492,7 @@ const en: Dict = {
       insufficient_hours: "Not enough hours, or the 30% housekeeping cap for the grant is reached.",
       service_not_unlocked: "This service isn't unlocked by any current grant.",
       expired_or_not_yet: "No grant is valid on that date (each grant lasts 90 days).",
+      conflict: "The wallet just changed in another booking. Reload and try again.",
       invalid_hours: "Invalid number of hours.",
     },
     history: "Wallet history",

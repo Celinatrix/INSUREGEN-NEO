@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { headers } from "next/headers";
 import { notFound } from "next/navigation";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
@@ -45,10 +46,12 @@ export default async function RootLayout({ children, params }: LayoutProps<"/[la
   const { lang } = await params;
   if (!hasLocale(lang)) notFound();
   const d = getDict(lang);
+  // Nonce do proxy tạo cho lượt tải này (xem src/proxy.ts); đọc header khiến trang render theo từng request.
+  const nonce = (await headers()).get("x-nonce") ?? undefined;
   return (
     <html lang={lang} suppressHydrationWarning>
       <head>
-        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+        <script nonce={nonce} dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
       <body>
         <a className="skip" href="#main">{d.nav.skip}</a>

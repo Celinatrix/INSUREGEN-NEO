@@ -2,8 +2,11 @@ import type { NextRequest } from "next/server";
 import { getStore } from "@/lib/server/store";
 import { isUuid, parseClaim, submitClaim } from "@/lib/server/wallet";
 import { rateLimited } from "@/lib/server/rateLimit";
+import { rejectJsonWrite } from "@/lib/security";
 
 export async function POST(request: NextRequest, ctx: RouteContext<"/api/wallets/[id]/claims">) {
+  const bad = rejectJsonWrite(request);
+  if (bad) return bad;
   const { id } = await ctx.params;
   if (!isUuid(id)) return Response.json({ error: "not_found" }, { status: 404 });
   if (rateLimited(request, "claims", 60, 60 * 60_000)) {

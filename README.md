@@ -48,7 +48,7 @@ Không cần cấu hình gì: khi chưa có Supabase, máy chủ lưu tạm tron
 
 ## Deploy lên Vercel + Supabase
 
-1. **Supabase**: tạo project tại supabase.com → **SQL Editor** → dán `supabase/migrations/001_init.sql` → **Run**. Vào **Project Settings → API**, chép **Project URL** và khóa **service_role**.
+1. **Supabase**: tạo project tại supabase.com → **SQL Editor** → dán `supabase/migrations/001_init.sql` → **Run**, rồi làm tương tự với `002_lock_down.sql` (thu hồi quyền bảng của anon). Vào **Project Settings → API**, chép **Project URL** và khóa **service_role**.
 2. **Vercel**: vercel.com → **Add New → Project** → chọn repo `INSUREGEN-NEO` → **Deploy**.
 3. Trong Vercel → **Settings → Environment Variables**, thêm các biến trong `.env.example`:
    - `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY` (bắt buộc để lưu dữ liệu thật)
@@ -63,3 +63,7 @@ Khóa `service_role` chỉ nằm ở máy chủ, không bao giờ gửi xuống 
 Trợ cấp theo đêm nằm viện (kể cả 1–2 đêm), mức ICU 60 giờ cần ít nhất 2 ngày nằm viện, đưa đón tính 2 giờ cho mỗi chuyến một chiều, mỗi lần cấp giờ dùng trong 90 ngày, chờ 30 ngày với bệnh (tai nạn áp dụng ngay), loại trừ thai sản. Chưa làm: khóa một lộ trình cho mỗi đợt bệnh và gộp lần tái nhập viện trong 30 ngày.
 
 Family Reconnect là sản phẩm ý tưởng cho cuộc thi học thuật, chưa được cấp phép kinh doanh. Mọi số liệu là minh họa.
+
+## Bảo mật
+
+Kết quả kiểm tra bảo mật (vibe-check, 17 mục) nằm ở [`security/AUDIT_SUMMARY.md`](security/AUDIT_SUMMARY.md). CSP theo nonce được tạo trong `src/proxy.ts`, các header khác ở `next.config.ts`.

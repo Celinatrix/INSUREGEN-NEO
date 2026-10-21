@@ -2,6 +2,8 @@
 // Cần biến môi trường ANTHROPIC_API_KEY. Không có khóa → trả 501 để giao diện chuyển sang nhập tay.
 // Ảnh không được lưu lại.
 import { rateLimited } from "@/lib/server/rateLimit";
+import { crossSite } from "@/lib/security";
+import { sniffImage } from "@/lib/upload";
 
 const MAX_BYTES = 5 * 1024 * 1024;
 const TYPES = ["image/jpeg", "image/png", "image/webp", "image/gif"];
@@ -23,10 +25,15 @@ type Extracted = {
 const isDate = (s: unknown) => typeof s === "string" && /^\d{4}-\d{2}-\d{2}$/.test(s) && !Number.isNaN(Date.parse(s));
 
 export async function POST(request: Request) {
+  if (crossSite(request)) return Response.json({ error: "forbidden_origin" }, { status: 403 });
   const key = process.env.ANTHROPIC_API_KEY;
   if (!key) return Response.json({ error: "extraction_unavailable" }, { status: 501 });
   if (rateLimited(request, "extract", 20, 60 * 60_000)) {
     return Response.json({ error: "rate_limited" }, { status: 429 });
+  }
+  // Từ chối sớm theo Content-Length để không phải đọc cả tệp quá lớn vào bộ nhớ.
+  if (Number(request.headers.get("content-length") ?? 0) > MAX_BYTES + 64 * 1024) {
+    return Response.json({ error: "too_large" }, { status: 413 });
   }
   const form = await request.formData().catch(() => null);
   const file = form?.get("file");
@@ -34,7 +41,10 @@ export async function POST(request: Request) {
   if (!TYPES.includes(file.type)) return Response.json({ error: "unsupported_type" }, { status: 415 });
   if (file.size > MAX_BYTES) return Response.json({ error: "too_large" }, { status: 413 });
 
-  const data = Buffer.from(await file.arrayBuffer()).toString("base64");
+  const bytes = new Uint8Array(await file.arrayBuffer());
+  const mediaType = sniffImage(bytes);
+  if (!mediaType) return Response.json({ error: "unsupported_type" }, { status: 415 });
+  const data = Buffer.from(bytes).toString("base64");
   const res = await fetch("https://api.anthropic.com/v1/messages", {
     method: "POST",
     headers: {
@@ -49,7 +59,7 @@ export async function POST(request: Request) {
         {
           role: "user",
           content: [
-            { type: "image", source: { type: "base64", media_type: file.type, data } },
+            { type: "image", source: { type: "base64", media_type: mediaType, data } },
             { type: "text", text: PROMPT },
           ],
         },

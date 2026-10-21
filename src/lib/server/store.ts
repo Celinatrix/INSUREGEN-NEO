@@ -81,7 +81,8 @@ export interface Store {
   getWallet(id: string): Promise<WalletSnapshot | null>;
   insertClaim(row: Omit<ClaimRow, "id" | "created_at">): Promise<ClaimRow>;
   insertGrant(row: Omit<GrantRow, "id" | "created_at">): Promise<GrantRow>;
-  updateGrantUsage(id: string, used: number, housekeepingUsed: number): Promise<void>;
+  /** Cập nhật có điều kiện: chỉ ghi khi `used` hiện tại vẫn bằng `expectedUsed`. Trả về false nếu bị lượt khác ghi trước. */
+  updateGrantUsage(id: string, expectedUsed: number, used: number, housekeepingUsed: number): Promise<boolean>;
   insertBooking(row: Omit<BookingRow, "id" | "created_at">): Promise<BookingRow>;
 }
 
@@ -146,12 +147,12 @@ const memoryStore: Store = {
     mem.grants.push(c);
     return c;
   },
-  async updateGrantUsage(id, used, hk) {
+  async updateGrantUsage(id, expected, used, hk) {
     const x = mem.grants.find((gr) => gr.id === id);
-    if (x) {
-      x.used = used;
-      x.housekeeping_used = hk;
-    }
+    if (!x || x.used !== expected) return false;
+    x.used = used;
+    x.housekeeping_used = hk;
+    return true;
   },
   async insertBooking(row) {
     const c = { ...row, id: crypto.randomUUID(), created_at: now() };
@@ -190,8 +191,11 @@ function supabaseStore(client: SupabaseClient): Store {
     async insertGrant(row) {
       return must(await client.from("grants").insert(row).select().single());
     },
-    async updateGrantUsage(id, used, hk) {
-      must(await client.from("grants").update({ used, housekeeping_used: hk }).eq("id", id));
+    async updateGrantUsage(id, expected, used, hk) {
+      const rows = must(
+        await client.from("grants").update({ used, housekeeping_used: hk }).eq("id", id).eq("used", expected).select("id"),
+      );
+      return Array.isArray(rows) && rows.length === 1;
     },
     async insertBooking(row) {
       return must(await client.from("bookings").insert(row).select().single());
