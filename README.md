@@ -1,61 +1,64 @@
 # INSUREGEN NEO — Family Reconnect
 
-Website cho sản phẩm **Family Reconnect**: bảo hiểm nhân thọ chung 10 năm cho cả cha và mẹ (2 tỷ đồng khi tử vong/TTTBVV) kèm quyền lợi bổ trợ **Family Continuity Rider** (trợ cấp nằm viện 500.000đ/ngày và 120 Care Hours mỗi cha/mẹ mỗi năm, dùng qua ví Family Care Wallet). Xây dựng bằng Next.js 16 (App Router) + TypeScript + Tailwind CSS v4.
+Ứng dụng web cho **Family Reconnect** (InsuNovate 2026): bảo hiểm nhân thọ chung 10 năm cho cả bố và mẹ (2 tỷ đồng khi tử vong hoặc thương tật toàn bộ vĩnh viễn), kèm quyền lợi bổ trợ **Family Continuity Rider**: trợ cấp 500.000đ/ngày nằm viện và 120 Giờ chăm sóc mỗi bố/mẹ mỗi năm, dùng qua **Family Care Wallet**.
 
-## Trạng thái hiện tại
+Next.js 16 (App Router) · TypeScript · Tailwind v4 · Supabase · Vercel. Giao diện chuyển từ trang `family-reconnect.html` của repo CODE-GEN.
 
-Cơ chế sản phẩm (đánh giá chức năng chăm sóc, Care Units, mạng lưới đối tác) được dựng dựa trên tài liệu thiết kế sản phẩm thật của dự án. Số liệu thống kê thị trường, câu chuyện thương hiệu, mốc phát triển và testimonial vẫn là **placeholder hợp lý**, chờ xác nhận/nội dung chính thức.
+## Trang
 
-Dữ liệu sản phẩm nằm ở:
-- `src/lib/data/family-reconnect.ts` — toàn bộ nội dung sản phẩm theo báo cáo Family Reconnect: quyền lợi, Lộ trình A/B, điểm CIS, dịch vụ, quy trình bồi thường, ví dụ, phí minh họa, so sánh, điều khoản, FAQ, lộ trình ra mắt
-- `src/lib/data/content.ts` — số liệu hero và bài viết kiến thức
-- `src/app/layout.tsx` — metadata SEO mặc định
-- `src/components/layout/Footer.tsx` — thông tin pháp lý, liên hệ
-
-**Quan trọng**: mục "Đang nghiên cứu — sắp ra mắt" (bảo vệ người chăm sóc & ông bà cao tuổi, mô hình ADL) tương ứng với phần "Under Consideration" trong tài liệu gốc — **chưa được chốt vào phạm vi sản phẩm**. Trang web chỉ nhắc đến như hướng nghiên cứu, không cho đăng ký. Không đưa tính năng này thành sản phẩm bán chính thức cho đến khi có xác nhận rõ ràng từ đội sản phẩm.
-
-## Design system
-
-Được tạo bằng skill `ui-ux-pro-max` (pattern "Trust & Authority", style "Accessible & Ethical" pha thêm glassmorphism cho khối hero/CTA). Xem chi tiết tại [`design-system/insuregen-neo/MASTER.md`](./design-system/insuregen-neo/MASTER.md).
-
-Token màu & shadow được khai báo trong `src/app/globals.css` (`@theme inline`), dùng trực tiếp qua class Tailwind: `bg-primary`, `text-accent`, `bg-navy`, `text-neo-cyan`, `shadow-card`, `shadow-elevated`...
-
-## Cấu trúc trang
-
-| Route | Nội dung |
+| Đường dẫn | Nội dung |
 |---|---|
-| `/` | Trang chủ: hero, vì sao khác biệt, 6 hoạt động chăm sóc + đối tác, quy trình 5 bước, testimonial, CTA |
-| `/san-pham` | Trang chi tiết Family Care Wallet: vấn đề, cách hoạt động, ví dụ minh họa, mạng lưới đối tác, đối tượng phù hợp, FAQ |
-| `/ve-chung-toi` | Giới thiệu, cam kết, hành trình phát triển, mục "sắp ra mắt" |
-| `/kien-thuc` | Bài viết kiến thức về khoảng trống chăm sóc gia đình & Care Units |
-| `/lien-he` | Thông tin liên hệ + form nhận tư vấn (chọn độ tuổi con) |
-| `/api/quote` (POST) | API nhận yêu cầu tư vấn (hiện chỉ validate + log; **cần nối CRM/email thật**) |
+| `/vi`, `/en` | Trang giới thiệu: vấn đề, bảo vệ liên tục, Lộ trình A/B, dịch vụ, bồi thường 6 bước, minh bạch, hỏi đáp, form tư vấn |
+| `/[lang]/tinh-phi` | Tính phí theo tuổi bố, mẹ, con nhỏ nhất (gọi `/api/pricing`) |
+| `/[lang]/cis` | Máy tính Điểm Tác động Chăm sóc (CIS) cho Lộ trình B |
+| `/[lang]/vi-cham-soc` | Ví dùng thử: gửi hồ sơ bồi thường, AI đọc giấy ra viện, đặt dịch vụ bằng Care Hours |
 
-## Bắt đầu phát triển
+`/` tự chuyển sang `/vi` hoặc `/en` theo ngôn ngữ trình duyệt.
+
+## API
+
+| Method | Đường dẫn | Việc làm |
+|---|---|---|
+| POST | `/api/leads` | Lưu đăng ký tư vấn, ghi nhận đồng ý theo Nghị định 13/2023 |
+| GET | `/api/pricing?father=34&mother=30&child=3` | Phí nhân thọ + bổ trợ, % thu nhập, thu nhập cần theo ngưỡng 12% |
+| POST | `/api/wallets` | Tạo ví dùng thử (kèm 1 giờ tặng hằng năm) |
+| GET | `/api/wallets/:id` | Số dư, hạn mức còn lại, lịch sử |
+| POST | `/api/wallets/:id/claims` | Đánh giá hồ sơ Lộ trình A hoặc B, cấp giờ và trợ cấp |
+| POST | `/api/wallets/:id/bookings` | Đặt dịch vụ, trừ giờ theo quy tắc |
+| POST | `/api/claims/extract` | Đọc ảnh giấy ra viện bằng Claude (cần `ANTHROPIC_API_KEY`) |
+
+## Số liệu và quy tắc ở đâu
+
+- `src/lib/product.ts` — **nguồn số liệu duy nhất**: quyền lợi, mức Lộ trình A/B, trọng số CIS, dịch vụ, biểu phí. Sửa ở đây, mọi trang và API tự cập nhật.
+- `src/lib/rules.ts` — quy tắc tính giờ, trợ cấp, CIS, trừ giờ khi đặt dịch vụ (dọn nhà ≤ 30% mỗi lần cấp, đưa đón 2 giờ/giờ, FIFO).
+- `src/lib/claims.ts` — đánh giá hồ sơ: hạn mức 120 giờ/năm, 30 ngày trợ cấp/năm, loại trừ thai sản, gắn cờ trùng thời gian/ngày tương lai/nằm viện dài bất thường.
+- `src/lib/pricing.ts` — định phí. Phí bổ trợ tra bảng mục 4.2.3. **Phí nhân thọ hiện chỉ có 4 cặp tuổi trong báo cáo** (25/25, 34/30, 40/30, 40/40); sẽ tính mọi cặp tuổi khi có file Excel định phí.
+- `src/i18n/vi.ts`, `src/i18n/en.ts` — toàn bộ chữ trên trang, song ngữ.
+
+## Chạy trên máy
 
 ```bash
 npm install
-npm run dev
+npm run dev     # http://localhost:3000
+npm test        # kiểm tra quy tắc theo số liệu báo cáo
 ```
 
-Mở [http://localhost:3000](http://localhost:3000).
+Không cần cấu hình gì: khi chưa có Supabase, máy chủ lưu tạm trong bộ nhớ.
 
-## Việc cần làm trước khi go-live
+## Deploy lên Vercel + Supabase
 
-1. **Xác nhận số liệu thị trường**: các số liệu trích dẫn (tỷ lệ hộ gia đình, tỷ lệ nhập viện...) lấy từ tài liệu nghiên cứu — cần dẫn nguồn chính thức hoặc xác nhận lại trước khi công bố.
-2. **Thay testimonial placeholder**: các trích dẫn khách hàng hiện là minh họa hư cấu — **phải thay bằng phản hồi thật có sự đồng ý của khách hàng** trước khi ra mắt, tránh rủi ro quảng cáo sai sự thật.
-3. **Chốt phạm vi mục "sắp ra mắt"**: xác nhận với đội sản phẩm trước khi mở rộng nội dung về bảo vệ người chăm sóc/ông bà cao tuổi.
-4. **Nối API `/api/quote` với hệ thống thật**: email (SendGrid/SES), CRM, hoặc lưu database — hiện tại chỉ log ra console.
-5. **Ảnh & OG image**: thêm hình ảnh thật, tạo `opengraph-image` cho SEO chia sẻ mạng xã hội.
-6. **Tên miền & GitHub**: tạo repo GitHub và deploy (Vercel được khuyến nghị cho Next.js) — cần xác nhận thủ công vì đụng đến tài khoản của bạn.
-7. **Rà soát pháp lý**: điều khoản, chính sách bảo mật, số giấy phép kinh doanh hiện là placeholder — cần bộ phận pháp chế cung cấp nội dung chính thức, đặc biệt vì đây là sản phẩm bảo hiểm với cơ chế chi trả mới (Care Units) cần tuân thủ quy định bảo hiểm hiện hành.
+1. **Supabase**: tạo project tại supabase.com → **SQL Editor** → dán `supabase/migrations/001_init.sql` → **Run**. Vào **Project Settings → API**, chép **Project URL** và khóa **service_role**.
+2. **Vercel**: vercel.com → **Add New → Project** → chọn repo `INSUREGEN-NEO` → **Deploy**.
+3. Trong Vercel → **Settings → Environment Variables**, thêm các biến trong `.env.example`:
+   - `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY` (bắt buộc để lưu dữ liệu thật)
+   - `NEXT_PUBLIC_SITE_URL` = địa chỉ Vercel của bạn
+   - `ANTHROPIC_API_KEY` (không bắt buộc, để bật AI đọc giấy ra viện)
+4. **Deployments → Redeploy**. Từ đó mỗi lần push lên `main` sẽ tự deploy.
 
-## Deploy lên Vercel
+Khóa `service_role` chỉ nằm ở máy chủ, không bao giờ gửi xuống trình duyệt. Các bảng bật RLS và không mở quyền cho khóa anon.
 
-```bash
-npm install -g vercel
-vercel login
-vercel
-```
+## Việc cần xác nhận trước khi trình bày
 
-Hoặc kết nối repo GitHub với Vercel để tự động deploy mỗi lần push.
+Xem danh sách ở cuối tin nhắn bàn giao hoặc hỏi nhóm sản phẩm: cách đếm ngày nằm viện, trợ cấp cho lần nằm viện dưới 3 ngày, giờ tặng có áp giới hạn dọn nhà không, thông tin liên hệ thật.
+
+Family Reconnect là sản phẩm ý tưởng cho cuộc thi học thuật, chưa được cấp phép kinh doanh. Mọi số liệu là minh họa.
