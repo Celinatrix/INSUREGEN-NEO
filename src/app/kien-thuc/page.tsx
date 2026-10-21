@@ -20,8 +20,8 @@ export default function InsightsPage() {
             Hiểu rõ trước khi quyết định
           </h1>
           <p className="mt-4 text-base leading-relaxed text-muted-foreground">
-            Những bài viết giúp bạn nắm rõ quyền lợi, điều khoản và quy trình
-            bồi thường trước khi tham gia bảo hiểm.
+            Những bài viết giúp bạn hiểu rõ quyền lợi nhân thọ chung, Care Hours,
+            điểm CIS và cách tính phí trước khi tham gia Family Reconnect.
           </p>
         </div>
 

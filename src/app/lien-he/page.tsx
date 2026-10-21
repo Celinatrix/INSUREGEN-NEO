@@ -5,7 +5,7 @@ import { QuoteForm } from "@/components/forms/QuoteForm";
 export const metadata: Metadata = {
   title: "Liên hệ & Nhận báo giá",
   description:
-    "Gửi yêu cầu tư vấn để nhận báo giá bảo hiểm cá nhân hóa từ đội ngũ chuyên viên INSUREGEN NEO.",
+    "Gửi yêu cầu tư vấn để nhận phí minh họa Family Reconnect theo tuổi của cha mẹ và con.",
 };
 
 const contactChannels = [
@@ -39,8 +39,9 @@ export default function ContactPage() {
               Nhận tư vấn và báo giá miễn phí
             </h1>
             <p className="mt-4 text-base leading-relaxed text-muted-foreground">
-              Để lại thông tin, chuyên viên tư vấn INSUREGEN NEO sẽ liên hệ để
-              hỗ trợ bạn chọn gói bảo hiểm phù hợp nhất.
+              Để lại thông tin, tư vấn viên sẽ giải thích quyền lợi 2 tỷ đồng,
+              cách dùng Care Hours và phí minh họa theo tuổi của gia đình bạn.
+              Family Reconnect đang thí điểm tại TP.HCM.
             </p>
 
             <dl className="mt-10 space-y-6">

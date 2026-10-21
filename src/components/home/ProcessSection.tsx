@@ -1,5 +1,5 @@
 import { Container } from "@/components/ui/Container";
-import { howItWorks } from "@/lib/data/care-wallet";
+import { howItWorks } from "@/lib/data/family-reconnect";
 
 export function ProcessSection() {
   return (
@@ -10,7 +10,7 @@ export function ProcessSection() {
             Cách hoạt động
           </p>
           <h2 className="text-balance mt-3 text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
-            Từ sự cố y tế đến dịch vụ chăm sóc thật
+            Từ hồ sơ nằm viện đến người trông con tại nhà
           </h2>
         </div>
 

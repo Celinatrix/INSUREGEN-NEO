@@ -1,14 +1,14 @@
-# INSUREGEN NEO — Family Care Wallet
+# INSUREGEN NEO — Family Reconnect
 
-Website cho sản phẩm **Family Care Wallet**: bảo hiểm chi trả bằng dịch vụ chăm sóc thật (thay vì tiền mặt) khi cha hoặc mẹ tạm thời không thể chăm con vì lý do sức khỏe. Xây dựng bằng Next.js 16 (App Router) + TypeScript + Tailwind CSS v4.
+Website cho sản phẩm **Family Reconnect**: bảo hiểm nhân thọ chung 10 năm cho cả cha và mẹ (2 tỷ đồng khi tử vong/TTTBVV) kèm quyền lợi bổ trợ **Family Continuity Rider** (trợ cấp nằm viện 500.000đ/ngày và 120 Care Hours mỗi cha/mẹ mỗi năm, dùng qua ví Family Care Wallet). Xây dựng bằng Next.js 16 (App Router) + TypeScript + Tailwind CSS v4.
 
 ## Trạng thái hiện tại
 
 Cơ chế sản phẩm (đánh giá chức năng chăm sóc, Care Units, mạng lưới đối tác) được dựng dựa trên tài liệu thiết kế sản phẩm thật của dự án. Số liệu thống kê thị trường, câu chuyện thương hiệu, mốc phát triển và testimonial vẫn là **placeholder hợp lý**, chờ xác nhận/nội dung chính thức.
 
 Dữ liệu sản phẩm nằm ở:
-- `src/lib/data/care-wallet.ts` — mô tả sản phẩm, vấn đề giải quyết, 6 hoạt động chăm sóc, cách hoạt động, ví dụ minh họa, mạng lưới đối tác, FAQ, và mục "sắp ra mắt"
-- `src/lib/data/content.ts` — số liệu thống kê, trust points, testimonial, bài viết kiến thức
+- `src/lib/data/family-reconnect.ts` — toàn bộ nội dung sản phẩm theo báo cáo Family Reconnect: quyền lợi, Lộ trình A/B, điểm CIS, dịch vụ, quy trình bồi thường, ví dụ, phí minh họa, so sánh, điều khoản, FAQ, lộ trình ra mắt
+- `src/lib/data/content.ts` — số liệu hero và bài viết kiến thức
 - `src/app/layout.tsx` — metadata SEO mặc định
 - `src/components/layout/Footer.tsx` — thông tin pháp lý, liên hệ
 

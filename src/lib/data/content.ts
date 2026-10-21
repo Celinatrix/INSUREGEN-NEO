@@ -1,72 +1,58 @@
-export const stats = [
-  { value: "6", label: "Hoạt động chăm sóc được đánh giá chuẩn hóa" },
-  { value: "3", label: "Đối tác dịch vụ chăm sóc đã kiểm định" },
-  { value: "0–8 tuổi", label: "Độ tuổi con được thiết kế quyền lợi phù hợp" },
-  { value: "< 48 giờ", label: "Thời gian xử lý đánh giá quyền lợi trung bình" },
-];
-
-export const trustPoints = [
-  {
-    title: "Đánh giá khách quan, không chỉ dựa vào bệnh danh",
-    detail:
-      "Quyền lợi được xác định dựa trên bằng chứng y khoa về khả năng vận động, sức mạnh, sự tỉnh táo... ánh xạ trực tiếp sang từng hoạt động chăm sóc con cụ thể.",
-  },
-  {
-    title: "Quyền lợi đi thẳng vào nhu cầu thực tế",
-    detail:
-      "Thay vì một khoản tiền mặt cố định, Care Units được quy đổi đúng theo mức độ và thời gian ảnh hưởng, sau khi đã cân đối khả năng hỗ trợ của người còn lại trong gia đình.",
-  },
-  {
-    title: "Mạng lưới đối tác được kiểm định chất lượng",
-    detail:
-      "Dịch vụ chăm sóc trẻ, hậu sản và hỗ trợ việc nhà được thực hiện bởi các đối tác đã qua kiểm định, đảm bảo chất lượng và an toàn cho gia đình.",
-  },
-];
-
-export const testimonials = [
-  {
-    quote:
-      "Lúc tôi phải bó bột chân, điều lo nhất không phải là viện phí mà là ai đưa đón và tắm rửa cho con mỗi ngày. Family Care Wallet giúp tôi đặt được người hỗ trợ ngay trong tuần đó.",
-    name: "Nguyễn Thu Hà",
-    role: "Phụ huynh có con 2 tuổi",
-  },
-  {
-    quote:
-      "Tôi bất ngờ vì hệ thống hỏi rất cụ thể về việc tôi có bế được con không, có tự tắm cho con được không — chứ không chỉ hỏi tôi bị bệnh gì. Cảm giác quyền lợi rất sát với hoàn cảnh thật.",
-    name: "Trần Minh Đức",
-    role: "Phụ huynh có con 4 tuổi",
-  },
-  {
-    quote:
-      "Đội ngũ hỗ trợ tận tình khi tôi cần đặt dịch vụ trông trẻ gấp qua Vi Easy Care. Quy trình đặt dịch vụ từ ví điện tử rất nhanh gọn.",
-    name: "Phạm Ngọc Lan",
-    role: "Phụ huynh có 2 con nhỏ",
-  },
+// Số liệu nổi bật trên hero — lấy từ báo cáo Family Reconnect.
+export const heroStats = [
+  { value: "2 tỷ đồng", label: "Chi trả một lần khi cha hoặc mẹ tử vong hoặc thương tật toàn bộ vĩnh viễn" },
+  { value: "500.000đ", label: "Trợ cấp mỗi ngày nằm viện, tối đa 30 ngày/năm" },
+  { value: "120 giờ", label: "Care Hours mỗi cha/mẹ mỗi năm" },
+  { value: "2,29 triệu", label: "Phí trung bình mỗi tháng cho cả gia đình" },
 ];
 
 export const insights = [
   {
-    slug: "khoang-trong-cham-soc-gia-dinh-la-gi",
-    title: "Khoảng trống chăm sóc gia đình là gì và vì sao ngày càng đáng lo?",
+    slug: "vi-sao-bao-ve-ca-cha-va-me",
+    title: "Vì sao nên bảo vệ cả cha và mẹ trên một hợp đồng?",
     excerpt:
-      "Khi gia đình hạt nhân trở thành xu hướng chủ đạo, ai sẽ thay thế cha mẹ chăm con lúc ốm đau bất ngờ?",
+      "Việc chăm con ngày càng dồn lên hai vợ chồng. Khi một người vắng mặt, người còn lại phải gánh cả công việc lẫn việc nhà.",
     category: "Kiến thức nền tảng",
     readTime: "6 phút đọc",
   },
   {
-    slug: "care-units-hoat-dong-nhu-the-nao",
-    title: "Care Units hoạt động như thế nào, và vì sao không phải là tiền mặt?",
+    slug: "care-hours-hoat-dong-nhu-the-nao",
+    title: "Care Hours hoạt động như thế nào?",
     excerpt:
-      "Tìm hiểu cách Family Care Wallet quy đổi mức độ ảnh hưởng sức khỏe thành quyền lợi dịch vụ thực tế.",
+      "Từ hồ sơ nằm viện đến giờ trông con trong Family Care Wallet: cách Lộ trình A và Lộ trình B quy đổi quyền lợi.",
     category: "Sản phẩm",
     readTime: "5 phút đọc",
   },
   {
-    slug: "danh-gia-chuc-nang-thay-vi-chan-doan",
-    title: "Vì sao đánh giá theo chức năng công bằng hơn chỉ dựa vào chẩn đoán bệnh?",
+    slug: "diem-cis-la-gi",
+    title: "Điểm Tác động Chăm sóc (CIS) là gì?",
     excerpt:
-      "Hai người cùng một bệnh có thể bị ảnh hưởng đến khả năng chăm con rất khác nhau — đây là lý do vì sao điều đó quan trọng.",
+      "Sáu hoạt động chăm sóc, bốn mức độ, và vì sao trọng số thay đổi theo tuổi của con nhỏ nhất.",
     category: "Sản phẩm",
     readTime: "6 phút đọc",
+  },
+  {
+    slug: "tien-mat-khong-dua-nguoi-cham-soc-den-nha",
+    title: "Tiền mặt thôi chưa đủ: bài toán tìm người chăm con giữa lúc khủng hoảng",
+    excerpt:
+      "Một lần nằm viện trung bình kéo dài 6,7 ngày. Thuê người trông trẻ 4 giờ mỗi ngày tốn 2,9–3,5 triệu đồng, nhưng khó nhất là tìm được người tin cậy.",
+    category: "Thị trường",
+    readTime: "4 phút đọc",
+  },
+  {
+    slug: "phi-bao-nhieu-la-vua-suc",
+    title: "Phí bảo hiểm bao nhiêu là vừa sức với gia đình trẻ?",
+    excerpt:
+      "Với thu nhập hộ đô thị trung bình 281,5 triệu đồng/năm, tổng phí dao động từ 5,6% đến 14,6% tùy tuổi cha mẹ.",
+    category: "Tài chính gia đình",
+    readTime: "5 phút đọc",
+  },
+  {
+    slug: "thuong-tat-toan-bo-vinh-vien",
+    title: "Thương tật toàn bộ vĩnh viễn được hiểu thế nào?",
+    excerpt:
+      "Trong Family Reconnect, đó là tình trạng thương tật từ 81% trở lên theo quy tắc hợp đồng. Tìm hiểu điều kiện và thời gian chờ.",
+    category: "Điều khoản",
+    readTime: "4 phút đọc",
   },
 ];

@@ -10,8 +10,8 @@ export function Footer() {
             INSUREGEN <span className="text-neo-cyan">NEO</span>
           </span>
           <p className="mt-4 max-w-sm text-sm leading-relaxed text-navy-muted">
-            Family Care Wallet — chi trả bằng dịch vụ chăm sóc thật khi cha
-            hoặc mẹ tạm thời không thể chăm con vì lý do sức khỏe.
+            Family Reconnect — bảo vệ cả cha và mẹ, cùng trợ cấp nằm viện và
+            Care Hours để gia đình có người trông con khi cần.
           </p>
           <p className="mt-6 text-xs text-navy-muted">
             Giấy phép hoạt động kinh doanh bảo hiểm số 000/GP-BTC do Bộ Tài
@@ -24,7 +24,7 @@ export function Footer() {
           <ul className="mt-4 space-y-3 text-sm text-navy-muted">
             <li>
               <Link href="/san-pham" className="hover:text-white">
-                Family Care Wallet
+                Family Reconnect
               </Link>
             </li>
             <li>
@@ -33,8 +33,13 @@ export function Footer() {
               </Link>
             </li>
             <li>
-              <Link href="/san-pham#doi-tac" className="hover:text-white">
-                Mạng lưới đối tác
+              <Link href="/san-pham#care-hours" className="hover:text-white">
+                Care Hours
+              </Link>
+            </li>
+            <li>
+              <Link href="/san-pham#phi" className="hover:text-white">
+                Phí minh họa
               </Link>
             </li>
             <li>

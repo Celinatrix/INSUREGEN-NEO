@@ -12,22 +12,24 @@ const ibmPlexSans = IBM_Plex_Sans({
 
 export const metadata: Metadata = {
   title: {
-    default: "INSUREGEN NEO — Family Care Wallet",
+    default: "INSUREGEN NEO — Family Reconnect",
     template: "%s | INSUREGEN NEO",
   },
   description:
-    "Family Care Wallet chi trả bằng dịch vụ chăm sóc thật khi cha hoặc mẹ tạm thời không thể chăm con vì lý do sức khỏe, thông qua đánh giá chức năng chăm sóc khách quan và mạng lưới đối tác dịch vụ.",
+    "Family Reconnect bảo vệ cả cha và mẹ: 2 tỷ đồng khi tử vong hoặc thương tật toàn bộ vĩnh viễn, cùng trợ cấp nằm viện và Care Hours để thuê người trông con, nấu ăn, dọn nhà khi cha mẹ cần hồi phục.",
   keywords: [
     "bảo hiểm chăm sóc gia đình",
+    "Family Reconnect",
     "Family Care Wallet",
+    "bảo hiểm nhân thọ chung cho vợ chồng",
     "bảo hiểm cho gia đình có con nhỏ",
     "dịch vụ chăm sóc trẻ em",
     "INSUREGEN NEO",
   ],
   openGraph: {
-    title: "INSUREGEN NEO — Family Care Wallet",
+    title: "INSUREGEN NEO — Family Reconnect",
     description:
-      "Chi trả bằng dịch vụ chăm sóc thật khi cha hoặc mẹ tạm thời không thể chăm con vì lý do sức khỏe.",
+      "Bảo vệ cả cha và mẹ, giữ nhịp sinh hoạt cho cả gia đình khi cha hoặc mẹ gặp vấn đề sức khỏe.",
     locale: "vi_VN",
     type: "website",
   },

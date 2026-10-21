@@ -2,7 +2,7 @@ import { Hero } from "@/components/home/Hero";
 import { TrustSection } from "@/components/home/TrustSection";
 import { ProductIntro } from "@/components/home/ProductIntro";
 import { ProcessSection } from "@/components/home/ProcessSection";
-import { Testimonials } from "@/components/home/Testimonials";
+import { Scenarios } from "@/components/home/Scenarios";
 import { CtaSection } from "@/components/home/CtaSection";
 
 export default function Home() {
@@ -12,7 +12,7 @@ export default function Home() {
       <TrustSection />
       <ProductIntro />
       <ProcessSection />
-      <Testimonials />
+      <Scenarios />
       <CtaSection />
     </>
   );

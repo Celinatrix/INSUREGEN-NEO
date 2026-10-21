@@ -5,6 +5,7 @@ type QuoteRequestBody = {
   phone?: string;
   email?: string;
   childAge?: string;
+  parentAge?: string;
   message?: string;
 };
 
@@ -23,7 +24,7 @@ export async function POST(request: Request) {
     );
   }
 
-  const { name, phone, email, childAge, message } = body;
+  const { name, phone, email, childAge, parentAge, message } = body;
 
   if (!name || name.trim().length < 2) {
     return NextResponse.json(
@@ -52,6 +53,7 @@ export async function POST(request: Request) {
     phone: phone.trim(),
     email: email.trim(),
     childAge: childAge?.trim() || "Chưa xác định",
+    parentAge: parentAge?.trim() || "Chưa xác định",
     message: message?.trim() || "",
     receivedAt: new Date().toISOString(),
   });

@@ -6,7 +6,15 @@ const childAgeOptions = [
   { value: "0-2", label: "0–2 tuổi" },
   { value: "3-5", label: "3–5 tuổi" },
   { value: "6-8", label: "6–8 tuổi" },
-  { value: "khac", label: "Ngoài độ tuổi trên / muốn tìm hiểu thêm" },
+  { value: "9-11", label: "9–11 tuổi" },
+  { value: "khac", label: "Từ 12 tuổi trở lên / muốn tìm hiểu thêm" },
+];
+
+const parentAgeOptions = [
+  { value: "25-30", label: "25–30 tuổi" },
+  { value: "31-35", label: "31–35 tuổi" },
+  { value: "36-40", label: "36–40 tuổi" },
+  { value: "khac", label: "Ngoài 25–40 tuổi" },
 ];
 
 type Status = "idle" | "submitting" | "success" | "error";
@@ -27,6 +35,7 @@ export function QuoteForm() {
       phone: String(data.get("phone") ?? ""),
       email: String(data.get("email") ?? ""),
       childAge: String(data.get("childAge") ?? ""),
+      parentAge: String(data.get("parentAge") ?? ""),
       message: String(data.get("message") ?? ""),
     };
 
@@ -120,9 +129,30 @@ export function QuoteForm() {
           />
         </div>
 
-        <div className="sm:col-span-2">
+        <div className="sm:col-span-1">
+          <label htmlFor="parentAge" className="text-sm font-medium text-foreground">
+            Tuổi của cha/mẹ lớn tuổi hơn
+          </label>
+          <select
+            id="parentAge"
+            name="parentAge"
+            className="mt-2 w-full rounded-lg border border-border bg-background px-4 py-3 text-sm text-foreground focus-visible:border-primary"
+            defaultValue=""
+          >
+            <option value="" disabled>
+              Chọn độ tuổi
+            </option>
+            {parentAgeOptions.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div className="sm:col-span-1">
           <label htmlFor="childAge" className="text-sm font-medium text-foreground">
-            Độ tuổi của con
+            Tuổi của con nhỏ nhất
           </label>
           <select
             id="childAge"

@@ -1,6 +1,6 @@
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
-import { stats } from "@/lib/data/content";
+import { heroStats } from "@/lib/data/content";
 
 export function Hero() {
   return (
@@ -17,15 +17,15 @@ export function Hero() {
         <div className="grid gap-16 md:grid-cols-[1.1fr_0.9fr] md:items-center">
           <div>
             <span className="inline-flex items-center rounded-full border border-navy-border bg-white/5 px-4 py-1.5 text-xs font-medium uppercase tracking-wide text-neo-cyan">
-              Family Care Wallet
+              Family Reconnect
             </span>
             <h1 className="text-balance mt-6 text-4xl font-semibold leading-tight tracking-tight text-white md:text-6xl">
-              Khi bạn không thể chăm con, ai đó vẫn cần làm điều đó
+              Bảo vệ cả cha và mẹ, giữ nhịp sinh hoạt cho cả gia đình
             </h1>
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-navy-muted">
-              Family Care Wallet đánh giá đúng phần chăm sóc con bị thiếu hụt
-              khi cha hoặc mẹ gặp sự cố sức khỏe, và chi trả bằng dịch vụ
-              chăm sóc thật thay vì một khoản tiền mặt chung chung.
+              Một hợp đồng cho cả hai vợ chồng: 2 tỷ đồng khi gia đình gặp mất
+              mát lớn, cùng trợ cấp nằm viện và Care Hours để có người trông
+              con, nấu ăn, dọn nhà khi cha hoặc mẹ cần thời gian hồi phục.
             </p>
             <div className="mt-10 flex flex-col gap-4 sm:flex-row">
               <Button href="/lien-he" variant="on-dark">
@@ -39,10 +39,10 @@ export function Hero() {
 
           <div className="glass-panel rounded-3xl p-6 shadow-elevated md:p-8">
             <p className="text-sm font-medium uppercase tracking-wide text-neo-cyan">
-              Family Care Wallet trong con số
+              Quyền lợi chính
             </p>
             <dl className="mt-6 grid grid-cols-2 gap-6">
-              {stats.map((stat) => (
+              {heroStats.map((stat) => (
                 <div key={stat.label}>
                   <dt className="sr-only">{stat.label}</dt>
                   <dd className="text-2xl font-semibold text-white md:text-3xl">
