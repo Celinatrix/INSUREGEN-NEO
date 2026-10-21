@@ -1,69 +1,172 @@
-# INSUREGEN NEO — Family Reconnect
+# Family Reconnect
 
-Ứng dụng web cho **Family Reconnect** (InsuNovate 2026): bảo hiểm nhân thọ chung 10 năm cho cả bố và mẹ (2 tỷ đồng khi tử vong hoặc thương tật toàn bộ vĩnh viễn), kèm quyền lợi bổ trợ **Family Continuity Rider**: trợ cấp 500.000đ/ngày nằm viện và 120 Giờ chăm sóc mỗi bố/mẹ mỗi năm, dùng qua **Family Care Wallet**.
+**Khi bố mẹ cần nghỉ ngơi, gia đình vẫn vận hành.**
 
-Next.js 16 (App Router) · TypeScript · Tailwind v4 · Supabase · Vercel. Giao diện chuyển từ trang `family-reconnect.html` của repo CODE-GEN.
+Family Reconnect là sản phẩm bảo hiểm cho gia đình trẻ ở đô thị Việt Nam, do đội **INSUREGEN NEO** thiết kế cho cuộc thi **InsuNovate 2026**. Sản phẩm bảo vệ cả bố và mẹ trong một hợp đồng, và lo cả phần bảo hiểm truyền thống bỏ qua: ai trông con, nấu cơm, đưa đón khi bố hoặc mẹ phải nằm viện.
 
-## Trang
+🌐 **Dùng thử:** [insuregen-neo.vercel.app](https://insuregen-neo.vercel.app) (tiếng Việt và tiếng Anh)
 
-| Đường dẫn | Nội dung |
+> Family Reconnect là sản phẩm ý tưởng cho cuộc thi học thuật, chưa được cấp phép kinh doanh. Mọi số liệu trên trang và trong tài liệu này chỉ để minh họa.
+
+---
+
+## Vấn đề
+
+Nhà anh Minh ở Quận 7: hai vợ chồng đi làm, bé Na 4 tuổi học mẫu giáo, ông bà ở quê. Một sáng thứ Hai chị Lan nhập viện cấp cứu. Viện phí đã có bảo hiểm y tế lo. Nhưng chiều đó không ai đón bé Na. Hôm sau anh Minh phải nghỉ làm, cả nhà ăn mì gói, và phải tìm người trông con giá gấp qua nhóm Zalo.
+
+**Tiền viện phí thì có người lo. Còn việc giữ cho gia đình vận hành thì chưa ai bảo hiểm.**
+
+| Số liệu | Giá trị |
 |---|---|
-| `/vi`, `/en` | Trang giới thiệu: vấn đề, bảo vệ liên tục, Lộ trình A/B, dịch vụ, bồi thường 6 bước, minh bạch, hỏi đáp, form tư vấn |
-| `/[lang]/tinh-phi` | Tính phí theo tuổi bố, mẹ, con nhỏ nhất (gọi `/api/pricing`), kèm bảng độ nhạy |
-| `/[lang]/cis` | Máy tính Điểm Tác động Chăm sóc (CIS) cho Lộ trình B |
-| `/[lang]/vi-cham-soc` | Ví dùng thử: gửi hồ sơ bồi thường, AI đọc giấy ra viện, đặt dịch vụ bằng Care Hours |
+| Người trưởng thành đô thị sống trong gia đình hai thế hệ | 55% |
+| Khả năng ít nhất một trong hai bố mẹ nhập viện trong 10 năm | 63% |
+| Thời gian nằm viện trung bình mỗi lần | 6,7 ngày |
+| Chi phí thuê trông trẻ 4 giờ/ngày cho một lần nằm viện | 2,9–3,5 triệu đồng |
+| Hộ gia đình mục tiêu ưu tiên | khoảng 790.000 hộ |
 
-`/` tự chuyển sang `/vi` hoặc `/en` theo ngôn ngữ trình duyệt.
+*Nguồn: khảo sát 600 người trưởng thành đô thị, VHLSS 2024 và tính toán của nhóm.*
 
-## API
+## Giải pháp
+
+Bốn trụ cột: **Protect · Recover · Care · Continue.**
+
+### 1. Hợp đồng chính: nhân thọ chung cho bố và mẹ (10 năm)
+
+- Chi trả **2 tỷ đồng** một lần khi bố hoặc mẹ tử vong, hoặc thương tật toàn bộ vĩnh viễn từ 81% (sự kiện đầu tiên xảy ra). Số tiền này tương đương khoảng 7 năm thu nhập của một hộ đô thị.
+- Nếu cả hai cùng gặp nạn trong một tai nạn, vẫn chi trả một lần.
+- Là bảo hiểm tử kỳ, không có giá trị hoàn lại.
+
+### 2. Quyền lợi bổ trợ: Family Continuity Rider (tái tục hằng năm)
+
+Giờ chăm sóc (Care Hours) được nạp vào **Ví Chăm sóc Gia đình** để đặt người giúp từ nhà cung cấp đã ký hợp đồng.
+
+**Lộ trình A: nằm viện**
+
+| Số ngày nằm viện | Giờ chăm sóc | Trợ cấp tiền mặt |
+|---|---|---|
+| 1–2 đêm | — | 500.000đ/đêm |
+| 3–6 ngày | 20 giờ | 500.000đ/ngày |
+| 7–13 ngày | 40 giờ | 500.000đ/ngày |
+| Từ 14 ngày, hoặc từ 48 giờ ICU | 60 giờ | 500.000đ/ngày |
+
+Trợ cấp tối đa 30 ngày mỗi bố/mẹ mỗi năm, không phụ thuộc viện phí.
+
+**Lộ trình B: hồi phục tại nhà, không nhập viện**
+
+Bác sĩ chấm mức độ cần hỗ trợ cho 6 hoạt động chăm con: trông giữ, bữa ăn, chăm sóc cá nhân, bế ẵm, đưa đón, việc nhà. Thang chấm là F0–F3. Điểm từng hoạt động được nhân trọng số theo tuổi con nhỏ nhất rồi cộng lại thành **Điểm Tác động Chăm sóc (CIS)**.
+
+| Điểm CIS | Giờ chăm sóc |
+|---|---|
+| 0,20–0,39 | 20 giờ |
+| 0,40–0,59 | 40 giờ |
+| 0,60–0,79 | 60 giờ |
+| Từ 0,80 | 80 giờ |
+
+Điều kiện: ít nhất một hoạt động ở mức F2/F3 trong 2 ngày liên tiếp. Chỉ hoạt động ở mức F2/F3 mới mở dịch vụ tương ứng.
+
+**Hạn mức và cách dùng giờ**
+
+- Mỗi bố/mẹ có tối đa **120 Giờ chăm sóc mỗi năm**, dùng chung cho hai lộ trình. Gia đình được tặng thêm 1 giờ mỗi năm.
+- Dịch vụ: trông trẻ, nấu ăn, dọn nhà (1 giờ dịch vụ = 1 Care Hour), đưa đón có người đi kèm (1 chuyến một chiều = 2 Care Hours).
+- Dọn nhà dùng tối đa 30% mỗi lần cấp. Mỗi lần cấp có hiệu lực 90 ngày. Giờ không đổi được thành tiền và không chuyển giữa bố và mẹ.
+- Thời gian chờ 30 ngày với bệnh; tai nạn được áp dụng ngay. Không áp dụng cho thai sản.
+- Quyền lợi bổ trợ dừng tái tục khi con nhỏ nhất từ 13 tuổi.
+
+## Ai tham gia được
+
+- Bố và mẹ cùng từ 25 đến 40 tuổi khi tham gia.
+- Con nhỏ nhất dưới 12 tuổi.
+- Thu nhập ròng của hộ từ 200 triệu đồng/năm. Tổng phí khuyến nghị không quá 12% thu nhập.
+
+## Phí bảo hiểm
+
+Ví dụ: bố 34 tuổi, mẹ 30 tuổi, con nhỏ nhất 3 tuổi, sức khỏe tiêu chuẩn.
+
+| Thành phần | Phí năm |
+|---|---|
+| Nhân thọ chung (2 tỷ đồng, 10 năm) | 20.769.350đ |
+| Family Continuity Rider | 1.838.410đ |
+| **Tổng** | **22.607.760đ** (khoảng 1,9 triệu đồng/tháng) |
+
+Với thu nhập hộ đô thị trung bình 281,5 triệu đồng/năm, mức phí này bằng khoảng 8% thu nhập. Bạn có thể tính phí cho gia đình mình tại trang [Tính phí](https://insuregen-neo.vercel.app/vi/tinh-phi).
+
+**Cơ sở định phí**
+
+- Bảng tử vong CSO 1980. Tỷ lệ thương tật toàn bộ vĩnh viễn theo SOA 1987 GLTD (nam) và SOA 1985 CIDA (nữ), nhân 1,2 để thận trọng.
+- Lãi suất kỹ thuật 4,5%.
+- Phí gộp gồm: phụ phí rủi ro 5%, tái bảo hiểm 3%, chi phí bồi thường 2%, lợi nhuận 10%, quản lý 100.000đ/năm, khai thác 300.000đ, hoa hồng 40% / 20% / 15%.
+- Thẩm định: người hút thuốc +20–35% phí nhân thọ; nhóm nghề 3–4 cộng thêm 1–5‰ số tiền bảo hiểm cho mỗi người.
+
+Trang [Cơ sở định phí](https://insuregen-neo.vercel.app/vi/co-so-dinh-phi) có bảng đối chiếu với file Excel của nhóm, dự phòng phí gộp từng năm và cấu thành phí bổ trợ.
+
+## Trang web có gì
+
+| Trang | Nội dung |
+|---|---|
+| [Trang chủ](https://insuregen-neo.vercel.app/vi) | Vấn đề, bảo vệ liên tục, Ví Chăm sóc, dịch vụ, quy trình bồi thường 6 bước, hỏi đáp, đăng ký tư vấn |
+| [Tính phí](https://insuregen-neo.vercel.app/vi/tinh-phi) | Phí theo tuổi bố, mẹ, con; phụ phí thẩm định; kiểm tra khả năng chi trả; bảng minh họa 10 năm; phân tích độ nhạy |
+| [Tính điểm CIS](https://insuregen-neo.vercel.app/vi/cis) | Tự chấm 6 hoạt động, xem số giờ được cấp và dịch vụ được mở |
+| [Dùng thử ví](https://insuregen-neo.vercel.app/vi/vi-cham-soc) | Gửi hồ sơ Lộ trình A/B, nhận giờ và trợ cấp, đặt dịch vụ bằng Care Hours; AI đọc giấy ra viện |
+| [Cơ sở định phí](https://insuregen-neo.vercel.app/vi/co-so-dinh-phi) | Phương pháp, giả định, bảng tỷ lệ, dự phòng, kiểm chứng với Excel |
+
+---
+
+## Dành cho người phát triển
+
+**Công nghệ:** Next.js 16 (App Router) · TypeScript · Tailwind v4 · Supabase (Postgres) · Vercel · Claude (đọc giấy ra viện).
+
+### Cấu trúc chính
+
+| Tệp | Vai trò |
+|---|---|
+| `src/lib/product.ts` | **Nguồn số liệu duy nhất**: quyền lợi, mức Lộ trình A/B, trọng số CIS, dịch vụ, biểu phí, thẩm định. Sửa ở đây thì mọi trang và API tự cập nhật. |
+| `src/lib/actuarial.ts` | Định phí nhân thọ chung cho mọi cặp tuổi, dự phòng phí gộp, kịch bản độ nhạy |
+| `src/lib/pricing.ts` | Ghép phí nhân thọ và phí bổ trợ, phụ phí thẩm định, khả năng chi trả, minh họa 10 năm |
+| `src/lib/rules.ts` | Tính giờ, trợ cấp, CIS, trừ giờ khi đặt dịch vụ |
+| `src/lib/claims.ts` | Đánh giá hồ sơ: hạn mức, thời gian chờ, loại trừ, gắn cờ cần xem xét |
+| `src/i18n/vi.ts`, `en.ts` | Toàn bộ nội dung song ngữ |
+| `src/proxy.ts`, `src/lib/security.ts` | Chọn ngôn ngữ, CSP theo nonce, header bảo mật |
+| `supabase/migrations/` | Lược đồ cơ sở dữ liệu |
+
+### API
 
 | Method | Đường dẫn | Việc làm |
 |---|---|---|
+| GET | `/api/pricing?father=34&mother=30&child=3` | Báo phí, phụ phí thẩm định (`smoker`, `occF`, `occM`), khả năng chi trả (`income`), minh họa 10 năm |
 | POST | `/api/leads` | Lưu đăng ký tư vấn, ghi nhận đồng ý theo Nghị định 13/2023 |
-| GET | `/api/pricing?father=34&mother=30&child=3` | Phí nhân thọ + bổ trợ, % thu nhập, thu nhập cần theo ngưỡng 12% |
-| POST | `/api/wallets` | Tạo ví dùng thử (kèm 1 giờ tặng hằng năm) |
+| POST | `/api/wallets` | Tạo ví dùng thử |
 | GET | `/api/wallets/:id` | Số dư, hạn mức còn lại, lịch sử |
-| POST | `/api/wallets/:id/claims` | Đánh giá hồ sơ Lộ trình A hoặc B, cấp giờ và trợ cấp |
-| POST | `/api/wallets/:id/bookings` | Đặt dịch vụ, trừ giờ theo quy tắc |
-| POST | `/api/claims/extract` | Đọc ảnh giấy ra viện bằng Claude (cần `ANTHROPIC_API_KEY`) |
+| POST | `/api/wallets/:id/claims` | Đánh giá hồ sơ Lộ trình A hoặc B |
+| POST | `/api/wallets/:id/bookings` | Đặt dịch vụ, trừ giờ |
+| POST | `/api/claims/extract` | Đọc ảnh giấy ra viện (cần `ANTHROPIC_API_KEY`) |
 
-## Số liệu và quy tắc ở đâu
-
-- `src/lib/product.ts` — **nguồn số liệu duy nhất**: quyền lợi, mức Lộ trình A/B, trọng số CIS, dịch vụ, biểu phí. Sửa ở đây, mọi trang và API tự cập nhật.
-- `src/lib/rules.ts` — quy tắc tính giờ, trợ cấp, CIS, trừ giờ khi đặt dịch vụ (dọn nhà ≤ 30% mỗi lần cấp, đưa đón 2 giờ/giờ, FIFO).
-- `src/lib/claims.ts` — đánh giá hồ sơ: hạn mức 120 giờ/năm, 30 ngày trợ cấp/năm, loại trừ thai sản, gắn cờ trùng thời gian/ngày tương lai/nằm viện dài bất thường.
-- `src/lib/actuarial.ts` — định phí nhân thọ chung cho mọi cặp tuổi 25–40, tái lập file `Joint_Life_TPD_20pct_Higher_Corrected` (CSO 1980, TPD SOA × 1,2, lãi suất 4,5%, phí gộp với hoa hồng 40/20/15%). Kèm các kịch bản độ nhạy của file `Sensitivity_Analysis`.
-- `src/lib/pricing.ts` — ghép phí nhân thọ với phí bổ trợ (bảng mục 4.2.3, khớp sheet Family Tariffs).
-- `src/i18n/vi.ts`, `src/i18n/en.ts` — toàn bộ chữ trên trang, song ngữ.
-
-## Chạy trên máy
+### Chạy trên máy
 
 ```bash
 npm install
 npm run dev     # http://localhost:3000
-npm test        # kiểm tra quy tắc và định phí theo số liệu báo cáo và file Excel
+npm test        # 27 bài test: quy tắc, định phí khớp báo cáo và Excel, bảo mật
 ```
 
-Không cần cấu hình gì: khi chưa có Supabase, máy chủ lưu tạm trong bộ nhớ.
+Không cần cấu hình gì thêm: khi chưa nối Supabase, dữ liệu được lưu tạm trong bộ nhớ.
 
-## Deploy lên Vercel + Supabase
+### Deploy (Vercel + Supabase)
 
-1. **Supabase**: tạo project tại supabase.com → **SQL Editor** → dán `supabase/migrations/001_init.sql` → **Run**, rồi làm tương tự với `002_lock_down.sql` (thu hồi quyền bảng của anon). Vào **Project Settings → API**, chép **Project URL** và khóa **service_role**.
-2. **Vercel**: vercel.com → **Add New → Project** → chọn repo `INSUREGEN-NEO` → **Deploy**.
-3. Trong Vercel → **Settings → Environment Variables**, thêm các biến trong `.env.example`:
-   - `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY` (bắt buộc để lưu dữ liệu thật)
-   - `NEXT_PUBLIC_SITE_URL` = địa chỉ Vercel của bạn
-   - `ANTHROPIC_API_KEY` (không bắt buộc, để bật AI đọc giấy ra viện)
-4. **Deployments → Redeploy**. Từ đó mỗi lần push lên `main` sẽ tự deploy.
+1. **Supabase**: tạo project, vào **SQL Editor**, lần lượt chạy `supabase/migrations/001_init.sql` và `002_lock_down.sql`.
+2. **Vercel**: **Add New → Project** → chọn repo này → **Deploy**.
+3. **Vercel → Settings → Environment Variables**: thêm các biến trong `.env.example`. `SUPABASE_URL` và `SUPABASE_SERVICE_ROLE_KEY` là bắt buộc; `NEXT_PUBLIC_SITE_URL` và `ANTHROPIC_API_KEY` là tùy chọn. Sau đó bấm **Redeploy**.
 
-Khóa `service_role` chỉ nằm ở máy chủ, không bao giờ gửi xuống trình duyệt. Các bảng bật RLS và không mở quyền cho khóa anon.
+Mỗi lần push lên `main`, Vercel tự deploy lại. Khóa `service_role` chỉ nằm ở máy chủ; mọi bảng đều bật RLS và đã thu hồi quyền của khóa anon.
 
-## Quy tắc bổ trợ đã áp dụng (sheet Benefit Terms)
+### Bảo mật
 
-Trợ cấp theo đêm nằm viện (kể cả 1–2 đêm), mức ICU 60 giờ cần ít nhất 2 ngày nằm viện, đưa đón tính 2 giờ cho mỗi chuyến một chiều, mỗi lần cấp giờ dùng trong 90 ngày, chờ 30 ngày với bệnh (tai nạn áp dụng ngay), loại trừ thai sản. Chưa làm: khóa một lộ trình cho mỗi đợt bệnh và gộp lần tái nhập viện trong 30 ngày.
+Trang đã được kiểm tra bằng vibe-check theo 17 mục (header, CSP, CORS, CSRF, rò rỉ khóa, phụ thuộc…). Báo cáo đầy đủ ở [`security/AUDIT_SUMMARY.md`](security/AUDIT_SUMMARY.md).
 
-Family Reconnect là sản phẩm ý tưởng cho cuộc thi học thuật, chưa được cấp phép kinh doanh. Mọi số liệu là minh họa.
+### Hạn chế đã biết
 
-## Bảo mật
+- Chưa khóa một lộ trình cho mỗi đợt bệnh, và chưa gộp các lần tái nhập viện trong 30 ngày.
+- Ví dùng thử không có tài khoản: ai có link ví thì xem được ví đó. Đừng nhập thông tin thật.
 
-Kết quả kiểm tra bảo mật (vibe-check, 17 mục) nằm ở [`security/AUDIT_SUMMARY.md`](security/AUDIT_SUMMARY.md). CSP theo nonce được tạo trong `src/proxy.ts`, các header khác ở `next.config.ts`.
+---
+
+**Đội INSUREGEN NEO · InsuNovate 2026**
