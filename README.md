@@ -169,4 +169,13 @@ Trang đã được kiểm tra bằng vibe-check theo 17 mục (header, CSP, COR
 
 ---
 
-**Đội INSUREGEN NEO · InsuNovate 2026**
+## Đội INSUREGEN NEO · InsuNovate 2026
+
+**Mentor:** Ms. Sze Huey Tan
+
+**Thành viên:**
+
+- Nguyễn Thị Thanh Bình
+- Nguyễn Đức Tuệ
+- Huỳnh Thanh Kiệt
+- Nguyễn Việt Khoa
