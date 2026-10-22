@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getDict, hasLocale, vnd } from "@/i18n";
-import { grossReserves, jointLife, rateTable } from "@/lib/actuarial";
+import { fmt, getDict, hasLocale, vnd } from "@/i18n";
+import { jointLife, rateTable, valuationReserves } from "@/lib/actuarial";
 import { LIFE_PREMIUM_POINTS } from "@/lib/product";
 
 export async function generateMetadata({ params }: PageProps<"/[lang]/co-so-dinh-phi">): Promise<Metadata> {
@@ -12,10 +12,11 @@ export async function generateMetadata({ params }: PageProps<"/[lang]/co-so-dinh
   return { title: d.basis.title, description: d.basis.lead, alternates: { canonical: `/${lang}/co-so-dinh-phi` } };
 }
 
-// Sheet Family Tariffs (file định phí bổ trợ), dòng Base
+// Sheet Family Tariffs (file định phí bổ trợ), dòng Base: trung bình đều 3 nhóm con 0–2, 3–5, 6–8
+// (báo cáo Phụ lục C.4, D, Bảng 6.5). Giờ tặng = (169.000 + 130.000 + 130.000) / 3 = 143.000 (Phụ lục C.2).
 const RIDER_BUILD = {
-  "25-39": [442_743.03, 331_080.87, 12_498.07, 40_000, 12_500, 0.51, 1_925_141.13],
-  "40-49": [455_292.44, 345_649.48, 12_781.52, 40_000, 12_500, 0.51, 1_978_869.5],
+  "25-39": [442_743.03, 331_080.87, 12_498.07, 40_000, 143_000, 12_500, 0.51, 1_925_141.13],
+  "40-49": [455_292.44, 345_649.48, 12_781.52, 40_000, 143_000, 12_500, 0.51, 1_978_869.49],
 } as const;
 
 const IDS = ["nhan-tho", "gia-dinh", "kiem-chung", "bang-ty-le", "du-phong", "bo-tro", "tham-dinh", "nguon"];
@@ -34,8 +35,11 @@ export default async function BasisPage({ params }: PageProps<"/[lang]/co-so-din
     return { k: `${f} / ${m}`, reported: v, engine: e, diff: e - v };
   });
   const workbook = jointLife(35, 30).gross;
-  const reserves = grossReserves(34, 30);
-  const maxAbs = Math.max(...reserves.map((r) => Math.abs(r.reserve)));
+  // Phụ lục A.4 báo cáo final: cặp 40/40, gộp raw 4,5%, thuần 3%, FPT 3%, dự phòng giữ lại.
+  const val = valuationReserves(40, 40);
+  const maxHeld = Math.max(...val.rows.map((r) => r.held));
+  const peak = val.rows.reduce((m, r) => (r.held > val.rows[m].held ? r.t : m), 0);
+  const mil = (x: number) => (Math.abs(x) < 5e3 ? "0" : (x / 1e6).toLocaleString(loc, { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
   const rates = rateTable().filter((r) => r.age >= 25);
 
   const h = (i: number, text: string) => (
@@ -118,34 +122,25 @@ export default async function BasisPage({ params }: PageProps<"/[lang]/co-so-din
           {h(4, b.reserve.title)}
           <p className="fine">{b.reserve.lead}</p>
           <div className="tbl-scroll" tabIndex={0}>
-            <table className="tbl" style={{ minWidth: 820 }}>
-              <thead><tr><th>{b.reserve.t}</th><th>{b.reserve.inForce}</th><th>{b.reserve.fb}</th><th>{b.reserve.fp}</th><th>{b.reserve.raw}</th><th>{b.reserve.floored}</th><th aria-hidden="true" /></tr></thead>
+            <table className="tbl" style={{ minWidth: 760 }}>
+              <thead><tr><th>{b.reserve.t}</th><th>{b.reserve.raw}</th><th>{b.reserve.net}</th><th>{b.reserve.fpt}</th><th>{b.reserve.held}</th><th aria-hidden="true" /></tr></thead>
               <tbody>
-                {reserves.map((r) => (
-                  <tr key={r.t}>
+                {val.rows.map((r) => (
+                  <tr key={r.t} className={r.t === peak ? "hl" : ""}>
                     <td>t = {r.t}</td>
-                    <td>{(r.inForce * 100).toLocaleString(loc, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}%</td>
-                    <td>{money(r.epvBenefits)}</td>
-                    <td>{money(r.epvPremiums)}</td>
-                    <td style={{ color: r.reserve < 0 ? "var(--coral-ink)" : undefined }}>{money(r.reserve)}</td>
-                    <td>{money(r.reserveFloored)}</td>
-                    <td aria-hidden="true" style={{ width: 160 }}>
-                      <div style={{ position: "relative", height: 12 }}>
-                        <div style={{ position: "absolute", left: "50%", top: 0, bottom: 0, width: 1, background: "var(--line)" }} />
-                        <div style={{
-                          position: "absolute", top: 1, height: 10, borderRadius: 3,
-                          background: r.reserve < 0 ? "var(--coral)" : "var(--ok)",
-                          width: `${(Math.abs(r.reserve) / maxAbs) * 50}%`,
-                          ...(r.reserve < 0 ? { right: "50%" } : { left: "50%" }),
-                        }} />
-                      </div>
+                    <td style={{ color: r.rawGross < -0.005e6 ? "var(--coral-ink)" : undefined }}>{mil(r.rawGross)}</td>
+                    <td>{mil(r.net)}</td>
+                    <td>{mil(r.fpt)}</td>
+                    <td><b>{mil(r.held)}</b></td>
+                    <td aria-hidden="true" style={{ width: 140 }}>
+                      <div style={{ height: 10, borderRadius: 3, background: "var(--ok)", width: `${(r.held / maxHeld) * 100}%` }} />
                     </td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
-          <p className="fine">{b.reserve.note}</p>
+          <p className="fine">{fmt(b.reserve.note, { net: money(val.netPremium), fpt: money(val.fptPremium), gross: money(val.gross) })}</p>
         </section>
 
         <section className="box">
@@ -170,10 +165,10 @@ export default async function BasisPage({ params }: PageProps<"/[lang]/co-so-din
                   <thead><tr><th><span className="visually-hidden">{lang === "vi" ? "Khoản" : "Item"}</span></th><th>{b.rider.older} 25–39</th><th>40–49</th></tr></thead>
                   <tbody>
                     {b.rider.build.map((label, i) => (
-                      <tr key={label} className={i === 6 ? "hl" : ""}>
+                      <tr key={label} className={i === 7 ? "hl" : ""}>
                         <td>{label}</td>
                         {(["25-39", "40-49"] as const).map((k) => (
-                          <td key={k}>{i === 5 ? RIDER_BUILD[k][i].toLocaleString(loc) : money(RIDER_BUILD[k][i])}</td>
+                          <td key={k}>{i === 6 ? RIDER_BUILD[k][i].toLocaleString(loc) : money(RIDER_BUILD[k][i])}</td>
                         ))}
                       </tr>
                     ))}

@@ -1,5 +1,5 @@
 // Định phí minh họa Family Reconnect.
-// Phí bổ trợ: tra bảng mục 4.2.3 (khớp sheet Family Tariffs của file định phí bổ trợ).
+// Phí bổ trợ: tra Bảng 4.3 (khớp sheet Family Tariffs của file định phí bổ trợ).
 // Phí nhân thọ: tính trực tiếp bằng engine trong actuarial.ts (CSO 1980, TPD × 1,2, lãi suất 4,5%,
 // phí và hoa hồng theo năm), khớp file Excel định phí cho mọi cặp tuổi 25–40.
 import { ELIGIBILITY, LIFE, LIFE_PREMIUM_POINTS, RIDER_RATES, UNDERWRITING, childBandFor } from "./product.ts";
@@ -46,7 +46,7 @@ export type Underwriting = {
 };
 export const STANDARD_UW: Underwriting = { smoker: "none", fatherOccupation: 1, motherOccupation: 1 };
 
-/** Phí nhân thọ sau phụ phí thẩm định, dạng khoảng [thấp, cao] theo Bảng 5.2. */
+/** Phí nhân thọ sau phụ phí thẩm định, dạng khoảng [thấp, cao] theo Phụ lục H.2. */
 export function loadedLife(life: number, uw: Underwriting): [number, number] {
   const sm = uw.smoker === "none" ? [0, 0] : UNDERWRITING.smokerLoad;
   const occ = [uw.fatherOccupation, uw.motherOccupation].map((c) => UNDERWRITING.occupationPerMille[c]);

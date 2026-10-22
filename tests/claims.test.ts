@@ -39,14 +39,25 @@ test("Annual limit and cash cap apply per parent", () => {
   assert.equal(m.hoursAwarded, 60);
 });
 
-test("Overlap and future dates go to review", () => {
+test("Re-assessed stay pays only the difference (report 3.2, C.2); future dates go to review", () => {
   const prior: PriorClaim[] = [
     { parent: "father", pathway: "A", status: "approved", admissionDate: "2027-03-01", dischargeDate: "2027-03-09", hoursAwarded: 40, cashDays: 8 },
   ];
-  const o = evaluateClaim({ parent: "father", pathway: "A", reason: "illness", admissionDate: "2027-03-05", dischargeDate: "2027-03-12" }, prior, today, start);
-  assert.equal(o.status, "review");
-  assert.deepEqual(o.flags, ["overlap"]);
-  assert.equal(o.hoursAwarded, 0);
+  // Same stay extended to 11 nights: still the 7–13 tier, so no extra hours; 3 extra cash days.
+  const same = evaluateClaim({ parent: "father", pathway: "A", reason: "illness", admissionDate: "2027-03-05", dischargeDate: "2027-03-12" }, prior, today, start);
+  assert.equal(same.status, "approved");
+  assert.equal(same.inpatientDays, 11);
+  assert.equal(same.hoursAwarded, 0);
+  assert.equal(same.cashDays, 3);
+  // Extended to 15 nights: moves to the 60-hour tier, so +20 hours and +7 cash days.
+  const up = evaluateClaim({ parent: "father", pathway: "A", reason: "illness", admissionDate: "2027-03-01", dischargeDate: "2027-03-16" }, prior, today, start);
+  assert.equal(up.hoursAwarded, 20);
+  assert.equal(up.cashDays, 7);
+  assert.deepEqual(up.reasons, ["episode_upgrade"]);
+  // Exact duplicate pays nothing.
+  const dup = evaluateClaim({ parent: "father", pathway: "A", reason: "illness", admissionDate: "2027-03-01", dischargeDate: "2027-03-09" }, prior, today, start);
+  assert.deepEqual([dup.hoursAwarded, dup.cashDays], [0, 0]);
+  assert.deepEqual(dup.reasons, ["no_additional_benefit"]);
   const f = evaluateClaim({ parent: "mother", pathway: "A", reason: "illness", admissionDate: "2027-07-01", dischargeDate: "2027-07-05" }, [], today, start);
   assert.equal(f.status, "review");
 });

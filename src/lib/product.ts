@@ -12,8 +12,9 @@ export const LIFE = {
   sumAssured: 2_000_000_000, // VND, chi trả một lần khi tử vong/TTTBVV đầu tiên (3.1)
   termYears: 10, // (3.1)
   tpdThresholdPct: 81, // TTTBVV từ 81% (3.2)
-  waitingPeriodYears: 2, // thời gian chờ quyền lợi tử vong/TTTBVV (3.2)
-  technicalRate: 0.045, // lãi suất kỹ thuật định phí (4.1.2)
+  waitingPeriodMonths: 3, // thời gian chờ quyền lợi tử vong/TTTBVV, theo quy tắc cuối cùng (báo cáo final Mục 3.2)
+  technicalRate: 0.045, // lãi suất kỹ thuật định phí (Bảng 4.1)
+  valuationRate: 0.03, // lãi suất dự phòng FPT (Bảng 4.1, Phụ lục A.3)
 } as const;
 
 export const ELIGIBILITY = {
@@ -55,7 +56,7 @@ export const PATHWAY_B_TIERS = [
   { minScore: 0.2, hours: 20 },
 ] as const;
 
-// Phụ lục B.2 — thang mức độ
+// Phụ lục B.3 — thang mức độ
 export const SEVERITY = { F0: 0, F1: 0.25, F2: 0.6, F3: 1 } as const;
 export type Severity = keyof typeof SEVERITY;
 
@@ -72,7 +73,7 @@ export function childBandFor(age: number): ChildBand {
 export const ACTIVITIES = ["C1", "C2", "C3", "C4", "C5", "C6"] as const;
 export type Activity = (typeof ACTIVITIES)[number];
 
-// Phụ lục B.2 — trọng số CIS theo tuổi con nhỏ nhất (tổng = 1)
+// Phụ lục B.3 — trọng số CIS theo tuổi con nhỏ nhất (tổng = 1)
 export const CIS_WEIGHTS: Record<ChildBand, Record<Activity, number>> = {
   "0-2": { C1: 0.25, C2: 0.2, C3: 0.2, C4: 0.2, C5: 0.05, C6: 0.1 },
   "3-5": { C1: 0.25, C2: 0.2, C3: 0.15, C4: 0.1, C5: 0.15, C6: 0.15 },
@@ -106,13 +107,13 @@ export const SERVICE_UNLOCKED_BY: Record<Service, Activity[]> = {
   housekeeping: ["C6"],
 };
 
-// Mục 4.2.3 — phí bổ trợ cho cả gia đình mỗi năm (VND)
+// Bảng 4.3 — phí bổ trợ cho cả gia đình mỗi năm (VND)
 export const RIDER_RATES: Record<"25-39" | "40-49", Record<ChildBand, number>> = {
   "25-39": { "0-2": 2_129_061, "3-5": 1_838_410, "6-8": 1_807_952, "9-12": 1_783_188 },
   "40-49": { "0-2": 2_186_982, "3-5": 1_890_522, "6-8": 1_859_105, "9-12": 1_833_607 },
 };
 
-// Mục 4.1.5 và Bảng 3.4 — phí nhân thọ gộp minh họa (VND/năm), khóa "bố-mẹ"
+// Bảng 4.2 và Bảng 3.4 — phí nhân thọ gộp minh họa (VND/năm), khóa "bố-mẹ"
 export const LIFE_PREMIUM_POINTS: Record<string, number> = {
   "25-25": 13_707_960.82,
   "34-30": 20_769_350,
@@ -120,7 +121,7 @@ export const LIFE_PREMIUM_POINTS: Record<string, number> = {
   "40-40": 38_893_158.89,
 };
 
-// Bảng 5.2 — khung thẩm định đề xuất
+// Phụ lục H.2 — khung thẩm định đề xuất
 export const UNDERWRITING = {
   // Người hút thuốc: +20–35% phí nhân thọ (áp một lần nếu bố hoặc mẹ hút thuốc — cần nhóm xác nhận)
   smokerLoad: [0.2, 0.35] as [number, number],

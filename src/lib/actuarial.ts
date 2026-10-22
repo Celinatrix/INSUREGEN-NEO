@@ -204,3 +204,59 @@ export function grossReserves(fatherAge: number, motherAge: number, over: Partia
   }
   return rows;
 }
+
+export type ValuationRow = {
+  t: number;
+  rawGross: number; // dự phòng gộp "raw" ở lãi suất định phí 4,5% (không gồm biên rủi ro, lợi nhuận)
+  correctedGross: number; // raw + biên rủi ro và lợi nhuận như dòng chi tương lai (Business Case)
+  net: number; // dự phòng thuần ở lãi suất định giá
+  fpt: number; // Full Preliminary Term ở lãi suất định giá
+  held: number; // max(0, FPT, gộp đã hiệu chỉnh)
+};
+
+/**
+ * Dự phòng theo Phụ lục A.3–A.4 của báo cáo final: gộp raw 4,5%, thuần và FPT ở 3%, dự phòng giữ lại
+ * V_held = max(0, V_FPT,3%, V_G,corr). Phí thuần định giá P_N(3%) = S·A(3%)/ä(3%);
+ * phí tái tục FPT β = S·A_1(3%)/ä_1(3%); V_0 = V_1 = 0.
+ */
+export function valuationReserves(fatherAge: number, motherAge: number, valuationRate = 0.03) {
+  const a = BASE_LIFE;
+  const n = a.termYears;
+  const tp: number[] = [1];
+  const q: number[] = [];
+  for (let t = 0; t < n; t++) {
+    const fx = BY_AGE.get(fatherAge + t)!;
+    const my = BY_AGE.get(motherAge + t)!;
+    const qx = fx[1] * a.tpdLoad + fx[2] - fx[1] * a.tpdLoad * fx[2];
+    const qy = my[3] * a.tpdLoad + my[4] - my[3] * a.tpdLoad * my[4];
+    q.push(qx + qy - qx * qy);
+    tp.push(tp[t] * (1 - q[t]));
+  }
+  const at = (t: number, i: number) => {
+    const v = 1 / (1 + i);
+    let A = 0, ad = 0;
+    for (let s = t; s < n; s++) {
+      A += v ** (s + 1 - t) * (tp[s] / tp[t]) * q[s];
+      ad += v ** (s - t) * (tp[s] / tp[t]);
+    }
+    return { A, ad };
+  };
+  const S = a.sumAssured;
+  const G = jointLife(fatherAge, motherAge).gross;
+  const raw = grossReserves(fatherAge, motherAge);
+  const v0 = at(0, valuationRate);
+  const netPremium = (S * v0.A) / v0.ad;
+  const v1 = at(1, valuationRate);
+  const fptPremium = (S * v1.A) / v1.ad;
+  const rows: ValuationRow[] = [];
+  for (let t = 0; t <= n; t++) {
+    const x = at(t, valuationRate);
+    const priced = at(t, a.interest);
+    const rawGross = raw[t].reserve;
+    const correctedGross = t === n ? 0 : rawGross + (a.riskLoad + a.profit) * G * priced.ad;
+    const net = t === n ? 0 : S * x.A - netPremium * x.ad;
+    const fpt = t <= 1 || t === n ? 0 : S * x.A - fptPremium * x.ad;
+    rows.push({ t, rawGross, correctedGross, net, fpt, held: Math.max(0, fpt, correctedGross) });
+  }
+  return { rows, netPremium, fptPremium, gross: G };
+}

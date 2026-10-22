@@ -117,29 +117,40 @@ export function evaluateClaim(input: ClaimInput, prior: PriorClaim[], today: str
     const flags: string[] = [];
     if ((parseDate(input.dischargeDate) ?? 0) > todayT) flags.push("future_date");
     if (days > LONG_STAY_DAYS) flags.push("stay_unusually_long");
-    const a = parseDate(input.admissionDate)!;
-    const b = parseDate(input.dischargeDate)!;
-    const overlaps = sameParent.some((p) => {
-      if (p.pathway !== "A" || !p.admissionDate || !p.dischargeDate) return false;
+    // Cùng một đợt nằm viện (trùng hoặc nối tiếp ngày với hồ sơ Lộ trình A đã duyệt): thẩm định lại cả đợt
+    // và chỉ cấp phần chênh lệch (báo cáo Mục 3.2 và Phụ lục C.2: upgrade = target − giờ đã cấp; trợ cấp =
+    // ngày có hồ sơ − ngày đã trả). Giới hạn 120 giờ và 30 ngày/năm vẫn áp dụng.
+    let a = parseDate(input.admissionDate)!;
+    let b = parseDate(input.dischargeDate)!;
+    const episode = sameParent.filter((p) => {
+      if (p.pathway !== "A" || p.status !== "approved" || !p.admissionDate || !p.dischargeDate) return false;
       const pa = parseDate(p.admissionDate)!;
       const pb = parseDate(p.dischargeDate)!;
-      return a < pb && pa < b;
+      return a <= pb && pa <= b;
     });
-    if (overlaps) flags.push("overlap");
+    for (const p of episode) {
+      a = Math.min(a, parseDate(p.admissionDate!)!);
+      b = Math.max(b, parseDate(p.dischargeDate!)!);
+    }
+    const episodeDays = Math.round((b - a) / DAY);
+    const pastHours = episode.reduce((s, p) => s + p.hoursAwarded, 0);
+    const pastCashDays = episode.reduce((s, p) => s + p.cashDays, 0);
 
-    const eligible = pathwayAHours(days, input.icuHours ?? 0);
+    const target = pathwayAHours(episodeDays, input.icuHours ?? 0);
+    const eligible = Math.max(0, target - pastHours);
     const hours = capToAnnualLimit(eligible, grantedThisYear);
-    const cash = hospitalCash(days, cashDaysThisYear);
+    const cash = hospitalCash(Math.max(0, episodeDays - pastCashDays), cashDaysThisYear);
     const reasons: string[] = [];
-    if (days === 0) reasons.push("no_overnight");
-    else if (eligible === 0) reasons.push("stay_too_short");
+    if (episode.length) reasons.push(eligible === 0 && cash.paidDays === 0 ? "no_additional_benefit" : "episode_upgrade");
+    if (episodeDays === 0) reasons.push("no_overnight");
+    else if (target === 0) reasons.push("stay_too_short");
     else if (hours < eligible) reasons.push("annual_limit_reached");
     return {
       ...base,
       status: flags.length ? "review" : "approved",
       reasons,
       flags,
-      inpatientDays: days,
+      inpatientDays: episodeDays,
       hoursEligible: eligible,
       hoursAwarded: flags.length ? 0 : hours,
       cashDays: flags.length ? 0 : cash.paidDays,

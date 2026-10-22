@@ -36,6 +36,7 @@ Bốn trụ cột: **Protect · Recover · Care · Continue.**
 
 - Chi trả **2 tỷ đồng** một lần khi bố hoặc mẹ tử vong, hoặc thương tật toàn bộ vĩnh viễn từ 81% (sự kiện đầu tiên xảy ra). Số tiền này tương đương khoảng 7 năm thu nhập của một hộ đô thị.
 - Nếu cả hai cùng gặp nạn trong một tai nạn, vẫn chi trả một lần.
+- Thời gian chờ 3 tháng kể từ ngày hợp đồng có hiệu lực, theo quy tắc hợp đồng cuối cùng.
 - Là bảo hiểm tử kỳ, không có giá trị hoàn lại.
 
 ### 2. Quyền lợi bổ trợ: Family Continuity Rider (tái tục hằng năm)
@@ -95,7 +96,7 @@ Với thu nhập hộ đô thị trung bình 281,5 triệu đồng/năm, mức p
 **Cơ sở định phí**
 
 - Bảng tử vong CSO 1980. Tỷ lệ thương tật toàn bộ vĩnh viễn theo SOA 1987 GLTD (nam) và SOA 1985 CIDA (nữ), nhân 1,2 để thận trọng.
-- Lãi suất kỹ thuật 4,5%.
+- Lãi suất kỹ thuật 4,5% để định phí; dự phòng tính theo phương pháp FPT ở lãi suất 3% (Phụ lục A.3–A.4).
 - Phí gộp gồm: phụ phí rủi ro 5%, tái bảo hiểm 3%, chi phí bồi thường 2%, lợi nhuận 10%, quản lý 100.000đ/năm, khai thác 300.000đ, hoa hồng 40% / 20% / 15%.
 - Thẩm định: người hút thuốc +20–35% phí nhân thọ; nhóm nghề 3–4 cộng thêm 1–5‰ số tiền bảo hiểm cho mỗi người.
 
@@ -123,7 +124,7 @@ Trang [Cơ sở định phí](https://insuregen-neo.vercel.app/vi/co-so-dinh-phi
 | Tệp | Vai trò |
 |---|---|
 | `src/lib/product.ts` | **Nguồn số liệu duy nhất**: quyền lợi, mức Lộ trình A/B, trọng số CIS, dịch vụ, biểu phí, thẩm định. Sửa ở đây thì mọi trang và API tự cập nhật. |
-| `src/lib/actuarial.ts` | Định phí nhân thọ chung cho mọi cặp tuổi, dự phòng phí gộp, kịch bản độ nhạy |
+| `src/lib/actuarial.ts` | Định phí nhân thọ chung cho mọi cặp tuổi; dự phòng gộp, thuần 3%, FPT 3% và dự phòng giữ lại (Phụ lục A.4); kịch bản độ nhạy |
 | `src/lib/pricing.ts` | Ghép phí nhân thọ và phí bổ trợ, phụ phí thẩm định, khả năng chi trả, minh họa 10 năm |
 | `src/lib/rules.ts` | Tính giờ, trợ cấp, CIS, trừ giờ khi đặt dịch vụ |
 | `src/lib/claims.ts` | Đánh giá hồ sơ: hạn mức, thời gian chờ, loại trừ, gắn cờ cần xem xét |
@@ -148,7 +149,7 @@ Trang [Cơ sở định phí](https://insuregen-neo.vercel.app/vi/co-so-dinh-phi
 ```bash
 npm install
 npm run dev     # http://localhost:3000
-npm test        # 30 bài test: quy tắc, định phí khớp báo cáo và Excel, bảo mật, quyền riêng tư
+npm test        # 34 bài test: quy tắc, định phí khớp báo cáo và Excel, bảo mật, quyền riêng tư
 ```
 
 Không cần cấu hình gì thêm: khi chưa nối Supabase, dữ liệu được lưu tạm trong bộ nhớ.
@@ -167,7 +168,7 @@ Trang đã được kiểm tra bằng vibe-check theo 17 mục (header, CSP, COR
 
 ### Hạn chế đã biết
 
-- Chưa khóa một lộ trình cho mỗi đợt bệnh, và chưa gộp các lần tái nhập viện trong 30 ngày.
+- Thẩm định lại cùng một đợt nằm viện (Lộ trình A) đã chỉ cấp phần chênh lệch theo Mục 3.2 và Phụ lục C.2. Chưa khóa lộ trình A/B cho một đợt khi hồ sơ B không có ngày bắt đầu, nên bản demo chưa nối được hồ sơ B với đợt nằm viện.
 - Ví dùng thử không có tài khoản: ai có link ví thì xem được ví đó. Đừng nhập thông tin thật.
 
 ---

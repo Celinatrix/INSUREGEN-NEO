@@ -45,7 +45,7 @@ export function commonVars(l: Locale) {
     gift: RIDER.giftHoursPerFamilyYear,
     term: LIFE.termYears,
     tpd: LIFE.tpdThresholdPct,
-    years: LIFE.waitingPeriodYears,
+    months: LIFE.waitingPeriodMonths,
     minIncome: vndShort(l, ELIGIBILITY.minNetIncome),
   };
 }

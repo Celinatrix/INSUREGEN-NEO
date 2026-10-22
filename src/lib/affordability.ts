@@ -1,4 +1,4 @@
-// Kiểm tra khả năng chi trả (Mục 5.1): tách riêng để chạy trên trình duyệt — thu nhập không gửi lên máy chủ.
+// Kiểm tra khả năng chi trả (Mục 2.4, Phụ lục H.2): tách riêng để chạy trên trình duyệt — thu nhập không gửi lên máy chủ.
 import { ELIGIBILITY } from "./product.ts";
 
 export type Affordability = {

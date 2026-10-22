@@ -34,7 +34,7 @@ export function hospitalCash(inpatientDays: number, daysAlreadyPaidThisYear = 0)
 
 export type Ratings = Record<Activity, Severity>;
 
-/** Điểm CIS = tổng có trọng số của 6 hoạt động (Phụ lục B.2). */
+/** Điểm CIS = tổng có trọng số của 6 hoạt động (Phụ lục B.3). */
 export function cisScore(band: ChildBand, ratings: Ratings): number {
   const w = CIS_WEIGHTS[band];
   const s = ACTIVITIES.reduce((sum, a) => sum + w[a] * SEVERITY[ratings[a]], 0);
