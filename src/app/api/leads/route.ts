@@ -36,7 +36,7 @@ export async function POST(request: Request) {
     await getStore().insertLead({
       name: input.name,
       phone: normalizePhone(input.phone),
-      email: input.email.toLowerCase(),
+      email: input.email ? input.email.toLowerCase() : null,
       father_age: input.fatherAge,
       mother_age: input.motherAge,
       youngest_child_age: input.youngestChildAge,

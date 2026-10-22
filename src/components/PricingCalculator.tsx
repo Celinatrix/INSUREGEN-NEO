@@ -3,7 +3,8 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import type { Dict, Locale } from "@/i18n";
-import type { Affordability, IllustrationRow, Occupation, Quote, Underwriting } from "@/lib/pricing";
+import type { IllustrationRow, Occupation, Quote, Underwriting } from "@/lib/pricing";
+import { affordability, type Affordability } from "@/lib/affordability";
 import { LifeSensitivity } from "./LifeSensitivity";
 
 type Props = {
@@ -22,7 +23,6 @@ type PricingResponse = Quote & {
   totalHigh: number;
   loaded: boolean;
   affordability: Affordability;
-  incomeProvided: boolean;
   illustration: IllustrationRow[];
   tenYearLow: number;
   tenYearHigh: number;
@@ -83,8 +83,6 @@ export function PricingCalculator({ lang, t, sumLabel, termYears, adviserHref, b
         occF: String(occF),
         occM: String(occM),
       });
-      const inc = Number(income.replace(/[^\d.]/g, ""));
-      if (inc > 0) params.set("income", String(Math.round(inc * 1e6)));
       try {
         const res = await fetch(`/api/pricing?${params}`, { signal: ctrl.signal });
         const body = await res.json();
@@ -103,11 +101,15 @@ export function PricingCalculator({ lang, t, sumLabel, termYears, adviserHref, b
       clearTimeout(timer);
       ctrl.abort();
     };
-  }, [father, mother, child, smoker, occF, occM, income, t]);
+  }, [father, mother, child, smoker, occF, occM, t]);
 
   const validAges = [father, mother].every((a) => Number.isInteger(a) && a >= 25 && a <= 40);
   const u = t.uw;
-  const a = q?.affordability;
+  // Thu nhập (triệu đồng/năm, dấu phẩy là thập phân) chỉ dùng trên trình duyệt.
+  const incomeNum = lang === "vi" ? income.replace(/\./g, "").replace(",", ".") : income.replace(/,/g, "");
+  const incomeVnd = Math.round(Number(incomeNum.replace(/[^\d.]/g, "")) * 1e6);
+  const incomeProvided = Number.isFinite(incomeVnd) && incomeVnd > 0;
+  const a = q ? (incomeProvided ? affordability(q.totalLow, q.totalHigh, incomeVnd) : q.affordability) : undefined;
 
   return (
     <>
@@ -144,7 +146,7 @@ export function PricingCalculator({ lang, t, sumLabel, termYears, adviserHref, b
           </div>
           <div className="field">
             <label htmlFor="income">{t.incomeLabel}</label>
-            <input id="income" className="input" inputMode="numeric" placeholder="281,5" value={income} onChange={(e) => setIncome(e.target.value)} />
+            <input id="income" className="input" inputMode="numeric" placeholder={lang === "vi" ? "281,5" : "281.5"} value={income} onChange={(e) => setIncome(e.target.value)} />
             <p className="fine">{t.incomeHelp}</p>
           </div>
           <p className="fine">{u.note}</p>
@@ -173,7 +175,7 @@ export function PricingCalculator({ lang, t, sumLabel, termYears, adviserHref, b
                 <li><span>{t.tenYear}</span><span>{range(lang, q.tenYearLow, q.tenYearHigh, short)}</span></li>
               </ul>
               {q.loaded && <p className="fine">{u.range}</p>}
-              {q.incomeProvided ? (
+              {incomeProvided ? (
                 <p className="fine">
                   {t.affordShare.replace("{share}", a.shareLow === a.shareHigh ? pct(lang, a.shareLow) : `${pct(lang, a.shareLow)} – ${pct(lang, a.shareHigh)}`)}{" "}
                   {!a.overCap && t.affordOk}
@@ -185,8 +187,8 @@ export function PricingCalculator({ lang, t, sumLabel, termYears, adviserHref, b
                     .replace("{need}", short(lang, q.totalHigh / 0.12))}
                 </p>
               )}
-              {q.incomeProvided && a.overCap && <p className="notice warn">{t.affordOver}</p>}
-              {q.incomeProvided && a.belowMinIncome && <p className="notice warn">{t.affordMin}</p>}
+              {incomeProvided && a.overCap && <p className="notice warn">{t.affordOver}</p>}
+              {incomeProvided && a.belowMinIncome && <p className="notice warn">{t.affordMin}</p>}
               <p className="fine">{t.engineNote}</p>
             </>
           )}
@@ -210,7 +212,7 @@ function Illustration({ lang, t, rows, basisHref, sumLabel }: { lang: Locale; t:
         <h2 id="illus-title" style={{ fontSize: "clamp(26px,3.4vw,36px)" }}>{t.title}</h2>
         <p className="fine">{t.lead}</p>
       </div>
-      <div className="tbl-scroll">
+      <div className="tbl-scroll" tabIndex={0}>
         <table className="tbl nowrap" style={{ minWidth: 980 }}>
           <thead>
             <tr>

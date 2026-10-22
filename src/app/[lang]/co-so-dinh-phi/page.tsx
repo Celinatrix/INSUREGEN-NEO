@@ -63,7 +63,7 @@ export default async function BasisPage({ params }: PageProps<"/[lang]/co-so-din
           <ul style={{ margin: 0, paddingLeft: 20, display: "grid", gap: 8, listStyle: "disc" }}>
             {b.life.points.map((p) => <li key={p}>{p}</li>)}
           </ul>
-          <div className="tbl-scroll">
+          <div className="tbl-scroll" tabIndex={0}>
             <pre className="notice" style={{ margin: 0, fontSize: 15, whiteSpace: "pre-wrap" }}>{b.life.formula}</pre>
           </div>
           <p className="fine">{b.life.formulaNote}</p>
@@ -71,7 +71,7 @@ export default async function BasisPage({ params }: PageProps<"/[lang]/co-so-din
 
         <section className="box">
           {h(1, b.assumptions.title)}
-          <div className="tbl-scroll">
+          <div className="tbl-scroll" tabIndex={0}>
             <table className="tbl">
               <thead><tr><th>{b.assumptions.item}</th><th style={{ textAlign: "left" }}>{b.assumptions.value}</th><th style={{ textAlign: "left" }}>{b.assumptions.source}</th></tr></thead>
               <tbody>
@@ -85,7 +85,7 @@ export default async function BasisPage({ params }: PageProps<"/[lang]/co-so-din
 
         <section className="box">
           {h(2, b.check.title)}
-          <div className="tbl-scroll">
+          <div className="tbl-scroll" tabIndex={0}>
             <table className="tbl">
               <thead><tr><th>{b.check.pair}</th><th>{b.check.reported}</th><th>{b.check.engine}</th><th>{b.check.diff}</th></tr></thead>
               <tbody>
@@ -102,7 +102,7 @@ export default async function BasisPage({ params }: PageProps<"/[lang]/co-so-din
         <section className="box">
           {h(3, b.table.title)}
           <p className="fine">{b.table.note}</p>
-          <div className="tbl-scroll" style={{ maxHeight: 460, overflowY: "auto" }}>
+          <div className="tbl-scroll" tabIndex={0} style={{ maxHeight: 460, overflowY: "auto" }}>
             <table className="tbl">
               <thead><tr><th>{b.table.age}</th><th>{b.table.dM}</th><th>{b.table.tM}</th><th>{b.table.dF}</th><th>{b.table.tF}</th></tr></thead>
               <tbody>
@@ -117,7 +117,7 @@ export default async function BasisPage({ params }: PageProps<"/[lang]/co-so-din
         <section className="box">
           {h(4, b.reserve.title)}
           <p className="fine">{b.reserve.lead}</p>
-          <div className="tbl-scroll">
+          <div className="tbl-scroll" tabIndex={0}>
             <table className="tbl" style={{ minWidth: 820 }}>
               <thead><tr><th>{b.reserve.t}</th><th>{b.reserve.inForce}</th><th>{b.reserve.fb}</th><th>{b.reserve.fp}</th><th>{b.reserve.raw}</th><th>{b.reserve.floored}</th><th aria-hidden="true" /></tr></thead>
               <tbody>
@@ -156,7 +156,7 @@ export default async function BasisPage({ params }: PageProps<"/[lang]/co-so-din
           <div className="trust-grid">
             <div style={{ display: "grid", gap: 10, minWidth: 0 }}>
               <h3>{b.rider.costTitle}</h3>
-              <div className="tbl-scroll">
+              <div className="tbl-scroll" tabIndex={0}>
                 <table className="tbl" style={{ minWidth: 360 }}>
                   <thead><tr><th>{b.rider.service}</th><th>{b.rider.cost}</th></tr></thead>
                   <tbody>{b.rider.costs.map(([s, c]) => <tr key={s}><td>{s}</td><td>{c}</td></tr>)}</tbody>
@@ -165,9 +165,9 @@ export default async function BasisPage({ params }: PageProps<"/[lang]/co-so-din
             </div>
             <div style={{ display: "grid", gap: 10, minWidth: 0 }}>
               <h3>{b.rider.buildTitle}</h3>
-              <div className="tbl-scroll">
+              <div className="tbl-scroll" tabIndex={0}>
                 <table className="tbl" style={{ minWidth: 360 }}>
-                  <thead><tr><th /><th>{b.rider.older} 25–39</th><th>40–49</th></tr></thead>
+                  <thead><tr><th><span className="visually-hidden">{lang === "vi" ? "Khoản" : "Item"}</span></th><th>{b.rider.older} 25–39</th><th>40–49</th></tr></thead>
                   <tbody>
                     {b.rider.build.map((label, i) => (
                       <tr key={label} className={i === 6 ? "hl" : ""}>

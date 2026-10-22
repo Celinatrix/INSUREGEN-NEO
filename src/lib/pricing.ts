@@ -3,6 +3,7 @@
 // Phí nhân thọ: tính trực tiếp bằng engine trong actuarial.ts (CSO 1980, TPD × 1,2, lãi suất 4,5%,
 // phí và hoa hồng theo năm), khớp file Excel định phí cho mọi cặp tuổi 25–40.
 import { ELIGIBILITY, LIFE, LIFE_PREMIUM_POINTS, RIDER_RATES, UNDERWRITING, childBandFor } from "./product.ts";
+export { affordability, type Affordability } from "./affordability.ts";
 import { grossReserves, jointLife, type LifeAssumptions } from "./actuarial.ts";
 
 export type QuoteInput = { fatherAge: number; motherAge: number; youngestChildAge: number };
@@ -54,23 +55,7 @@ export function loadedLife(life: number, uw: Underwriting): [number, number] {
   return [Math.round(life * (1 + sm[0]) + occLo), Math.round(life * (1 + sm[1]) + occHi)];
 }
 
-export type Affordability = {
-  income: number;
-  shareLow: number;
-  shareHigh: number;
-  belowMinIncome: boolean;
-  overCap: boolean; // tổng phí (mức cao) > 12% thu nhập ròng
-};
 
-export function affordability(totalLow: number, totalHigh: number, income: number): Affordability {
-  return {
-    income,
-    shareLow: totalLow / income,
-    shareHigh: totalHigh / income,
-    belowMinIncome: income < ELIGIBILITY.minNetIncome,
-    overCap: totalHigh > income * ELIGIBILITY.premiumIncomeCap,
-  };
-}
 
 export type IllustrationRow = {
   year: number;

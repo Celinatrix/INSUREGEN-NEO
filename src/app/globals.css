@@ -465,7 +465,7 @@ section{padding-block:clamp(64px, 9vw, 120px);scroll-margin-top:72px}
 .big-num{font-family:var(--font-display);font-size:clamp(44px,6vw,64px);line-height:1;font-variant-numeric:tabular-nums}
 .chips{display:flex;flex-wrap:wrap;gap:6px}
 .chip{font-size:13px;padding:6px 10px;border-radius:999px;border:1px solid rgb(255 255 255 / .28)}
-.chip.off{opacity:.45;text-decoration:line-through}
+.chip.off{color:var(--navy-ink-2);border-color:rgb(255 255 255 / .16);text-decoration:line-through}
 .demo-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:20px;align-items:start}
 @media (max-width: 960px){ .demo-grid{grid-template-columns:1fr} .cis-out{position:static} }
 .kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
@@ -495,3 +495,14 @@ section{padding-block:clamp(64px, 9vw, 120px);scroll-margin-top:72px}
 .nav-links .mobile-only{display:none}
 @media (max-width: 400px){ .nav-links .mobile-only{display:flex} }
 .tbl.nowrap td{white-space:nowrap}
+
+/* Trang pháp lý */
+.legal{max-width:880px;gap:28px}
+.legal section{display:grid;gap:12px;padding:0;margin:0;border:0;background:none}
+.legal h2{font-size:clamp(20px,2.4vw,24px)}
+.legal p,.legal li{color:var(--ink-2);line-height:1.65}
+.legal ul{padding-left:20px;display:grid;gap:6px}
+.legal-tbl{min-width:560px}
+.legal-tbl th,.legal-tbl td{text-align:left;vertical-align:top}
+.opt{font-weight:400;color:var(--ink-3)}
+.box-title{font-size:24px}

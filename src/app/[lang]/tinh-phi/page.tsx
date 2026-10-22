@@ -37,7 +37,7 @@ export default async function PricingPage({ params }: PageProps<"/[lang]/tinh-ph
         />
         <div className="box">
           <h3>{t.riderTable}</h3>
-          <div className="tbl-scroll">
+          <div className="tbl-scroll" tabIndex={0}>
             <table className="tbl">
               <thead>
                 <tr>

@@ -8,7 +8,7 @@ import type { ClaimResult, Parent } from "../claims.ts";
 export type LeadRow = {
   name: string;
   phone: string;
-  email: string;
+  email: string | null;
   father_age: number | null;
   mother_age: number | null;
   youngest_child_age: number | null;
@@ -79,6 +79,8 @@ export interface Store {
   insertLead(row: LeadRow): Promise<void>;
   createWallet(youngestChildAge: number): Promise<WalletRow>;
   getWallet(id: string): Promise<WalletSnapshot | null>;
+  /** Xóa ví và mọi hồ sơ, lần cấp giờ, lịch đặt của ví. Trả về false nếu không có ví. */
+  deleteWallet(id: string): Promise<boolean>;
   insertClaim(row: Omit<ClaimRow, "id" | "created_at">): Promise<ClaimRow>;
   insertGrant(row: Omit<GrantRow, "id" | "created_at">): Promise<GrantRow>;
   /** Cập nhật có điều kiện: chỉ ghi khi `used` hiện tại vẫn bằng `expectedUsed`. Trả về false nếu bị lượt khác ghi trước. */
@@ -137,6 +139,14 @@ const memoryStore: Store = {
       bookings: mem.bookings.filter((c) => c.wallet_id === id),
     };
   },
+  async deleteWallet(id) {
+    const n = mem.wallets.length;
+    mem.wallets = mem.wallets.filter((w) => w.id !== id);
+    mem.claims = mem.claims.filter((c) => c.wallet_id !== id);
+    mem.grants = mem.grants.filter((c) => c.wallet_id !== id);
+    mem.bookings = mem.bookings.filter((c) => c.wallet_id !== id);
+    return mem.wallets.length < n;
+  },
   async insertClaim(row) {
     const c = { ...row, id: crypto.randomUUID(), created_at: stamp() };
     mem.claims.push(c);
@@ -184,6 +194,11 @@ function supabaseStore(client: SupabaseClient): Store {
         client.from("bookings").select().eq("wallet_id", id).order("created_at"),
       ]);
       return { wallet: w.data, claims: must(claims), grants: must(grants), bookings: must(bookings) };
+    },
+    async deleteWallet(id) {
+      // Bảng con xóa theo ON DELETE CASCADE.
+      const rows = must(await client.from("wallets").delete().eq("id", id).select("id"));
+      return Array.isArray(rows) && rows.length === 1;
     },
     async insertClaim(row) {
       return must(await client.from("claims").insert(row).select().single());

@@ -29,8 +29,8 @@ export async function GET(request: NextRequest) {
     fatherOccupation: occ(sp.get("occF")),
     motherOccupation: occ(sp.get("occM")),
   };
-  const incomeRaw = Number(sp.get("income"));
-  const income = Number.isFinite(incomeRaw) && incomeRaw > 0 ? Math.min(incomeRaw, 1e12) : ELIGIBILITY.benchmarkIncome;
+  // Thu nhập không nhận qua API (không đưa dữ liệu tài chính vào URL); trình duyệt tự tính với thu nhập người dùng nhập.
+  const income = ELIGIBILITY.benchmarkIncome;
 
   const q = quote(input);
   const [lifeLow, lifeHigh] = loadedLife(q.life, uw);
@@ -48,7 +48,6 @@ export async function GET(request: NextRequest) {
       totalHigh,
       loaded: lifeHigh !== q.life,
       affordability: affordability(totalLow, totalHigh, income),
-      incomeProvided: sp.has("income"),
       illustration: rows,
       tenYearLow: rows[rows.length - 1].cumulativeLow,
       tenYearHigh: rows[rows.length - 1].cumulativeHigh,

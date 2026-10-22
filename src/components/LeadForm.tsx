@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState, type FormEvent } from "react";
 import type { Dict, Locale } from "@/i18n";
 import { validateLead, type LeadInput, type LeadField } from "@/lib/lead";
@@ -84,44 +85,45 @@ export function LeadForm({ lang, t }: { lang: Locale; t: Dict["lead"] }) {
 
   return (
     <div className="form">
-      <form onSubmit={onSubmit} noValidate style={{ display: "grid", gap: 18 }}>
+      <form onSubmit={onSubmit} noValidate style={{ display: "grid", gap: 18 }} aria-describedby="lead-purpose">
+        <p className="fine" id="lead-purpose">{t.purpose}</p>
         <div className="f">
           <label htmlFor="f-name">{t.name}</label>
-          <input id="f-name" name="name" type="text" autoComplete="name" className="input" {...field("name")} />
+          <input id="f-name" name="name" type="text" autoComplete="name" className="input" required aria-required="true" {...field("name")} />
           {err("name")}
         </div>
         <div className="row2">
           <div className="f">
             <label htmlFor="f-phone">{t.phone}</label>
-            <input id="f-phone" name="phone" type="tel" inputMode="tel" autoComplete="tel" placeholder="09xx xxx xxx" className="input" {...field("phone")} />
+            <input id="f-phone" name="phone" type="tel" inputMode="tel" autoComplete="tel" placeholder="09xx xxx xxx" className="input" required aria-required="true" {...field("phone")} />
             {err("phone")}
           </div>
           <div className="f">
-            <label htmlFor="f-email">{t.email}</label>
+            <label htmlFor="f-email">{t.email} <span className="opt">({t.optional})</span></label>
             <input id="f-email" name="email" type="email" inputMode="email" autoComplete="email" className="input" {...field("email")} />
             {err("email")}
           </div>
         </div>
         <div className="row2">
           <div className="f">
-            <label htmlFor="f-father">{t.fatherAge}</label>
+            <label htmlFor="f-father">{t.fatherAge} <span className="opt">({t.optional})</span></label>
             <input id="f-father" name="fatherAge" type="number" inputMode="numeric" min={25} max={40} className="input" {...field("fatherAge")} />
             {err("fatherAge")}
           </div>
           <div className="f">
-            <label htmlFor="f-mother">{t.motherAge}</label>
+            <label htmlFor="f-mother">{t.motherAge} <span className="opt">({t.optional})</span></label>
             <input id="f-mother" name="motherAge" type="number" inputMode="numeric" min={25} max={40} className="input" {...field("motherAge")} />
             {err("motherAge")}
           </div>
         </div>
         <div className="row2">
           <div className="f">
-            <label htmlFor="f-child">{t.childAge}</label>
+            <label htmlFor="f-child">{t.childAge} <span className="opt">({t.optional})</span></label>
             <input id="f-child" name="childAge" type="number" inputMode="numeric" min={0} max={11} className="input" {...field("youngestChildAge")} />
             {err("youngestChildAge")}
           </div>
           <div className="f">
-            <label htmlFor="f-city">{t.city}</label>
+            <label htmlFor="f-city">{t.city} <span className="opt">({t.optional})</span></label>
             <select id="f-city" name="city" className="select" defaultValue="hcmc">
               {Object.entries(t.cities).map(([k, v]) => <option key={k} value={k}>{v}</option>)}
             </select>
@@ -133,7 +135,7 @@ export function LeadForm({ lang, t }: { lang: Locale; t: Dict["lead"] }) {
         </div>
         <label className="consent" htmlFor="f-consent">
           <input id="f-consent" name="consent" type="checkbox" {...field("consent")} />
-          <span>{t.consent}</span>
+          <span>{t.consent} <Link href={`/${lang}/chinh-sach-bao-mat`}>{t.privacy}</Link></span>
         </label>
         {err("consent")}
         {errors.form && <p className="err" role="alert">{errors.form}</p>}

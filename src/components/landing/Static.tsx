@@ -210,13 +210,14 @@ export function Services({ d }: { d: Dict }) {
           {SERVICES.map((k) => (
             <article className="svc" key={k}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img className="svc-photo" src={SERVICE_IMG[k]} alt="" loading="lazy" width={640} height={400} />
+              <img className="svc-photo" src={SERVICE_IMG[k]} alt={s.alts[k]} loading="lazy" width={640} height={400} />
               <h3>{s.names[k]}</h3>
               <ul>{s.bullets[k].map((b) => <li key={b}>{b}</li>)}</ul>
               <p className="rate">{fmt(SERVICE_UNIT[k] === "trip" ? s.rateTrip : s.rate, { n: CREDITS_PER_SERVICE_UNIT[k] })}</p>
             </article>
           ))}
         </div>
+        <p className="fine" style={{ marginTop: 12 }}>{s.photoCredit}</p>
         <div className="partners">
           <span>{s.standardsLabel}</span>
           {s.standards.map((x) => <b key={x}>{x}</b>)}

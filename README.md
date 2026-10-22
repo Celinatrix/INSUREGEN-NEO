@@ -110,6 +110,7 @@ Trang [Cơ sở định phí](https://insuregen-neo.vercel.app/vi/co-so-dinh-phi
 | [Tính điểm CIS](https://insuregen-neo.vercel.app/vi/cis) | Tự chấm 6 hoạt động, xem số giờ được cấp và dịch vụ được mở |
 | [Dùng thử ví](https://insuregen-neo.vercel.app/vi/vi-cham-soc) | Gửi hồ sơ Lộ trình A/B, nhận giờ và trợ cấp, đặt dịch vụ bằng Care Hours; AI đọc giấy ra viện |
 | [Cơ sở định phí](https://insuregen-neo.vercel.app/vi/co-so-dinh-phi) | Phương pháp, giả định, bảng tỷ lệ, dự phòng, kiểm chứng với Excel |
+| [Chính sách bảo mật](https://insuregen-neo.vercel.app/vi/chinh-sach-bao-mat) · [Điều khoản](https://insuregen-neo.vercel.app/vi/dieu-khoan) · [Cookie](https://insuregen-neo.vercel.app/vi/cookie) · [Hủy và hoàn phí](https://insuregen-neo.vercel.app/vi/hoan-phi) | Bốn trang pháp lý theo Luật Bảo vệ dữ liệu cá nhân 91/2025/QH15 và Luật Kinh doanh bảo hiểm 08/2022/QH15 |
 
 ---
 
@@ -126,7 +127,7 @@ Trang [Cơ sở định phí](https://insuregen-neo.vercel.app/vi/co-so-dinh-phi
 | `src/lib/pricing.ts` | Ghép phí nhân thọ và phí bổ trợ, phụ phí thẩm định, khả năng chi trả, minh họa 10 năm |
 | `src/lib/rules.ts` | Tính giờ, trợ cấp, CIS, trừ giờ khi đặt dịch vụ |
 | `src/lib/claims.ts` | Đánh giá hồ sơ: hạn mức, thời gian chờ, loại trừ, gắn cờ cần xem xét |
-| `src/i18n/vi.ts`, `en.ts` | Toàn bộ nội dung song ngữ |
+| `src/i18n/vi.ts`, `en.ts`, `legal.ts` | Toàn bộ nội dung song ngữ, gồm 4 trang pháp lý |
 | `src/proxy.ts`, `src/lib/security.ts` | Chọn ngôn ngữ, CSP theo nonce, header bảo mật |
 | `supabase/migrations/` | Lược đồ cơ sở dữ liệu |
 
@@ -135,26 +136,26 @@ Trang [Cơ sở định phí](https://insuregen-neo.vercel.app/vi/co-so-dinh-phi
 | Method | Đường dẫn | Việc làm |
 |---|---|---|
 | GET | `/api/pricing?father=34&mother=30&child=3` | Báo phí, phụ phí thẩm định (`smoker`, `occF`, `occM`), khả năng chi trả (`income`), minh họa 10 năm |
-| POST | `/api/leads` | Lưu đăng ký tư vấn, ghi nhận đồng ý theo Nghị định 13/2023 |
+| POST | `/api/leads` | Lưu đăng ký tư vấn, ghi nhận đồng ý theo Luật Bảo vệ dữ liệu cá nhân 91/2025/QH15 |
 | POST | `/api/wallets` | Tạo ví dùng thử |
-| GET | `/api/wallets/:id` | Số dư, hạn mức còn lại, lịch sử |
+| GET / DELETE | `/api/wallets/:id` | Xem số dư, hạn mức, lịch sử; xóa hẳn ví |
 | POST | `/api/wallets/:id/claims` | Đánh giá hồ sơ Lộ trình A hoặc B |
 | POST | `/api/wallets/:id/bookings` | Đặt dịch vụ, trừ giờ |
-| POST | `/api/claims/extract` | Đọc ảnh giấy ra viện (cần `ANTHROPIC_API_KEY`) |
+| POST | `/api/claims/extract` | Đọc ảnh giấy ra viện (cần `ANTHROPIC_API_KEY` và đồng ý xử lý dữ liệu sức khỏe) |
 
 ### Chạy trên máy
 
 ```bash
 npm install
 npm run dev     # http://localhost:3000
-npm test        # 27 bài test: quy tắc, định phí khớp báo cáo và Excel, bảo mật
+npm test        # 30 bài test: quy tắc, định phí khớp báo cáo và Excel, bảo mật, quyền riêng tư
 ```
 
 Không cần cấu hình gì thêm: khi chưa nối Supabase, dữ liệu được lưu tạm trong bộ nhớ.
 
 ### Deploy (Vercel + Supabase)
 
-1. **Supabase**: tạo project, vào **SQL Editor**, lần lượt chạy `supabase/migrations/001_init.sql` và `002_lock_down.sql`.
+1. **Supabase**: tạo project, vào **SQL Editor**, lần lượt chạy `supabase/migrations/001_init.sql`, `002_lock_down.sql` và `003_privacy.sql`.
 2. **Vercel**: **Add New → Project** → chọn repo này → **Deploy**.
 3. **Vercel → Settings → Environment Variables**: thêm các biến trong `.env.example`. `SUPABASE_URL` và `SUPABASE_SERVICE_ROLE_KEY` là bắt buộc; `NEXT_PUBLIC_SITE_URL` và `ANTHROPIC_API_KEY` là tùy chọn. Sau đó bấm **Redeploy**.
 
@@ -162,7 +163,7 @@ Mỗi lần push lên `main`, Vercel tự deploy lại. Khóa `service_role` ch�
 
 ### Bảo mật
 
-Trang đã được kiểm tra bằng vibe-check theo 17 mục (header, CSP, CORS, CSRF, rò rỉ khóa, phụ thuộc…). Báo cáo đầy đủ ở [`security/AUDIT_SUMMARY.md`](security/AUDIT_SUMMARY.md).
+Trang đã được kiểm tra bằng vibe-check theo 17 mục (header, CSP, CORS, CSRF, rò rỉ khóa, phụ thuộc…). Báo cáo đầy đủ ở [`security/AUDIT_SUMMARY.md`](security/AUDIT_SUMMARY.md). Checklist 20 điểm pháp lý và trải nghiệm ở [`security/COMPLIANCE_CHECKLIST.md`](security/COMPLIANCE_CHECKLIST.md).
 
 ### Hạn chế đã biết
 

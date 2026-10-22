@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent } from "react";
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import type { Dict, Locale } from "@/i18n";
 import { ACTIVITIES, CHILD_BANDS, CREDITS_PER_SERVICE_UNIT, SERVICE_UNIT, SERVICES, childBandFor, type ChildBand, type Service, type Severity } from "@/lib/product";
@@ -79,6 +80,7 @@ export function DemoWallet({ lang, t }: { lang: Locale; t: T }) {
   const [serviceHours, setServiceHours] = useState(4);
   const [serviceDate, setServiceDate] = useState(todayStr());
   const [bookMsg, setBookMsg] = useState<{ kind: "ok" | "warn"; text: string } | null>(null);
+  const [healthConsent, setHealthConsent] = useState(false);
   const started = useRef(false);
 
   const create = useCallback(async (age: number) => {
@@ -125,7 +127,9 @@ export function DemoWallet({ lang, t }: { lang: Locale; t: T }) {
 
   async function onUpload(file: File) {
     setExtractMsg({ kind: "", text: d.reading });
+    if (!healthConsent) return;
     const fd = new FormData();
+    fd.append("consent", "health-data-v1");
     fd.append("file", file);
     const res = await fetch("/api/claims/extract", { method: "POST", body: fd }).catch(() => null);
     if (!res) return setExtractMsg({ kind: "warn", text: d.readFail });
@@ -139,6 +143,16 @@ export function DemoWallet({ lang, t }: { lang: Locale; t: T }) {
       kind: "ok",
       text: fill(d.readOk, { admit: j.admissionDate, discharge: j.dischargeDate, icu: j.icuHours ? ` · ICU ${j.icuHours}h` : "" }),
     });
+  }
+
+  // Quyền xóa dữ liệu: xóa hẳn ví trên máy chủ, rồi tạo ví trống.
+  async function deleteAndRestart() {
+    if (!wallet) return;
+    await fetch(`/api/wallets/${wallet.id}`, { method: "DELETE" }).catch(() => null);
+    try {
+      localStorage.removeItem(KEY);
+    } catch {}
+    await create(wallet.youngestChildAge).catch(() => setLoadError(d.readFail));
   }
 
   async function submitClaim(e: FormEvent) {
@@ -236,7 +250,7 @@ export function DemoWallet({ lang, t }: { lang: Locale; t: T }) {
       <div className="demo-grid">
         <div style={{ display: "grid", gap: 20 }}>
           <form className="box" onSubmit={submitClaim}>
-            <h3>{d.newClaim}</h3>
+            <h2 className="box-title">{d.newClaim}</h2>
             <div className="field">
               <span className="flabel" id="who-l">{d.who}</span>
               <div className="seg" role="group" aria-labelledby="who-l">
@@ -263,9 +277,15 @@ export function DemoWallet({ lang, t }: { lang: Locale; t: T }) {
               <>
                 <div className="field">
                   <label htmlFor="doc">{d.upload}</label>
-                  <input id="doc" type="file" accept="image/jpeg,image/png,image/webp" className="input"
-                    onChange={(e) => e.target.files?.[0] && onUpload(e.target.files[0])} />
-                  <p className="fine">{d.uploadHelp}</p>
+                  <label className="consent" htmlFor="doc-consent">
+                    <input id="doc-consent" type="checkbox" checked={healthConsent} onChange={(e) => setHealthConsent(e.target.checked)} />
+                    <span>
+                      {d.uploadConsent} <Link href={`/${lang}/chinh-sach-bao-mat`}>{d.privacy}</Link>
+                    </span>
+                  </label>
+                  <input id="doc" type="file" accept="image/jpeg,image/png,image/webp" className="input" disabled={!healthConsent}
+                    aria-describedby="doc-help" onChange={(e) => e.target.files?.[0] && onUpload(e.target.files[0])} />
+                  <p className="fine" id="doc-help">{d.uploadHelp}</p>
                   {extractMsg.text && <p className={`notice ${extractMsg.kind}`} role="status">{extractMsg.text}</p>}
                 </div>
                 <div className="row2">
@@ -327,7 +347,7 @@ export function DemoWallet({ lang, t }: { lang: Locale; t: T }) {
           </form>
 
           <form className="box" onSubmit={submitBooking}>
-            <h3>{d.book}</h3>
+            <h2 className="box-title">{d.book}</h2>
             <div className="row2">
               <div className="field">
                 <label htmlFor="svc">{d.service}</label>
@@ -353,8 +373,8 @@ export function DemoWallet({ lang, t }: { lang: Locale; t: T }) {
 
         <div className="box">
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
-            <h3>{d.history}</h3>
-            <button type="button" className="btn btn-ghost btn-sm" onClick={() => create(wallet.youngestChildAge)}>{d.reset}</button>
+            <h2 className="box-title">{d.history}</h2>
+            <button type="button" className="btn btn-ghost btn-sm" onClick={deleteAndRestart} aria-describedby="reset-help">{d.reset}</button>
           </div>
           {history.length === 0 ? (
             <p className="fine">{d.empty}</p>
@@ -370,6 +390,7 @@ export function DemoWallet({ lang, t }: { lang: Locale; t: T }) {
             </ul>
           )}
           <p className="fine">{fill(d.storageNote, { where: wallet.storage === "supabase" ? d.storageDb : d.storageMemory })}</p>
+          <p className="fine" id="reset-help">{d.resetHelp} <Link href={`/${lang}/chinh-sach-bao-mat`}>{d.privacy}</Link></p>
         </div>
       </div>
     </div>

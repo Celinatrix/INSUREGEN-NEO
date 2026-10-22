@@ -70,7 +70,7 @@ export function LifeSensitivity({ lang, t, fatherAge, motherAge }: Props) {
 
       <div style={{ display: "grid", gap: 10 }}>
         <h3>{t.scenTitle}</h3>
-        <div className="tbl-scroll">
+        <div className="tbl-scroll" tabIndex={0}>
           <table className="tbl">
             <thead><tr><th>{t.scenario}</th><th>{t.premium}</th><th>{t.change}</th></tr></thead>
             <tbody>
@@ -93,7 +93,7 @@ export function LifeSensitivity({ lang, t, fatherAge, motherAge }: Props) {
             <div key={k} style={{ display: "grid", gridTemplateColumns: "minmax(0,1.1fr) 58px minmax(0,1fr) 58px", gap: 8, alignItems: "center" }}>
               <span style={{ fontSize: 14 }}>{t.riderFactors[k]}</span>
               <span className="fine num" style={{ fontSize: 12, textAlign: "right" }}>{pct(lo)}</span>
-              <div aria-label={`${t.low} ${pct(lo)}, ${t.high} ${pct(hi)}`} style={{ position: "relative", height: 22 }}>
+              <div role="img" aria-label={`${t.low} ${pct(lo)}, ${t.high} ${pct(hi)}`} style={{ position: "relative", height: 22 }}>
                 <div style={{ position: "absolute", left: "50%", top: 0, bottom: 0, width: 1, background: "var(--line)" }} />
                 <div style={{ position: "absolute", right: "50%", top: 3, height: 16, width: `${(-lo / maxBar) * 50}%`, background: "var(--ok)", borderRadius: "4px 0 0 4px" }} />
                 <div style={{ position: "absolute", left: "50%", top: 3, height: 16, width: `${(hi / maxBar) * 50}%`, background: "var(--coral)", borderRadius: "0 4px 4px 0" }} />

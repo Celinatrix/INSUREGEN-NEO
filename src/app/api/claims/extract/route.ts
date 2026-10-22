@@ -36,6 +36,8 @@ export async function POST(request: Request) {
     return Response.json({ error: "too_large" }, { status: 413 });
   }
   const form = await request.formData().catch(() => null);
+  // Ảnh giấy ra viện là dữ liệu sức khỏe (nhạy cảm): chỉ xử lý khi có đồng ý riêng, rõ ràng.
+  if (form?.get("consent") !== "health-data-v1") return Response.json({ error: "consent_required" }, { status: 400 });
   const file = form?.get("file");
   if (!(file instanceof File)) return Response.json({ error: "no_file" }, { status: 400 });
   if (!TYPES.includes(file.type)) return Response.json({ error: "unsupported_type" }, { status: 415 });

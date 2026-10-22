@@ -45,3 +45,27 @@ test("Concurrent bookings cannot spend the same hours twice", async () => {
   const ok = results.filter((r) => r && !("error" in r));
   assert.equal(ok.length, 1);
 });
+
+test("Lead form: only name and phone are required (data minimisation)", async () => {
+  const { validateLead } = await import("../src/lib/lead.ts");
+  const base = { name: "Lan", phone: "0912345678", email: "", fatherAge: null, motherAge: null, youngestChildAge: null, city: "hcmc", consent: true, locale: "vi" };
+  assert.deepEqual(validateLead(base), []);
+  assert.equal(validateLead({ ...base, email: "not-an-email" })[0]?.field, "email");
+  assert.equal(validateLead({ ...base, consent: false })[0]?.field, "consent");
+});
+
+test("Demo wallets can be deleted with all their data (right to erasure)", async () => {
+  const { createWallet } = await import("../src/lib/server/wallet.ts");
+  const { getStore } = await import("../src/lib/server/store.ts");
+  const w = await createWallet(4);
+  assert.equal(await getStore().deleteWallet(w.wallet.id), true);
+  assert.equal(await getStore().getWallet(w.wallet.id), null);
+  assert.equal(await getStore().deleteWallet(w.wallet.id), false);
+});
+
+test("Affordability runs without the server", async () => {
+  const { affordability } = await import("../src/lib/affordability.ts");
+  const a = affordability(22_607_760, 22_607_760, 281_500_000);
+  assert.equal(a.overCap, false);
+  assert.ok(Math.abs(a.shareLow - 0.0803) < 0.001);
+});

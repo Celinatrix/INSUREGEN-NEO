@@ -1,9 +1,19 @@
 import Link from "next/link";
 import type { Dict, Locale } from "@/i18n";
+import { CONTACT_EMAIL } from "@/i18n/legal";
 import { BrandMark } from "./BrandMark";
 
 export function Footer({ lang, footer }: { lang: Locale; footer: Dict["footer"] }) {
   const home = `/${lang}`;
+  const links = [
+    { href: `${home}/chinh-sach-bao-mat`, label: footer.links.privacy },
+    { href: `${home}/dieu-khoan`, label: footer.links.terms },
+    { href: `${home}/cookie`, label: footer.links.cookie },
+    { href: `${home}/hoan-phi`, label: footer.links.refund },
+    { href: `${home}#minh-bach`, label: footer.links.excl },
+    { href: `${home}#hoi-dap`, label: footer.links.faq },
+  ];
+  const [before, after] = footer.contact.split("{email}");
   return (
     <footer className="site-footer">
       <div className="wrap">
@@ -15,13 +25,17 @@ export function Footer({ lang, footer }: { lang: Locale; footer: Dict["footer"] 
             </Link>
             <p className="fine">{footer.tagline}</p>
             <p className="fine">{footer.team}</p>
+            <p className="fine">
+              {before}
+              <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
+              {after}
+            </p>
           </div>
-          <nav aria-label={footer.links.terms}>
+          <nav aria-label={footer.legalNav}>
             <ul>
-              <li><Link href={`${home}#minh-bach`}>{footer.links.terms}</Link></li>
-              <li><Link href={`${home}#minh-bach`}>{footer.links.data}</Link></li>
-              <li><Link href={`${home}#minh-bach`}>{footer.links.excl}</Link></li>
-              <li><Link href={`${home}#hoi-dap`}>{footer.links.faq}</Link></li>
+              {links.map((l) => (
+                <li key={l.href}><Link href={l.href}>{l.label}</Link></li>
+              ))}
             </ul>
           </nav>
         </div>
