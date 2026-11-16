@@ -405,6 +405,7 @@ Vật thể đặc trưng của sản phẩm: một tấm thẻ navy bo 24px, đ
 - **Don't** viết hoa toàn bộ nhãn hay giãn chữ (`text-transform: uppercase`, `letter-spacing` dương).
 - **Don't** dùng chữ nghiêng để nhấn, hay trọng lượng 700 trở lên.
 - **Don't** dùng gradient chuyển giữa hai sắc (xanh lá → vàng → navy), bóng màu vàng, hay quầng sáng.
+- **Don't** đặt thẻ có viền bên trong thẻ có viền. Khung ngoài nhóm lại thì lớp trong dùng khoảng cách, mũi tên hoặc đường kẻ mảnh; chỉ một vật thể đích (như ô "Gia đình bạn" màu navy) được giữ nền riêng.
 - **Don't** dùng `transition: all` hay phóng to phần tử khi được chọn.
 - **Don't** dùng bảng màu xanh dương + xanh lá của `design-system/insuregen-neo/MASTER.md`; file đó đã lỗi thời.
 - **Don't** thêm logo đối tác, lời chứng thực hay số khách hàng không có thật.
