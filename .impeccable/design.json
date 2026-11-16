@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-11-16T15:17:16.382Z",
+  "generatedAt": "2026-11-16T15:25:24.304Z",
   "title": "Design System: Family Reconnect",
   "extensions": {
     "colorMeta": {
@@ -163,6 +163,31 @@
           "oklch(83.6% 0.001 264.5)",
           "oklch(95% 0 264.5)"
         ]
+      },
+      "night-page": {
+        "role": "neutral",
+        "displayName": "Night Page",
+        "canonical": "#0D1525"
+      },
+      "approved-ink": {
+        "role": "secondary",
+        "displayName": "Approved Ink",
+        "canonical": "#16603F"
+      },
+      "brand-red": {
+        "role": "tertiary",
+        "displayName": "Brand Red (logo only)",
+        "canonical": "#C22938"
+      },
+      "phone-frame": {
+        "role": "neutral",
+        "displayName": "Phone Frame",
+        "canonical": "#0E1626"
+      },
+      "phone-paper": {
+        "role": "neutral",
+        "displayName": "Phone Paper",
+        "canonical": "#FAF6F0"
       }
     },
     "themes": {
@@ -282,6 +307,11 @@
         "name": "object",
         "value": "0 24px 60px rgb(20 34 61 / .28)",
         "purpose": "Holdable objects floating on the page: Care Wallet card, claims phone. Replaced by an 8% white hairline in dark theme."
+      },
+      {
+        "name": "knob",
+        "value": "0 1px 3px rgb(0 0 0 / .25)",
+        "purpose": "Switch knob only."
       }
     ],
     "motion": [
@@ -312,6 +342,10 @@
         "value": "1400px"
       },
       {
+        "name": "sticky-results",
+        "value": "961px"
+      },
+      {
         "name": "single-column",
         "value": "900px"
       },
@@ -323,7 +357,12 @@
         "name": "minimal-header",
         "value": "400px"
       }
-    ]
+    ],
+    "touch": {
+      "minTarget": "44px",
+      "hoverGate": "@media (hover: hover)",
+      "rangeHitArea": "44px"
+    }
   },
   "components": [
     {
@@ -349,6 +388,14 @@
       "description": "Small section or state label; gold, or green for 'protecting'.",
       "html": "<span class=\"ds-tag\">Kịch bản minh họa</span> <span class=\"ds-tag ds-tag-ok\">Đang bảo vệ</span>",
       "css": ".ds-tag{display:inline-flex;align-items:center;gap:6px;font-family:var(--font-ui,'Be Vietnam Pro',sans-serif);font-size:13px;font-weight:500;padding:4px 10px;border-radius:999px;background:var(--coral-tint,#F6ECD3);color:var(--coral-ink,#7A5A12)}.ds-tag-ok{background:var(--ok-tint,#DCEFE4);color:var(--ok,#1D7550)}"
+    },
+    {
+      "name": "Segmented Control",
+      "kind": "chip",
+      "refersTo": "segmented",
+      "description": "Mutually exclusive choices; 44px options, navy when selected.",
+      "html": "<div class=\"ds-seg\" role=\"group\" aria-label=\"Ai hút thuốc\"><button aria-pressed=\"true\">Không ai</button><button aria-pressed=\"false\">Bố</button><button aria-pressed=\"false\">Mẹ</button><button aria-pressed=\"false\">Cả hai</button></div>",
+      "css": ".ds-seg{display:inline-flex;flex-wrap:wrap;gap:6px;padding:4px;border:1px solid var(--line,#E2E5EC);border-radius:14px;background:var(--surface,#FFFFFF);font-family:var(--font-ui,'Be Vietnam Pro',sans-serif)}.ds-seg button{min-height:44px;min-width:44px;padding:0 14px;border:0;border-radius:10px;background:transparent;font:inherit;font-weight:600;font-size:14px;color:var(--ink-2,#44506A);cursor:pointer;transition:background-color .2s ease,color .2s ease}.ds-seg button[aria-pressed=true]{background:var(--navy,#1B2E52);color:var(--navy-ink,#FFFFFF)}.ds-seg button:focus-visible{outline:3px solid var(--focus,#C9982E);outline-offset:3px}"
     },
     {
       "name": "Text Input",
@@ -437,6 +484,11 @@
         "name": "The Night Has No Shadows Rule",
         "body": "Ở giao diện tối, bỏ bóng; vật thể nổi dùng viền trắng 8% thay cho bóng.",
         "section": "elevation"
+      },
+      {
+        "name": "The 44px Rule",
+        "body": "Mọi thứ bấm được có vùng chạm tối thiểu 44×44px: nút, nút chọn, liên kết điều hướng, thanh trượt (vạch mảnh, vùng chạm 44px). Ô nhỏ hơn chỉ được phép khi nằm trong <label> cao từ 44px.",
+        "section": "layout"
       }
     ],
     "dos": [
@@ -444,7 +496,9 @@
       "Do đặt mọi con số bằng Fraunces với tabular-nums khi nó là nhân vật chính của khối.",
       "Do giữ khoảng cách trên lưới 4px và bo tròn lồng nhau đúng toán (12 / 14 / 22 / 24).",
       "Do đặt rõ chữ \"Minh họa\" trên mọi vật thể có số liệu giả định.",
-      "Do dùng chuyển động 0.15–0.2s ease cho hover và trạng thái, và chỉ một lần hiện dần khi cuộn (0.6s)."
+      "Do dùng chuyển động 0.15–0.2s ease cho hover và trạng thái, và chỉ một lần hiện dần khi cuộn (0.6s).",
+      "Do đặt mọi hiệu ứng hover trong @media (hover: hover); trên màn hình cảm ứng dùng :active để phản hồi.",
+      "Do giữ cột kết quả trong tầm mắt khi form dài hơn màn hình."
     ],
     "donts": [
       "Don't viết hoa toàn bộ nhãn hay giãn chữ (text-transform: uppercase, letter-spacing dương).",

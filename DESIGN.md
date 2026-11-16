@@ -19,6 +19,13 @@ colors:
   ink: "#14223D"
   ink-secondary: "#44506A"
   ink-muted: "#5B6580"
+  night-page: "#0D1525"
+  approved-ink: "#16603F"
+  brand-red: "#C22938"
+  phone-frame: "#0E1626"
+  phone-paper: "#FAF6F0"
+  phone-line: "#E3D8C8"
+  phone-map: "#E9EFE9"
 typography:
   display:
     fontFamily: "Fraunces Variable, Fraunces, Lora, Georgia, serif"
@@ -134,10 +141,18 @@ typography:
     lineHeight: 1
     fontFeature: "tnum"
 rounded:
+  hairline: "2px"
+  bar: "4px"
+  focus: "6px"
+  tag: "8px"
+  inset: "9px"
+  inner: "10px"
   control: "12px"
   card: "14px"
   panel: "22px"
   device: "24px"
+  phone-screen: "30px"
+  phone: "40px"
   pill: "999px"
 spacing:
   xs: "4px"
@@ -187,6 +202,23 @@ components:
     rounded: "{rounded.control}"
     padding: "10px 14px"
     height: "48px"
+  segmented:
+    backgroundColor: "{colors.surface}"
+    textColor: "{colors.ink-secondary}"
+    rounded: "{rounded.card}"
+    padding: "4px"
+  segmented-option:
+    backgroundColor: "transparent"
+    textColor: "{colors.ink-secondary}"
+    rounded: "{rounded.inner}"
+    padding: "0 14px"
+    height: "44px"
+  segmented-option-selected:
+    backgroundColor: "{colors.evening-navy}"
+    textColor: "{colors.on-navy}"
+    rounded: "{rounded.inner}"
+    padding: "0 14px"
+    height: "44px"
   care-wallet:
     backgroundColor: "{colors.evening-navy}"
     textColor: "{colors.on-navy}"
@@ -234,6 +266,12 @@ Tên biến trong mã là di sản của bản cũ: `--coral*` thực chất là
 - **Surface Sunk** (`surface-sunk`): nền các phần xen kẽ (`.sec-alt`) và ô phụ.
 - **Hairline** (`hairline`): mọi đường viền và đường chia.
 - **Ink / Ink Secondary / Ink Muted** (`ink`, `ink-secondary`, `ink-muted`): ba vai trò chữ: chính, phụ (đoạn mô tả), mờ (chú thích, nhãn nhỏ). Không thêm vai trò thứ tư.
+
+### Fixed-purpose colours
+- **Night Page** (`night-page`): nền trang ở giao diện tối và `theme-color` của trình duyệt khi tối.
+- **Approved Ink** (`approved-ink`): chữ của viên thuốc "Đã duyệt" trên thẻ Ví và điện thoại, trên nền `care-green-wash`. Hai nhãn này giữ nguyên ở cả hai giao diện.
+- **Brand Red** (`brand-red`): chỉ trong dấu logo (`BrandMark`). Không dùng ở chỗ nào khác trên giao diện.
+- **Phone Frame / Phone Paper / Phone Line / Phone Map** (`phone-*`): chỉ bên trong điện thoại minh họa: khung máy, nền giấy ấm, viền thẻ, nền bản đồ.
 
 ### Named Rules
 **The One Lamp Rule.** Mỗi màn hình chỉ có một hành động vàng nổi bật. Nếu hai nút cùng vàng cạnh nhau, một nút phải chuyển sang ghost.
@@ -283,7 +321,11 @@ Khoảng cách theo lưới 4px: 4, 8, 12, 16, 20, 24, 32. Bước 2px chỉ dù
 
 Bố cục dạng tách đôi không đối xứng: hero 1.15fr chữ / 0.85fr thẻ Ví; công cụ tính 1.1fr / 0.9fr; câu hỏi thường gặp 0.8fr / 1.2fr. Dưới 900px mọi lưới gộp thành một cột theo thứ tự đọc, hình minh họa đi sau nút hành động.
 
-Mốc chuyển: 1400px (menu thu vào nút), 900px (một cột), 560px (ẩn nút "Tính phí" ở header), 400px (ẩn chuyển ngôn ngữ trên header). Mọi trang phải dùng được ở 375px mà không cuộn ngang.
+Trang Dùng thử ví và Tính điểm CIS tách **hành động** (form, bên trái) khỏi **kết quả** (bên phải). Từ 961px cột kết quả dính dưới header (`top: 84px`) và tự cuộn khi dài hơn màn hình, để người dùng luôn thấy kết quả khi điền form; dưới đó mọi thứ xếp một cột, form trước.
+
+Mốc chuyển: 1400px (menu thu vào nút; từ 1401px liên kết "Tính phí" trùng nút vàng thì ẩn), 961px (cột kết quả dính), 900px (một cột), 560px (ẩn nút "Tính phí" ở header), 400px (ẩn chuyển ngôn ngữ trên header). Mọi trang phải dùng được ở 375px và ở chiều ngang 812×375 mà không cuộn ngang.
+
+**The 44px Rule.** Mọi thứ bấm được có vùng chạm tối thiểu 44×44px: nút, nút chọn, liên kết điều hướng, thanh trượt (vạch mảnh, vùng chạm 44px). Ô nhỏ hơn chỉ được phép khi nằm trong `<label>` cao từ 44px.
 
 ## Elevation & Depth
 
@@ -300,7 +342,7 @@ Phẳng mặc định. Chiều sâu đến từ bậc nền (`page` → `surface
 
 ## Shapes
 
-Bo tròn mềm, lồng nhau đúng toán: control 12px, thẻ 14px, hộp 22px, vật thể 24px. Bo trong bằng bo ngoài trừ khoảng đệm, không nhỏ hơn 4px. Nút và nhãn là viên thuốc (999px); vòng số bước và nút nhỏ là hình tròn. Đường viền 1px cho bề mặt, 1.5px cho control và nút ghost.
+Bo tròn mềm, lồng nhau đúng toán: control 12px, thẻ 14px, hộp 22px, vật thể 24px. Bên trong chúng: nút chọn và liên kết điều hướng 10px (trong khung 14px, đệm 4px), nút ngôn ngữ 9px (trong khung 12px, đệm 3px), nhãn lưu ý 8px, vạch tiến độ và ô thước giờ 4px, đường vạch cao 4px bo 2px, viền focus 6px. Ảnh dịch vụ sát mép thẻ bo `22px − 1px` (trừ viền). Điện thoại minh họa: khung 40px, màn hình 30px (40 − đệm 10). Bo trong bằng bo ngoài trừ khoảng đệm, không nhỏ hơn 4px. Nút và nhãn là viên thuốc (999px); vòng số bước và nút nhỏ là hình tròn. Đường viền 1px cho bề mặt, 1.5px cho control và nút ghost.
 
 ## Components
 
@@ -309,7 +351,7 @@ Mềm và chắc chắn: to, dễ bấm, phản hồi lặng.
 - **Shape:** viên thuốc (999px), cao tối thiểu 48px (44px ở cỡ nhỏ), chữ 16px trọng lượng 600.
 - **Primary:** nền `porch-gold`, chữ `on-gold`. Trên nền navy dùng `lamp-gold`.
 - **Ghost:** nền trong suốt, viền 1.5px màu chữ.
-- **Hover / Focus / Press:** hover làm nền nút chính đậm hơn (trộn 12% `ink`), ghost lên nền `surface`. Focus là viền vàng 3px cách 3px. Nhấn thu nhỏ còn 0.98. Không bóng màu, không nhấc nút lên.
+- **Hover / Focus / Press:** chỉ trên thiết bị có hover (`@media (hover: hover)`), hover làm nền nút chính đậm hơn (trộn 12% `ink`), ghost lên nền `surface`. Focus là viền vàng 3px cách 3px. Nhấn thu nhỏ còn 0.98. Không bóng màu, không nhấc nút lên.
 
 ### Tags and Status
 - **Tag:** viên thuốc nhỏ, chữ 14px trọng lượng 500, nền `gold-wash`, chữ `gold-ink`. Bản xanh `care-green-wash` / `care-green` cho "đang bảo vệ".
@@ -327,6 +369,14 @@ Mềm và chắc chắn: to, dễ bấm, phản hồi lặng.
 - **Focus:** viền vàng 3px cách 1px.
 - **Error:** viền `porch-gold`, thông báo lỗi 14px màu `gold-ink` ngay dưới ô. Chỉ bắt buộc tên và số điện thoại.
 - **Stepper, công tắc, nút chia đoạn:** cùng họ control 12–14px; công tắc bật màu `care-green`; nút chia đoạn được chọn nền navy.
+
+### Segmented Control
+Nhóm lựa chọn loại trừ nhau (hút thuốc, nhóm tuổi con, F0–F3, bố/mẹ, Lộ trình A/B).
+- **Shape:** khung `surface` viền mảnh bo 14px, đệm 4px; mỗi lựa chọn bo 10px, tối thiểu 44×44px, chữ 14px trọng lượng 600.
+- **Selected:** nền `evening-navy`, chữ `on-navy`, kèm `aria-pressed="true"`; nhóm có `role="group"` và nhãn.
+
+### Range Slider
+- Vạch gốc của trình duyệt, màu nhấn `porch-gold` (`accent-color`), vùng chạm cao 44px.
 
 ### Navigation
 - Header dính, cao 68px, logo + tên sản phẩm 18px trọng lượng 600, liên kết 14px màu `ink-secondary`, hover lên `ink` trên nền `surface`.
@@ -347,6 +397,9 @@ Vật thể đặc trưng của sản phẩm: một tấm thẻ navy bo 24px, đ
 - **Do** giữ khoảng cách trên lưới 4px và bo tròn lồng nhau đúng toán (12 / 14 / 22 / 24).
 - **Do** đặt rõ chữ "Minh họa" trên mọi vật thể có số liệu giả định.
 - **Do** dùng chuyển động 0.15–0.2s `ease` cho hover và trạng thái, và chỉ một lần hiện dần khi cuộn (0.6s).
+
+- **Do** đặt mọi hiệu ứng hover trong `@media (hover: hover)`; trên màn hình cảm ứng dùng `:active` để phản hồi.
+- **Do** giữ cột kết quả trong tầm mắt khi form dài hơn màn hình.
 
 ### Don't:
 - **Don't** viết hoa toàn bộ nhãn hay giãn chữ (`text-transform: uppercase`, `letter-spacing` dương).
