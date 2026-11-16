@@ -660,7 +660,7 @@ const vi = {
   },
   footer: {
     tagline: "Khi bố mẹ cần nghỉ ngơi, gia đình vẫn vận hành.",
-    links: { privacy: "Chính sách bảo mật", terms: "Điều khoản sử dụng", cookie: "Chính sách cookie", refund: "Hủy hợp đồng và hoàn phí", excl: "Loại trừ bảo hiểm", faq: "Hỏi đáp" },
+    links: { privacy: "Chính sách bảo mật", terms: "Điều khoản sử dụng", cookie: "Chính sách cookie", refund: "Hủy hợp đồng và hoàn phí", excl: "Loại trừ bảo hiểm", faq: "Hỏi đáp", actuarial: "Dữ liệu định phí", workbench: "Bàn tính phí" },
     legalNav: "Pháp lý",
     contact: "Liên hệ: {email}",
     team: "Đội INSUREGEN NEO · InsuNovate 2026",
