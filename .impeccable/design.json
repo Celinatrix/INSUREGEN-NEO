@@ -1,0 +1,397 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-16T15:06:56.659Z",
+  "title": "Design System: Family Reconnect",
+  "extensions": {
+    "colorMeta": {
+      "evening-navy": {
+        "role": "primary",
+        "displayName": "Evening Navy",
+        "canonical": "#1B2E52",
+        "oklch": "oklch(30.5% 0.07 262.1)",
+        "tonalRamp": [
+          "oklch(15% 0.023 262.1)",
+          "oklch(26.4% 0.045 262.1)",
+          "oklch(37.9% 0.062 262.1)",
+          "oklch(49.3% 0.069 262.1)",
+          "oklch(60.7% 0.067 262.1)",
+          "oklch(72.1% 0.056 262.1)",
+          "oklch(83.6% 0.036 262.1)",
+          "oklch(95% 0.011 262.1)"
+        ]
+      },
+      "porch-gold": {
+        "role": "primary",
+        "displayName": "Porch Gold",
+        "canonical": "#C9982E",
+        "oklch": "oklch(70.8% 0.131 82.3)",
+        "tonalRamp": [
+          "oklch(15% 0.042 82.3)",
+          "oklch(26.4% 0.085 82.3)",
+          "oklch(37.9% 0.116 82.3)",
+          "oklch(49.3% 0.13 82.3)",
+          "oklch(60.7% 0.126 82.3)",
+          "oklch(72.1% 0.104 82.3)",
+          "oklch(83.6% 0.067 82.3)",
+          "oklch(95% 0.021 82.3)"
+        ]
+      },
+      "lamp-gold": {
+        "role": "primary",
+        "displayName": "Lamp Gold",
+        "canonical": "#E3BB63",
+        "oklch": "oklch(81% 0.116 85.2)",
+        "tonalRamp": [
+          "oklch(15% 0.038 85.2)",
+          "oklch(26.4% 0.076 85.2)",
+          "oklch(37.9% 0.103 85.2)",
+          "oklch(49.3% 0.116 85.2)",
+          "oklch(60.7% 0.112 85.2)",
+          "oklch(72.1% 0.093 85.2)",
+          "oklch(83.6% 0.06 85.2)",
+          "oklch(95% 0.019 85.2)"
+        ]
+      },
+      "gold-ink": {
+        "role": "primary",
+        "displayName": "Gold Ink",
+        "canonical": "#7A5A12",
+        "oklch": "oklch(48.9% 0.093 82.3)",
+        "tonalRamp": [
+          "oklch(15% 0.03 82.3)",
+          "oklch(26.4% 0.061 82.3)",
+          "oklch(37.9% 0.083 82.3)",
+          "oklch(49.3% 0.093 82.3)",
+          "oklch(60.7% 0.09 82.3)",
+          "oklch(72.1% 0.074 82.3)",
+          "oklch(83.6% 0.048 82.3)",
+          "oklch(95% 0.015 82.3)"
+        ]
+      },
+      "care-green": {
+        "role": "secondary",
+        "displayName": "Care Green",
+        "canonical": "#1D7550",
+        "oklch": "oklch(50.2% 0.101 160.6)",
+        "tonalRamp": [
+          "oklch(15% 0.033 160.6)",
+          "oklch(26.4% 0.066 160.6)",
+          "oklch(37.9% 0.089 160.6)",
+          "oklch(49.3% 0.1 160.6)",
+          "oklch(60.7% 0.097 160.6)",
+          "oklch(72.1% 0.08 160.6)",
+          "oklch(83.6% 0.052 160.6)",
+          "oklch(95% 0.017 160.6)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "canonical": "#14223D",
+        "oklch": "oklch(25.5% 0.055 262.4)",
+        "tonalRamp": [
+          "oklch(15% 0.018 262.4)",
+          "oklch(26.4% 0.036 262.4)",
+          "oklch(37.9% 0.048 262.4)",
+          "oklch(49.3% 0.054 262.4)",
+          "oklch(60.7% 0.053 262.4)",
+          "oklch(72.1% 0.044 262.4)",
+          "oklch(83.6% 0.028 262.4)",
+          "oklch(95% 0.009 262.4)"
+        ]
+      },
+      "ink-secondary": {
+        "role": "neutral",
+        "displayName": "Ink Secondary",
+        "canonical": "#44506A",
+        "oklch": "oklch(43.2% 0.046 265.3)",
+        "tonalRamp": [
+          "oklch(15% 0.015 265.3)",
+          "oklch(26.4% 0.03 265.3)",
+          "oklch(37.9% 0.041 265.3)",
+          "oklch(49.3% 0.046 265.3)",
+          "oklch(60.7% 0.044 265.3)",
+          "oklch(72.1% 0.037 265.3)",
+          "oklch(83.6% 0.024 265.3)",
+          "oklch(95% 0.008 265.3)"
+        ]
+      },
+      "ink-muted": {
+        "role": "neutral",
+        "displayName": "Ink Muted",
+        "canonical": "#5B6580",
+        "oklch": "oklch(50.9% 0.045 268.9)",
+        "tonalRamp": [
+          "oklch(15% 0.015 268.9)",
+          "oklch(26.4% 0.029 268.9)",
+          "oklch(37.9% 0.04 268.9)",
+          "oklch(49.3% 0.045 268.9)",
+          "oklch(60.7% 0.043 268.9)",
+          "oklch(72.1% 0.036 268.9)",
+          "oklch(83.6% 0.023 268.9)",
+          "oklch(95% 0.007 268.9)"
+        ]
+      },
+      "hairline": {
+        "role": "neutral",
+        "displayName": "Hairline",
+        "canonical": "#E2E5EC",
+        "oklch": "oklch(92.2% 0.01 267.4)",
+        "tonalRamp": [
+          "oklch(15% 0.003 267.4)",
+          "oklch(26.4% 0.007 267.4)",
+          "oklch(37.9% 0.009 267.4)",
+          "oklch(49.3% 0.01 267.4)",
+          "oklch(60.7% 0.01 267.4)",
+          "oklch(72.1% 0.008 267.4)",
+          "oklch(83.6% 0.005 267.4)",
+          "oklch(95% 0.002 267.4)"
+        ]
+      },
+      "page": {
+        "role": "neutral",
+        "displayName": "Page",
+        "canonical": "#F7F8FA",
+        "oklch": "oklch(97.9% 0.003 264.5)",
+        "tonalRamp": [
+          "oklch(15% 0.001 264.5)",
+          "oklch(26.4% 0.002 264.5)",
+          "oklch(37.9% 0.003 264.5)",
+          "oklch(49.3% 0.003 264.5)",
+          "oklch(60.7% 0.003 264.5)",
+          "oklch(72.1% 0.002 264.5)",
+          "oklch(83.6% 0.001 264.5)",
+          "oklch(95% 0 264.5)"
+        ]
+      }
+    },
+    "themes": {
+      "source": "src/app/globals.css (:root[data-theme=dark] and prefers-color-scheme: dark)",
+      "dark": {
+        "page": "#0D1525",
+        "surface": "#141F35",
+        "surface-sunk": "#18243D",
+        "hairline": "#2A3A5A",
+        "ink": "#F4EEE6",
+        "ink-secondary": "#BAC3D3",
+        "ink-muted": "#A2ADC0",
+        "evening-navy": "#20345C",
+        "on-navy": "#F4EEE6",
+        "on-navy-muted": "#C0CAE0",
+        "porch-gold": "#E3B94A",
+        "on-gold": "#0D1525",
+        "gold-wash": "#3A331C",
+        "gold-ink": "#F0CB6F",
+        "care-green": "#62CC99",
+        "care-green-wash": "#143428"
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Hero headline, once per page; emphasis in gold-ink, never italic."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Section titles."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Card, box and large question titles."
+      },
+      "figure": {
+        "displayName": "Figure",
+        "purpose": "Hours, money and market figures that lead their block; tabular numbers."
+      },
+      "lead": {
+        "displayName": "Lead",
+        "purpose": "Opening paragraph under a headline, max 62ch, ink-secondary."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Running text; 15px inside cards."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Eyebrows, tags, table heads; sentence case, no tracking."
+      }
+    },
+    "shadows": [
+      {
+        "name": "lift",
+        "value": "0 1px 2px rgb(20 34 61 / .06), 0 10px 30px rgb(20 34 61 / .08)",
+        "purpose": "Selected state only: active protection layer, current claim step."
+      },
+      {
+        "name": "object",
+        "value": "0 24px 60px rgb(20 34 61 / .28)",
+        "purpose": "Holdable objects floating on the page: Care Wallet card, claims phone. Replaced by an 8% white hairline in dark theme."
+      }
+    ],
+    "motion": [
+      {
+        "name": "feedback",
+        "value": "0.15s ease",
+        "purpose": "Button background and press scale (0.98)."
+      },
+      {
+        "name": "state",
+        "value": "0.2s ease",
+        "purpose": "Colour, border and opacity changes on selection; named properties only, never transition: all."
+      },
+      {
+        "name": "reveal",
+        "value": "opacity 0.6s ease, transform 0.6s ease (translateY 14px)",
+        "purpose": "One fade-and-rise for content below the fold; disabled under prefers-reduced-motion."
+      },
+      {
+        "name": "fill",
+        "value": "width 0.9s cubic-bezier(.2,.7,.2,1)",
+        "purpose": "Care Hours ladder tracks filling in."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "nav-collapse",
+        "value": "1400px"
+      },
+      {
+        "name": "single-column",
+        "value": "900px"
+      },
+      {
+        "name": "compact-header",
+        "value": "560px"
+      },
+      {
+        "name": "minimal-header",
+        "value": "400px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The one gold action on a screen.",
+      "html": "<button class=\"ds-btn-primary\">Tính phí của gia đình bạn</button>",
+      "css": ".ds-btn-primary{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:12px 22px;border-radius:999px;border:1.5px solid transparent;background:var(--coral,#C9982E);color:var(--on-coral,#14223D);font-family:var(--font-ui,'Be Vietnam Pro',sans-serif);font-weight:600;font-size:16px;cursor:pointer;transition:transform .15s ease,background-color .15s ease}.ds-btn-primary:hover{background:color-mix(in srgb,var(--coral,#C9982E) 88%,var(--ink,#14223D))}.ds-btn-primary:active{transform:scale(.98)}.ds-btn-primary:focus-visible{outline:3px solid var(--focus,#C9982E);outline-offset:3px}"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Secondary action beside the primary.",
+      "html": "<button class=\"ds-btn-ghost\">Xem cách hoạt động</button>",
+      "css": ".ds-btn-ghost{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:12px 22px;border-radius:999px;border:1.5px solid var(--ink,#14223D);background:transparent;color:var(--ink,#14223D);font-family:var(--font-ui,'Be Vietnam Pro',sans-serif);font-weight:600;font-size:16px;cursor:pointer;transition:transform .15s ease,background-color .15s ease}.ds-btn-ghost:hover{background:var(--surface,#FFFFFF)}.ds-btn-ghost:active{transform:scale(.98)}.ds-btn-ghost:focus-visible{outline:3px solid var(--focus,#C9982E);outline-offset:3px}"
+    },
+    {
+      "name": "Tag",
+      "kind": "chip",
+      "refersTo": "tag",
+      "description": "Small section or state label; gold, or green for 'protecting'.",
+      "html": "<span class=\"ds-tag\">Kịch bản minh họa</span> <span class=\"ds-tag ds-tag-ok\">Đang bảo vệ</span>",
+      "css": ".ds-tag{display:inline-flex;align-items:center;gap:6px;font-family:var(--font-ui,'Be Vietnam Pro',sans-serif);font-size:13px;font-weight:500;padding:4px 10px;border-radius:999px;background:var(--coral-tint,#F6ECD3);color:var(--coral-ink,#7A5A12)}.ds-tag-ok{background:var(--ok-tint,#DCEFE4);color:var(--ok,#1D7550)}"
+    },
+    {
+      "name": "Text Input",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Form field; 16px text so mobile Safari does not zoom.",
+      "html": "<label class=\"ds-field\"><span>Số điện thoại</span><input class=\"ds-input\" type=\"tel\" placeholder=\"0901 234 567\"></label>",
+      "css": ".ds-field{display:grid;gap:6px;font-family:var(--font-ui,'Be Vietnam Pro',sans-serif);font-weight:600;font-size:15px;color:var(--ink,#14223D)}.ds-input{min-height:48px;padding:10px 14px;border-radius:12px;border:1.5px solid var(--line,#E2E5EC);background:var(--bg,#F7F8FA);font:inherit;font-weight:400;font-size:16px;color:var(--ink,#14223D)}.ds-input:focus-visible{outline:3px solid var(--focus,#C9982E);outline-offset:1px}"
+    },
+    {
+      "name": "Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Flat surface with a hairline; lifts only when selected.",
+      "html": "<div class=\"ds-card\"><h3>Ngày 1 · Nhập viện cấp cứu</h3><p>Cô giáo gọi: chưa ai đón bé Na.</p></div>",
+      "css": ".ds-card{background:var(--surface,#FFFFFF);border:1px solid var(--line,#E2E5EC);border-radius:14px;padding:20px;display:grid;gap:12px;color:var(--ink,#14223D);font-family:var(--font-ui,'Be Vietnam Pro',sans-serif);transition:border-color .2s ease}.ds-card h3{margin:0;font-family:var(--font-display,'Fraunces',serif);font-weight:500;font-size:21px}.ds-card p{margin:0;font-size:15px;color:var(--ink-2,#44506A)}.ds-card:hover{border-color:var(--ink-3,#5B6580)}"
+    },
+    {
+      "name": "Navigation Link",
+      "kind": "nav",
+      "description": "Header link; current page sits on the surface step.",
+      "html": "<nav class=\"ds-nav\"><a href=\"#\">Vấn đề</a><a href=\"#\" aria-current=\"page\">Ví Chăm sóc</a><a href=\"#\">Tính phí</a></nav>",
+      "css": ".ds-nav{display:flex;gap:4px;font-family:var(--font-ui,'Be Vietnam Pro',sans-serif)}.ds-nav a{display:flex;align-items:center;min-height:44px;padding:0 12px;border-radius:10px;text-decoration:none;font-size:15px;font-weight:500;color:var(--ink-2,#44506A);transition:background-color .2s ease,color .2s ease}.ds-nav a:hover,.ds-nav a[aria-current=page]{color:var(--ink,#14223D);background:var(--surface,#FFFFFF)}.ds-nav a:focus-visible{outline:3px solid var(--focus,#C9982E);outline-offset:3px}"
+    },
+    {
+      "name": "Care Wallet",
+      "kind": "custom",
+      "refersTo": "care-wallet",
+      "description": "Signature object: navy card with Care Hours left, an hour-per-cell meter and the claim events.",
+      "html": "<div class=\"ds-wallet\"><div class=\"ds-w-label\">Ví Chăm sóc</div><div class=\"ds-w-amt\"><strong>14</strong><span>/ 20 giờ còn lại</span></div><div class=\"ds-w-meter\"><i class=\"on\"></i><i class=\"on\"></i><i class=\"on\"></i><i class=\"on\"></i><i class=\"on\"></i><i class=\"on\"></i><i class=\"on\"></i><i></i><i></i><i></i></div><div class=\"ds-w-ev\"><span>Chị Lan nằm viện 3 ngày</span><b>+20 giờ</b></div><div class=\"ds-w-note\">Minh họa.</div></div>",
+      "css": ".ds-wallet{width:min(100%,420px);background:var(--navy,#1B2E52);color:var(--navy-ink,#FFFFFF);border-radius:24px;padding:24px;display:grid;gap:18px;box-shadow:0 24px 60px rgb(20 34 61 / .28);font-family:var(--font-ui,'Be Vietnam Pro',sans-serif)}.ds-w-label{font-size:13px;font-weight:500;color:var(--navy-ink-2,#C9D2E3)}.ds-w-amt{display:flex;align-items:baseline;gap:8px}.ds-w-amt strong{font-family:var(--font-display,'Fraunces',serif);font-weight:500;font-size:64px;line-height:1;font-variant-numeric:tabular-nums}.ds-w-amt span{font-size:18px;color:var(--navy-ink-2,#C9D2E3)}.ds-w-meter{display:grid;grid-template-columns:repeat(10,1fr);gap:3px}.ds-w-meter i{height:14px;border-radius:3px;background:rgb(255 255 255 / .14)}.ds-w-meter i.on{background:var(--card-accent,#E3BB63)}.ds-w-ev{display:flex;justify-content:space-between;gap:12px;padding:12px 16px;border-radius:12px;background:rgb(255 255 255 / .08);font-size:14px}.ds-w-ev b{color:var(--card-accent,#E3BB63)}.ds-w-note{font-size:12px;color:var(--navy-ink-2,#C9D2E3)}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Ngọn đèn hiên nhà (The Porch Light)",
+    "overview": "Navy là buổi tối của một gia đình đang có chuyện: mẹ nằm viện, bố chạy qua lại, con chưa ai đón. Vàng là ngọn đèn hiên vẫn sáng trong buổi tối đó, dấu hiệu rằng việc nhà vẫn có người lo. Cả hệ thiết kế dựng trên cặp này: nền yên, sáng có chủ đích, và ánh vàng chỉ bật ở nơi gia đình được đỡ một tay.\n\nGiao diện ấm, bình tĩnh và đáng tin hơn là náo nhiệt. Mật độ vừa phải, nhiều khoảng thở, tiêu đề serif Fraunces nói như người thật, chữ thường Be Vietnam Pro đọc dễ ở tiếng Việt có dấu. Bề mặt phẳng, phân lớp bằng nền và đường viền mảnh; chỉ những vật thể \"cầm được\" như thẻ Ví Chăm sóc và điện thoại minh họa mới nổi lên khỏi trang.\n\nTrang có giao diện sáng mặc định và giao diện tối đầy đủ (theo hệ thống hoặc nút chuyển). Ở giao diện tối, buổi tối trở thành nền trang và ngọn đèn sáng hơn một bậc.",
+    "keyCharacteristics": [
+      "Navy cho những khoảnh khắc nặng ký (Ví, kết quả tính phí, phần đăng ký cuối trang), vàng cho hành động chính và con số quan trọng",
+      "Serif ấm cho tiêu đề và con số lớn, sans rõ ràng cho mọi thứ còn lại",
+      "Phẳng, viền mảnh, bóng chỉ dành cho vật thể nổi",
+      "Bo tròn mềm, nút dạng viên thuốc, vùng chạm tối thiểu 44px",
+      "Chuyển động ngắn và lặng, không lặp, không nảy"
+    ],
+    "rules": [
+      {
+        "name": "The One Lamp Rule",
+        "body": "Mỗi màn hình chỉ có một hành động vàng nổi bật. Nếu hai nút cùng vàng cạnh nhau, một nút phải chuyển sang ghost.",
+        "section": "colors"
+      },
+      {
+        "name": "The Gold-on-Navy Rule",
+        "body": "Trên nền navy dùng lamp-gold; trên nền sáng dùng porch-gold cho nền nút và gold-ink cho chữ. Vàng không bao giờ làm màu chữ trên nền trắng ở cỡ nhỏ.",
+        "section": "colors"
+      },
+      {
+        "name": "The Green Means Paid Rule",
+        "body": "Xanh lá chỉ xuất hiện khi có điều tốt đã xảy ra. Không dùng xanh lá cho nút, liên kết hay trang trí.",
+        "section": "colors"
+      },
+      {
+        "name": "The Sentence Case Rule",
+        "body": "Không text-transform: uppercase và không letter-spacing dương trên nhãn. Chữ hiện đúng như người viết.",
+        "section": "typography"
+      },
+      {
+        "name": "The 600 Ceiling Rule",
+        "body": "Trọng lượng chữ là 400, 500 và 600. Không dùng 700 trở lên; thứ bậc đến từ cỡ chữ, font và màu.",
+        "section": "typography"
+      },
+      {
+        "name": "The Numbers Are Figures Rule",
+        "body": "Số tiền, số giờ, số ngày luôn tabular-nums và theo một định dạng: 500.000đ và 2 tỷ đồng ở tiếng Việt, VND 500,000 ở tiếng Anh.",
+        "section": "typography"
+      },
+      {
+        "name": "The Flat-By-Default Rule",
+        "body": "Bề mặt phẳng khi nghỉ. Bóng chỉ xuất hiện khi một thứ được chọn, hoặc khi nó là vật thể thật.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Night Has No Shadows Rule",
+        "body": "Ở giao diện tối, bỏ bóng; vật thể nổi dùng viền trắng 8% thay cho bóng.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do dùng navy cho những khối mang nhiều thông tin nhất (Ví, kết quả phí, form cuối trang) và để phần còn lại sáng, lặng.",
+      "Do đặt mọi con số bằng Fraunces với tabular-nums khi nó là nhân vật chính của khối.",
+      "Do giữ khoảng cách trên lưới 4px và bo tròn lồng nhau đúng toán (12 / 14 / 22 / 24).",
+      "Do đặt rõ chữ \"Minh họa\" trên mọi vật thể có số liệu giả định.",
+      "Do dùng chuyển động 0.15–0.2s ease cho hover và trạng thái, và chỉ một lần hiện dần khi cuộn (0.6s)."
+    ],
+    "donts": [
+      "Don't viết hoa toàn bộ nhãn hay giãn chữ (text-transform: uppercase, letter-spacing dương).",
+      "Don't dùng chữ nghiêng để nhấn, hay trọng lượng 700 trở lên.",
+      "Don't dùng gradient chuyển giữa hai sắc (xanh lá → vàng → navy), bóng màu vàng, hay quầng sáng.",
+      "Don't dùng transition: all hay phóng to phần tử khi được chọn.",
+      "Don't dùng bảng màu xanh dương + xanh lá của design-system/insuregen-neo/MASTER.md; file đó đã lỗi thời.",
+      "Don't thêm logo đối tác, lời chứng thực hay số khách hàng không có thật."
+    ]
+  }
+}
