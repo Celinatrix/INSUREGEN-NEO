@@ -471,6 +471,8 @@ section{padding-block:clamp(64px, 9vw, 120px);scroll-margin-top:72px}
 .chip.off{color:var(--navy-ink-2);border-color:rgb(255 255 255 / .16);text-decoration:line-through}
 .demo-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:20px;align-items:start}
 @media (max-width: 960px){ .demo-grid{grid-template-columns:1fr} .cis-out{position:static} }
+/* Lịch sử ví đi theo form bên trái; dài quá màn hình thì tự cuộn */
+@media (min-width: 961px){ .demo-side{position:sticky;top:calc(84px + env(safe-area-inset-top,0px));max-height:calc(100dvh - 100px);overflow-y:auto;overscroll-behavior:contain} }
 .kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
 .kpi{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px;display:grid;gap:4px}
 .kpi b{font-family:var(--font-display);font-weight:500;font-size:30px;line-height:1.1;font-variant-numeric:tabular-nums}

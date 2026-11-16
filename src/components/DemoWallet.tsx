@@ -371,9 +371,10 @@ export function DemoWallet({ lang, t }: { lang: Locale; t: T }) {
           </form>
         </div>
 
-        <div className="box">
+        {/* Cột kết quả: dính dưới header trên desktop để luôn thấy lịch sử ví khi điền form bên trái */}
+        <section className="box demo-side" aria-labelledby="history-title" tabIndex={0}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
-            <h2 className="box-title">{d.history}</h2>
+            <h2 className="box-title" id="history-title">{d.history}</h2>
             <button type="button" className="btn btn-ghost btn-sm" onClick={deleteAndRestart} aria-describedby="reset-help">{d.reset}</button>
           </div>
           {history.length === 0 ? (
@@ -391,7 +392,7 @@ export function DemoWallet({ lang, t }: { lang: Locale; t: T }) {
           )}
           <p className="fine">{fill(d.storageNote, { where: wallet.storage === "supabase" ? d.storageDb : d.storageMemory })}</p>
           <p className="fine" id="reset-help">{d.resetHelp} <Link href={`/${lang}/chinh-sach-bao-mat`}>{d.privacy}</Link></p>
-        </div>
+        </section>
       </div>
     </div>
   );
