@@ -31,6 +31,17 @@ const vi = {
     ctaPrimary: "Tính phí của gia đình bạn",
     ctaSecondary: "Xem cách hoạt động",
     facts: ["{sum} cho cả bố và mẹ", "Trợ cấp {cash}/ngày nằm viện", "{hours} Giờ chăm sóc mỗi bố/mẹ mỗi năm"],
+    wallet: {
+      aria: "Minh họa Ví Chăm sóc của gia đình anh Minh sau khi chị Lan nằm viện {days} ngày",
+      label: "Ví Chăm sóc",
+      family: "Gia đình anh Minh · Quận 7",
+      status: "Đã duyệt",
+      left: "/ {granted} giờ còn lại",
+      grant: "Chị Lan nằm viện {days} ngày",
+      cash: "Trợ cấp nằm viện {days} × {perDay}",
+      booked: "Trông bé Na tại nhà",
+      note: "Minh họa. Mỗi lần cấp giờ có hiệu lực {validity} ngày.",
+    },
   },
   problem: {
     tag: "Kịch bản minh họa",
@@ -317,7 +328,7 @@ const vi = {
     submit: "Gửi thông tin",
     sending: "Đang gửi...",
     note: "Sản phẩm ý tưởng cho cuộc thi, chưa được chào bán.",
-    successTitle: "Cảm ơn {name}!",
+    successTitle: "Cảm ơn {name}",
     successBody: "Chúng tôi đã ghi nhận yêu cầu và sẽ liên hệ lại trong 24 giờ làm việc.",
     again: "Gửi yêu cầu khác",
     errors: {

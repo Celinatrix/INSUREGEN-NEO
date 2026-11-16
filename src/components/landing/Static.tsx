@@ -1,6 +1,7 @@
 // Các phần tĩnh của trang chủ (Server Components).
 import Link from "next/link";
-import { type Dict, type Locale, commonVars, fmt } from "@/i18n";
+import { type Dict, type Locale, commonVars, fmt, vnd } from "@/i18n";
+import { hospitalCash, pathwayAHours } from "@/lib/rules";
 import {
   ACTIVITIES,
   CHILD_BANDS,
@@ -48,8 +49,55 @@ export function Hero({ lang, d }: { lang: Locale; d: Dict }) {
             ))}
           </ul>
         </div>
+        <HeroWallet lang={lang} d={d} />
       </div>
     </section>
+  );
+}
+
+// Thẻ Ví Chăm sóc minh họa: chị Lan nằm viện 3 ngày, cùng kịch bản với phần "Vấn đề".
+const HERO_STAY_DAYS = 3;
+const HERO_BOOKED_HOURS = 6;
+
+function HeroWallet({ lang, d }: { lang: Locale; d: Dict }) {
+  const w = d.hero.wallet;
+  const granted = pathwayAHours(HERO_STAY_DAYS);
+  const left = granted - HERO_BOOKED_HOURS;
+  const cash = hospitalCash(HERO_STAY_DAYS).amount;
+  const vars = {
+    days: HERO_STAY_DAYS,
+    granted,
+    perDay: vnd(lang, RIDER.hospitalCashPerDay),
+    validity: RIDER.grantValidityDays,
+  };
+  return (
+    <figure className="wallet-stage" aria-label={fmt(w.aria, vars)}>
+      <div className="wallet">
+        <div className="wallet-top">
+          <div>
+            <div className="wallet-label">{w.label}</div>
+            <div className="wallet-family">{w.family}</div>
+          </div>
+          <span className="wallet-status"><Check />{w.status}</span>
+        </div>
+        <div className="wallet-amount">
+          <strong>{left}</strong>
+          <span>{fmt(w.left, vars)}</span>
+        </div>
+        <div className="meter" aria-hidden="true">
+          {Array.from({ length: granted }, (_, i) => <i key={i} className={i < left ? "on" : undefined} />)}
+        </div>
+        <ul className="wallet-events">
+          <li className="wallet-event"><span>{fmt(w.grant, vars)}</span><b className="num">+{granted} {d.units.hours}</b></li>
+          <li className="wallet-event"><span>{w.booked}</span><span className="num">−{HERO_BOOKED_HOURS} {d.units.hours}</span></li>
+          <li className="wallet-event"><span>{fmt(w.cash, vars)}</span><b className="num">{vnd(lang, cash)}</b></li>
+        </ul>
+        <div className="wallet-services">
+          {SERVICES.map((s) => <span key={s}>{d.services.names[s]}</span>)}
+        </div>
+        <figcaption className="wallet-note">{fmt(w.note, vars)}</figcaption>
+      </div>
+    </figure>
   );
 }
 
