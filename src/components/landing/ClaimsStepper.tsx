@@ -120,7 +120,7 @@ export function ClaimsStepper({ c, units, story, demoHref }: { c: Dict["claims"]
             <h2 id="claims-title">{c.title}</h2>
             <p className="lead">{c.lead}</p>
           </div>
-          <div className="progress" aria-hidden="true"><span style={{ width: `${((step + 1) / c.steps.length) * 100}%` }} /></div>
+          <div className="progress" aria-hidden="true"><span style={{ transform: `scaleX(${(step + 1) / c.steps.length})` }} /></div>
           <ol className="steps">
             {c.steps.map((s, i) => (
               <li key={s.t}>
