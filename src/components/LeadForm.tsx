@@ -89,7 +89,7 @@ export function LeadForm({ lang, t }: { lang: Locale; t: Dict["lead"] }) {
         <p className="fine" id="lead-purpose">{t.purpose}</p>
         <div className="f">
           <label htmlFor="f-name">{t.name}</label>
-          <input id="f-name" name="name" type="text" autoComplete="name" className="input" required aria-required="true" {...field("name")} />
+          <input id="f-name" name="name" type="text" autoComplete="name" autoCapitalize="words" enterKeyHint="next" className="input" required aria-required="true" {...field("name")} />
           {err("name")}
         </div>
         <div className="row2">
@@ -100,7 +100,7 @@ export function LeadForm({ lang, t }: { lang: Locale; t: Dict["lead"] }) {
           </div>
           <div className="f">
             <label htmlFor="f-email">{t.email} <span className="opt">({t.optional})</span></label>
-            <input id="f-email" name="email" type="email" inputMode="email" autoComplete="email" className="input" {...field("email")} />
+            <input id="f-email" name="email" type="email" inputMode="email" autoComplete="email" autoCapitalize="none" autoCorrect="off" spellCheck={false} enterKeyHint="next" className="input" {...field("email")} />
             {err("email")}
           </div>
         </div>

@@ -38,6 +38,7 @@ export function Header({ lang, nav }: { lang: Locale; nav: Dict["nav"] }) {
     const cur = root.dataset.theme || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
     const next = cur === "dark" ? "light" : "dark";
     root.dataset.theme = next;
+    document.querySelectorAll('meta[name="theme-color"]').forEach((m) => m.setAttribute("content", next === "dark" ? "#0D1525" : "#F7F8FA"));
     try {
       localStorage.setItem("fr-theme", next);
     } catch {}

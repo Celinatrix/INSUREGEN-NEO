@@ -33,6 +33,7 @@ export async function generateMetadata({ params }: LayoutProps<"/[lang]">): Prom
 
 export const viewport: Viewport = {
   viewportFit: "cover",
+  interactiveWidget: "resizes-content",
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "#F7F8FA" },
     { media: "(prefers-color-scheme: dark)", color: "#0D1525" },
@@ -40,7 +41,7 @@ export const viewport: Viewport = {
 };
 
 // Áp dụng giao diện sáng/tối đã lưu trước khi trang hiển thị, tránh nháy màu.
-const themeScript = `try{var t=localStorage.getItem('fr-theme');if(t==='dark'||t==='light')document.documentElement.dataset.theme=t}catch(e){}`;
+const themeScript = `try{var t=localStorage.getItem('fr-theme');if(t==='dark'||t==='light'){document.documentElement.dataset.theme=t;document.querySelectorAll('meta[name="theme-color"]').forEach(function(m){m.setAttribute('content',t==='dark'?'#0D1525':'#F7F8FA')})}}catch(e){}`;
 
 export default async function RootLayout({ children, params }: LayoutProps<"/[lang]">) {
   const { lang } = await params;
