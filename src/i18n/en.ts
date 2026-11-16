@@ -32,6 +32,17 @@ const en: Dict = {
     ctaPrimary: "Price your family's plan",
     ctaSecondary: "See how it works",
     facts: ["{sum} covering both parents", "{cash} per hospital day", "{hours} Care Hours per parent a year"],
+    wallet: {
+      aria: "Illustrative Care Wallet for Minh's family after Lan's {days}-day hospital stay",
+      label: "Care Wallet",
+      family: "Minh's family · District 7",
+      status: "Approved",
+      left: "/ {granted} hours left",
+      grant: "Lan in hospital for {days} days",
+      cash: "Hospital cash {days} × {perDay}",
+      booked: "Childcare at home for Na",
+      note: "Illustration. Each grant of hours is valid for {validity} days.",
+    },
   },
   problem: {
     tag: "Illustrative scenario",
@@ -318,7 +329,7 @@ const en: Dict = {
     submit: "Send my details",
     sending: "Sending...",
     note: "A concept product for a competition, not offered for sale.",
-    successTitle: "Thank you, {name}!",
+    successTitle: "Thank you, {name}",
     successBody: "We've recorded your request and will get back to you within one working day.",
     again: "Send another request",
     errors: {

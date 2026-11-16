@@ -25,7 +25,8 @@ export function Header({ lang, nav }: { lang: Locale; nav: Dict["nav"] }) {
     { href: `${home}#van-de`, label: nav.problem },
     { href: `${home}#vi-cham-soc`, label: nav.wallet },
     { href: `${home}#boi-thuong`, label: nav.claims },
-    { href: `${home}/tinh-phi`, label: nav.pricing },
+    // Trên desktop nút vàng "Tính phí" đã làm việc này; link chỉ hiện trong menu di động.
+    { href: `${home}/tinh-phi`, label: nav.pricing, menuOnly: true },
     { href: `${home}/cis`, label: nav.cis },
     { href: `${home}/vi-cham-soc`, label: nav.demo },
     { href: `${home}/co-so-dinh-phi`, label: nav.basis },
@@ -51,7 +52,7 @@ export function Header({ lang, nav }: { lang: Locale; nav: Dict["nav"] }) {
         </Link>
         <ul className={`nav-links${open ? " open" : ""}`} id="navLinks">
           {links.map((l) => (
-            <li key={l.href}>
+            <li key={l.href} className={l.menuOnly ? "menu-only" : undefined}>
               <Link
                 href={l.href}
                 onClick={() => setOpen(false)}
