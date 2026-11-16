@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import type { Dict } from "@/i18n";
 
-type Story = { days: number; hours: number; cash: string; limit: number; used: number };
+type Story = { days: number; hours: number; cash: string; limit: number; childcareHours: number; schoolTrips: number };
 
 const Doc = () => (
   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--ok)" strokeWidth="2" aria-hidden="true">
@@ -28,27 +28,19 @@ export function ClaimsStepper({ c, units, story, demoHref }: { c: Dict["claims"]
   const [step, setStep] = useState(0);
   const p = c.phone;
   const fill = (s: string) =>
-    s.replace("{cash}", story.cash).replace("{hours}", String(story.hours))
+    s.replace("{cash}", story.cash).replace("{hours}", String(story.hours)).replace("{days}", String(story.days))
       .replace("{left}", String(story.limit - story.hours)).replace("{limit}", String(story.limit));
-  const left = story.hours - story.used;
+  // Bảng 3.4: 30 giờ trông trẻ + 5 chuyến đưa đón (2 Giờ chăm sóc/chuyến) dùng hết 40 giờ được cấp.
+  const tripCredits = story.schoolTrips * 2;
+  const left = story.hours - story.childcareHours - tripCredits;
 
   const screens = [
     <>
-      <div className="app-h">{p.report}</div>
+      <div className="app-h">{p.docs}</div>
       <div className="body">
         <div className="m-label">{p.who}</div>
         <div className="m-opt sel"><b>Minh</b><span style={{ marginLeft: "auto", display: "inline-flex" }}><Tick /></span></div>
-        <div className="m-opt">Lan</div>
-        <div className="m-label" style={{ marginTop: 6 }}>{p.what}</div>
-        <div className="m-opt sel">{p.inHospital}<span style={{ marginLeft: "auto", display: "inline-flex" }}><Tick /></span></div>
-        <div className="m-opt">{p.atHome}</div>
-        <div className="m-btn">{p.continue}</div>
-      </div>
-    </>,
-    <>
-      <div className="app-h">{p.docs}</div>
-      <div className="body">
-        <div className="m-doc"><Doc /><span><b>{p.discharge}</b><br /><span className="m-label">IMG_0412.jpg</span></span></div>
+        <div className="m-doc"><Doc /><span><b>{p.discharge}</b><br /><span className="m-label">{p.photo}</span></span></div>
         <div className="m-doc"><Doc /><span><b>{p.questionnaire}</b><br /><span className="m-label">{p.completed}</span></span></div>
         <div className="m-doc" style={{ justifyContent: "center" }}><Plus />{p.addPhoto}</div>
         <p className="m-label" style={{ fontWeight: 400 }}>{p.privacy}</p>
@@ -60,17 +52,18 @@ export function ClaimsStepper({ c, units, story, demoHref }: { c: Dict["claims"]
       <div className="body">
         <div className="m-card"><div className="m-row"><span>{p.hospital}</span><b>{p.hospitalName}</b></div></div>
         <div className="m-card"><div className="m-row"><span>{p.daysAdmitted}</span><b className="num">{story.days} {units.days}</b></div></div>
-        <div className="m-card"><div className="m-row"><span>{p.policy}</span><span style={{ color: "var(--ok)", fontWeight: 600 }}>{p.inForce}</span></div></div>
-        <div className="m-card navy"><div className="m-label">{p.tier}</div><div style={{ fontSize: 15, marginTop: 4 }}>{p.tierValue}</div></div>
-      </div>
-    </>,
-    <>
-      <div className="app-h">{p.checking}</div>
-      <div className="body">
         <div className="m-card"><div className="m-row"><span>{p.datesMatch}</span><span style={{ color: "var(--ok)" }}><Tick /></span></div></div>
         <div className="m-card"><div className="m-row"><span>{p.waiting}</span><span style={{ color: "var(--ok)" }}><Tick /></span></div></div>
         <div className="m-card"><div className="m-row"><span>{p.flags}</span><b>0</b></div></div>
-        <div className="m-card navy"><div className="m-label">{p.noReview}</div><div className="m-meter"><span style={{ width: "85%" }} /></div></div>
+      </div>
+    </>,
+    <>
+      <div className="app-h">{p.record}</div>
+      <div className="body">
+        <div className="m-card"><div className="m-row"><span>{p.policy}</span><span style={{ color: "var(--ok)", fontWeight: 600 }}>{p.inForce}</span></div></div>
+        <div className="m-card"><div className="m-row"><span>{p.pathway}</span><b>{p.inHospital}</b></div></div>
+        <div className="m-card navy"><div className="m-label">{p.tier}</div><div style={{ fontSize: 15, marginTop: 4 }}>{p.tierValue}</div></div>
+        <p className="m-label" style={{ fontWeight: 400 }}>{fill(p.remainingYear)}</p>
       </div>
     </>,
     <>
@@ -83,29 +76,23 @@ export function ClaimsStepper({ c, units, story, demoHref }: { c: Dict["claims"]
           <div className="m-meter"><span style={{ width: `${(story.hours / story.limit) * 100}%` }} /></div>
         </div>
         <div className="m-card"><div className="m-row"><span>{p.cash}</span><b className="num">{story.cash}</b></div></div>
-        <p className="m-label" style={{ fontWeight: 400 }}>{fill(p.remainingYear)}</p>
         <div className="m-btn">{p.book}</div>
       </div>
     </>,
     <>
-      <div className="app-h">{p.today}</div>
+      <div className="app-h">{p.plan}</div>
       <div className="body">
         <div className="m-card navy">
           <div className="m-row"><span className="m-label">{p.remaining}</span><b className="num">{left}/{story.hours} {units.hours}</b></div>
           <div className="m-meter"><span style={{ width: `${(left / story.hours) * 100}%` }} /></div>
         </div>
         <div className="m-card">
-          <div className="m-row"><b>{p.pickup}</b><span className="num">16:30</span></div>
-          <div className="m-label" style={{ fontWeight: 400 }}>{p.pickupWho}</div>
-        </div>
-        <div className="m-card">
-          <div className="m-row"><b>{p.childcareHome}</b><span className="num">17:00–21:00</span></div>
+          <div className="m-row"><b>{p.childcareHome}</b><span className="num">{story.childcareHours} {units.hours}</span></div>
           <div className="m-label" style={{ fontWeight: 400 }}>{p.contracted}</div>
         </div>
-        <div className="m-track">
-          <div className="done">{p.arrived}</div>
-          <div className="now"><b>{p.heading}</b></div>
-          <div>{p.handover}</div>
+        <div className="m-card">
+          <div className="m-row"><b>{p.pickup}</b><span className="num">{story.schoolTrips} {units.trips}</span></div>
+          <div className="m-label" style={{ fontWeight: 400 }}>{p.pickupWho}</div>
         </div>
       </div>
     </>,

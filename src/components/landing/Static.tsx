@@ -56,13 +56,15 @@ export function Hero({ lang, d }: { lang: Locale; d: Dict }) {
 }
 
 // Thẻ Ví Chăm sóc minh họa: chị Lan nằm viện 3 ngày, cùng kịch bản với phần "Vấn đề".
-const HERO_STAY_DAYS = 3;
-const HERO_BOOKED_HOURS = 6;
+// Bảng 3.4 (ví dụ trong đề xuất): bố nằm viện 8 ngày; dùng 30 giờ trông trẻ và 5 chuyến đưa đón (40 Giờ chăm sóc).
+const HERO_STAY_DAYS = 8;
+const HERO_CHILDCARE_HOURS = 30;
+const HERO_SCHOOL_TRIPS = 5;
 
 function HeroWallet({ lang, d }: { lang: Locale; d: Dict }) {
   const w = d.hero.wallet;
   const granted = pathwayAHours(HERO_STAY_DAYS);
-  const left = granted - HERO_BOOKED_HOURS;
+  const tripCredits = HERO_SCHOOL_TRIPS * CREDITS_PER_SERVICE_UNIT.transport;
   const cash = hospitalCash(HERO_STAY_DAYS).amount;
   const vars = {
     days: HERO_STAY_DAYS,
@@ -81,15 +83,16 @@ function HeroWallet({ lang, d }: { lang: Locale; d: Dict }) {
           <span className="wallet-status"><Check />{w.status}</span>
         </div>
         <div className="wallet-amount">
-          <strong>{left}</strong>
-          <span>{fmt(w.left, vars)}</span>
+          <strong>{granted}</strong>
+          <span>{w.granted}</span>
         </div>
         <div className="meter" aria-hidden="true">
-          {Array.from({ length: granted }, (_, i) => <i key={i} className={i < left ? "on" : undefined} />)}
+          {Array.from({ length: granted }, (_, i) => <i key={i} className="on" />)}
         </div>
         <ul className="wallet-events">
           <li className="wallet-event"><span>{fmt(w.grant, vars)}</span><b className="num">+{granted} {d.units.hours}</b></li>
-          <li className="wallet-event"><span>{w.booked}</span><span className="num">−{HERO_BOOKED_HOURS} {d.units.hours}</span></li>
+          <li className="wallet-event"><span>{fmt(w.childcare, { n: HERO_CHILDCARE_HOURS })}</span><span className="num">−{HERO_CHILDCARE_HOURS} {d.units.hours}</span></li>
+          <li className="wallet-event"><span>{fmt(w.transport, { n: HERO_SCHOOL_TRIPS })}</span><span className="num">−{tripCredits} {d.units.hours}</span></li>
           <li className="wallet-event"><span>{fmt(w.cash, vars)}</span><b className="num">{vnd(lang, cash)}</b></li>
         </ul>
         <div className="wallet-services">

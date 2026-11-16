@@ -12,13 +12,15 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
   if (!hasLocale(lang)) notFound();
   const d = getDict(lang);
   const vars = commonVars(lang);
-  const storyDays = 7;
+  // Bảng 3.4: bố nằm viện 8 ngày → 40 Giờ chăm sóc và 4.000.000đ; dùng 30 giờ trông trẻ + 5 chuyến đưa đón.
+  const storyDays = 8;
   const story = {
     days: storyDays,
     hours: pathwayAHours(storyDays),
     cash: vnd(lang, hospitalCash(storyDays).amount),
     limit: RIDER.careHoursPerParentYear,
-    used: 12,
+    childcareHours: 30,
+    schoolTrips: 5,
   };
 
   return (

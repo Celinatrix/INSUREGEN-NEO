@@ -14,7 +14,7 @@ Family Reconnect là sản phẩm bảo hiểm cho gia đình trẻ ở đô th�
 
 ## Vấn đề
 
-Nhà anh Minh ở Quận 7: hai vợ chồng đi làm, bé Na 4 tuổi học mẫu giáo, ông bà ở quê. Một sáng thứ Hai chị Lan nhập viện cấp cứu. Viện phí đã có bảo hiểm y tế lo. Nhưng chiều đó không ai đón bé Na. Hôm sau anh Minh phải nghỉ làm, cả nhà ăn mì gói, và phải tìm người trông con giá gấp qua nhóm Zalo.
+Ví dụ trong đề xuất (Bảng 3.4): bố 34 tuổi, mẹ 30 tuổi, con nhỏ nhất 3 tuổi. Khi bố hoặc mẹ nằm viện, viện phí đã có bảo hiểm y tế lo, nhưng việc trông con, bữa ăn và đưa đón đi học vẫn phải tiếp tục. Người còn lại vừa đi làm vừa gánh phần việc của cả hai, hoặc gia đình phải thuê người giúp gấp, và khó tìm được người đáng tin giữa lúc rối ren.
 
 **Tiền viện phí thì có người lo. Còn việc giữ cho gia đình vận hành thì chưa ai bảo hiểm.**
 
@@ -71,7 +71,7 @@ Bác sĩ chấm mức độ cần hỗ trợ cho 6 hoạt động chăm con: tr�
 
 - Mỗi bố/mẹ có tối đa **120 Giờ chăm sóc mỗi năm**, dùng chung cho hai lộ trình. Gia đình được tặng thêm 1 giờ mỗi năm.
 - Dịch vụ: trông trẻ, nấu ăn, dọn nhà (1 giờ dịch vụ = 1 Care Hour), đưa đón có người đi kèm (1 chuyến một chiều = 2 Care Hours).
-- Dọn nhà dùng tối đa 30% mỗi lần cấp. Mỗi lần cấp có hiệu lực 90 ngày. Giờ không đổi được thành tiền và không chuyển giữa bố và mẹ.
+- Dọn nhà dùng tối đa 30% mỗi lần cấp. Mỗi lần cấp có hiệu lực 90 ngày. Giờ chăm sóc là tín dụng dịch vụ, không đổi được thành tiền.
 - Thời gian chờ 30 ngày với bệnh; tai nạn được áp dụng ngay. Không áp dụng cho thai sản.
 - Quyền lợi bổ trợ dừng tái tục khi con nhỏ nhất từ 13 tuổi.
 
@@ -106,7 +106,7 @@ Trang [Cơ sở định phí](https://insuregen-neo.vercel.app/vi/co-so-dinh-phi
 
 | Trang | Nội dung |
 |---|---|
-| [Trang chủ](https://insuregen-neo.vercel.app/vi) | Vấn đề, bảo vệ liên tục, Ví Chăm sóc, dịch vụ, quy trình bồi thường 6 bước, hỏi đáp, đăng ký tư vấn |
+| [Trang chủ](https://insuregen-neo.vercel.app/vi) | Vấn đề, bảo vệ liên tục, Ví Chăm sóc, dịch vụ, quy trình bồi thường 5 bước, hỏi đáp, đăng ký tư vấn |
 | [Tính phí](https://insuregen-neo.vercel.app/vi/tinh-phi) | Phí theo tuổi bố, mẹ, con; phụ phí thẩm định; kiểm tra khả năng chi trả; bảng minh họa 10 năm; phân tích độ nhạy |
 | [Tính điểm CIS](https://insuregen-neo.vercel.app/vi/cis) | Tự chấm 6 hoạt động, xem số giờ được cấp và dịch vụ được mở |
 | [Dùng thử ví](https://insuregen-neo.vercel.app/vi/vi-cham-soc) | Gửi hồ sơ Lộ trình A/B, nhận giờ và trợ cấp, đặt dịch vụ bằng Care Hours; AI đọc giấy ra viện |
