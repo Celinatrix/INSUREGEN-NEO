@@ -351,6 +351,7 @@ Mềm và chắc chắn: to, dễ bấm, phản hồi lặng.
 - **Shape:** viên thuốc (999px), cao tối thiểu 48px (44px ở cỡ nhỏ), chữ 16px trọng lượng 600.
 - **Primary:** nền `porch-gold`, chữ `on-gold`. Trên nền navy dùng `lamp-gold`.
 - **Ghost:** nền trong suốt, viền 1.5px màu chữ.
+- **Disabled:** mờ còn 45%, con trỏ `not-allowed`, không hover và không thu nhỏ khi nhấn. Nút đang gửi đổi chữ ("Đang gửi…") thay vì chỉ mờ đi.
 - **Hover / Focus / Press:** chỉ trên thiết bị có hover (`@media (hover: hover)`), hover làm nền nút chính đậm hơn (trộn 12% `ink`), ghost lên nền `surface`. Focus là viền vàng 3px cách 3px. Nhấn thu nhỏ còn 0.98. Không bóng màu, không nhấc nút lên.
 
 ### Tags and Status
@@ -377,6 +378,13 @@ Nhóm lựa chọn loại trừ nhau (hút thuốc, nhóm tuổi con, F0–F3, b
 
 ### Range Slider
 - Vạch gốc của trình duyệt, màu nhấn `porch-gold` (`accent-color`), vùng chạm cao 44px.
+
+### Browser Surfaces
+- Vùng chọn chữ nền `gold-wash`, chữ `ink`; con trỏ nhập liệu `gold-ink`; `accent-color` là `porch-gold`; thanh cuộn `ink-muted` 45% trên nền trang.
+- Chữ gợi ý (placeholder) màu `ink-muted` (5,8:1 trên nền sáng).
+- Gạch chân liên kết dày 1px, cách chữ 0,18em.
+- Đoạn văn dài trong hộp và trang pháp lý tối đa 60ch.
+- Biểu tượng luôn là SVG nét, kể cả trong điện thoại minh họa; không dùng ký tự ✓ hay ＋ làm biểu tượng.
 
 ### Navigation
 - Header dính, cao 68px, logo + tên sản phẩm 18px trọng lượng 600, liên kết 14px màu `ink-secondary`, hover lên `ink` trên nền `surface`.

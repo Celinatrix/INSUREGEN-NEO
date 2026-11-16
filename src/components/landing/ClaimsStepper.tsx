@@ -13,6 +13,17 @@ const Doc = () => (
   </svg>
 );
 
+const Tick = () => (
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="m5 12 5 5 9-10" />
+  </svg>
+);
+const Plus = () => (
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" aria-hidden="true">
+    <path d="M12 5v14M5 12h14" />
+  </svg>
+);
+
 export function ClaimsStepper({ c, units, story, demoHref }: { c: Dict["claims"]; units: Dict["units"]; story: Story; demoHref: string }) {
   const [step, setStep] = useState(0);
   const p = c.phone;
@@ -26,10 +37,10 @@ export function ClaimsStepper({ c, units, story, demoHref }: { c: Dict["claims"]
       <div className="app-h">{p.report}</div>
       <div className="body">
         <div className="m-label">{p.who}</div>
-        <div className="m-opt sel"><b>Minh</b><span style={{ marginLeft: "auto" }}>✓</span></div>
+        <div className="m-opt sel"><b>Minh</b><span style={{ marginLeft: "auto", display: "inline-flex" }}><Tick /></span></div>
         <div className="m-opt">Lan</div>
         <div className="m-label" style={{ marginTop: 6 }}>{p.what}</div>
-        <div className="m-opt sel">{p.inHospital}<span style={{ marginLeft: "auto" }}>✓</span></div>
+        <div className="m-opt sel">{p.inHospital}<span style={{ marginLeft: "auto", display: "inline-flex" }}><Tick /></span></div>
         <div className="m-opt">{p.atHome}</div>
         <div className="m-btn">{p.continue}</div>
       </div>
@@ -39,8 +50,8 @@ export function ClaimsStepper({ c, units, story, demoHref }: { c: Dict["claims"]
       <div className="body">
         <div className="m-doc"><Doc /><span><b>{p.discharge}</b><br /><span className="m-label">IMG_0412.jpg</span></span></div>
         <div className="m-doc"><Doc /><span><b>{p.questionnaire}</b><br /><span className="m-label">{p.completed}</span></span></div>
-        <div className="m-doc" style={{ justifyContent: "center" }}>＋ {p.addPhoto}</div>
-        <p className="m-label" style={{ textTransform: "none", letterSpacing: 0, fontWeight: 400 }}>{p.privacy}</p>
+        <div className="m-doc" style={{ justifyContent: "center" }}><Plus />{p.addPhoto}</div>
+        <p className="m-label" style={{ fontWeight: 400 }}>{p.privacy}</p>
         <div className="m-btn">{p.submit}</div>
       </div>
     </>,
@@ -56,8 +67,8 @@ export function ClaimsStepper({ c, units, story, demoHref }: { c: Dict["claims"]
     <>
       <div className="app-h">{p.checking}</div>
       <div className="body">
-        <div className="m-card"><div className="m-row"><span>{p.datesMatch}</span><span style={{ color: "var(--ok)" }}>✓</span></div></div>
-        <div className="m-card"><div className="m-row"><span>{p.waiting}</span><span style={{ color: "var(--ok)" }}>✓</span></div></div>
+        <div className="m-card"><div className="m-row"><span>{p.datesMatch}</span><span style={{ color: "var(--ok)" }}><Tick /></span></div></div>
+        <div className="m-card"><div className="m-row"><span>{p.waiting}</span><span style={{ color: "var(--ok)" }}><Tick /></span></div></div>
         <div className="m-card"><div className="m-row"><span>{p.flags}</span><b>0</b></div></div>
         <div className="m-card navy"><div className="m-label">{p.noReview}</div><div className="m-meter"><span style={{ width: "85%" }} /></div></div>
       </div>
@@ -65,14 +76,14 @@ export function ClaimsStepper({ c, units, story, demoHref }: { c: Dict["claims"]
     <>
       <div className="app-h">{p.wallet}</div>
       <div className="body">
-        <span className="m-ok">✓ {p.approved}</span>
+        <span className="m-ok"><Tick />{p.approved}</span>
         <div className="m-card navy">
           <div className="m-label">{p.careHours}</div>
           <div className="m-big">{story.hours}<span style={{ fontSize: 15, fontFamily: "var(--font-ui)" }}> {units.hours}</span></div>
           <div className="m-meter"><span style={{ width: `${(story.hours / story.limit) * 100}%` }} /></div>
         </div>
         <div className="m-card"><div className="m-row"><span>{p.cash}</span><b className="num">{story.cash}</b></div></div>
-        <p className="m-label" style={{ textTransform: "none", letterSpacing: 0, fontWeight: 400 }}>{fill(p.remainingYear)}</p>
+        <p className="m-label" style={{ fontWeight: 400 }}>{fill(p.remainingYear)}</p>
         <div className="m-btn">{p.book}</div>
       </div>
     </>,
@@ -85,11 +96,11 @@ export function ClaimsStepper({ c, units, story, demoHref }: { c: Dict["claims"]
         </div>
         <div className="m-card">
           <div className="m-row"><b>{p.pickup}</b><span className="num">16:30</span></div>
-          <div className="m-label" style={{ textTransform: "none", letterSpacing: 0, fontWeight: 400 }}>{p.pickupWho}</div>
+          <div className="m-label" style={{ fontWeight: 400 }}>{p.pickupWho}</div>
         </div>
         <div className="m-card">
           <div className="m-row"><b>{p.childcareHome}</b><span className="num">17:00–21:00</span></div>
-          <div className="m-label" style={{ textTransform: "none", letterSpacing: 0, fontWeight: 400 }}>{p.contracted}</div>
+          <div className="m-label" style={{ fontWeight: 400 }}>{p.contracted}</div>
         </div>
         <div className="m-track">
           <div className="done">{p.arrived}</div>

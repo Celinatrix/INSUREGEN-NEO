@@ -65,10 +65,18 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-ui);f
 img,svg{max-width:100%}
 h1,h2,h3,h4{font-family:var(--font-display);font-weight:500;line-height:1.18;margin:0;text-wrap:balance;letter-spacing:-.01em;font-optical-sizing:auto}
 p{margin:0;text-wrap:pretty}
-li,.lead,.fine,.ans{text-wrap:pretty}
+li,.lead,.fine,.ans,figcaption{text-wrap:pretty}
+/* Độ dài dòng đọc thoải mái */
+.box > p,.box > .fine,.legal p,.legal li{max-width:60ch}
 a{color:inherit}
 button,input,select{font:inherit;color:inherit}
 :focus-visible{outline:3px solid var(--focus);outline-offset:3px;border-radius:6px}
+/* Bề mặt trình duyệt theo bảng màu */
+:root{accent-color:var(--coral);scrollbar-color:color-mix(in srgb, var(--ink-3) 45%, transparent) var(--bg)}
+::selection{background:var(--coral-tint);color:var(--ink)}
+input,textarea{caret-color:var(--coral-ink)}
+::placeholder{color:var(--ink-3);opacity:1}
+a{text-underline-offset:.18em;text-decoration-thickness:1px}
 [hidden]{display:none!important}
 .visually-hidden{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .skip{position:absolute;left:12px;top:-60px;background:var(--navy);color:var(--navy-ink);padding:10px 16px;border-radius:10px;z-index:100}
@@ -92,9 +100,11 @@ section{padding-block:clamp(64px, 9vw, 120px);scroll-margin-top:72px}
 /* Buttons — min 44px touch target */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:12px 22px;border-radius:999px;border:1.5px solid transparent;font-weight:600;font-size:16px;text-decoration:none;cursor:pointer;transition:transform .15s ease, background-color .15s ease, border-color .15s ease}
 .btn-primary{background:var(--coral);color:var(--on-coral)}
-@media (hover: hover){ .btn-primary:hover{background:color-mix(in srgb, var(--coral) 88%, var(--ink))} }.btn:active{transform:scale(.98)}
+@media (hover: hover){ .btn-primary:hover:not(:disabled){background:color-mix(in srgb, var(--coral) 88%, var(--ink))} }.btn:active:not(:disabled){transform:scale(.98)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.input:disabled,.select:disabled{opacity:.6;cursor:not-allowed}
 .btn-ghost{background:transparent;border-color:var(--ink);color:var(--ink)}
-@media (hover: hover){ .btn-ghost:hover{background:var(--surface)} }
+@media (hover: hover){ .btn-ghost:hover:not(:disabled){background:var(--surface)} }
 .btn-sm{min-height:44px;padding:8px 16px;font-size:14px}
 
 /* Reveal on scroll — only elements below the fold at load are hidden */
