@@ -12,6 +12,8 @@ export function Footer({ lang, footer }: { lang: Locale; footer: Dict["footer"] 
     { href: `${home}/hoan-phi`, label: footer.links.refund },
     { href: `${home}#minh-bach`, label: footer.links.excl },
     { href: `${home}#hoi-dap`, label: footer.links.faq },
+    { href: `${home}/actuarial`, label: footer.links.actuarial },
+    { href: `${home}/workbench`, label: footer.links.workbench },
   ];
   const [before, after] = footer.contact.split("{email}");
   return (

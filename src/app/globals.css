@@ -535,6 +535,25 @@ input[type="range"]{min-height:44px;margin:0;cursor:pointer}
 
 /* Đặt cuối file để thắng các transition khai báo phía trên */
 /* Giảm chuyển động: bỏ mọi dịch chuyển, giữ đổi màu và độ mờ ngắn để vẫn thấy trạng thái đổi */
+/* Actuarial Database Center + Pricing Workbench */
+.db-filters{display:grid;grid-template-columns:2fr 1fr 1fr;gap:12px}
+@media (max-width: 720px){ .db-filters{grid-template-columns:1fr} }
+.db-table td{vertical-align:top}
+.db-table :is(th,td):is(:nth-child(2),:nth-child(4),:nth-child(5)){text-align:left}
+.db-table td:nth-child(2) a{font-weight:500}
+.db-group{display:block;font-size:12px;color:var(--ink-3);margin-top:4px}
+.db-status{display:inline-block;font-size:12px;font-weight:500;padding:4px 8px;border-radius:999px;background:var(--surface-2);color:var(--ink-2);white-space:nowrap}
+.db-populated,.db-operational{background:var(--ok-tint);color:var(--ok)}
+.db-source_missing,.db-empty{background:var(--coral-tint);color:var(--coral-ink)}
+.db-edges{list-style:none;padding:0;margin:0;display:grid;gap:8px}
+.db-edges li{font-size:14px;overflow-wrap:anywhere}
+.wb-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;margin-top:16px}
+.wb-grid .field > label{font-size:14px}
+details.box > summary{cursor:pointer;min-height:44px;display:flex;flex-wrap:wrap;align-items:center;gap:8px;overflow-wrap:anywhere}
+details.box > summary code,details.box p code{font-size:14px}
+details.box p{overflow-wrap:anywhere}
+.tbl.nowrap td,.tbl.nowrap th{white-space:nowrap}
+
 @media (prefers-reduced-motion: reduce){
   *,*::before,*::after{animation:none!important}
   .btn:active:not(:disabled){transform:none}

@@ -661,7 +661,7 @@ const en: Dict = {
   },
   footer: {
     tagline: "When parents need to rest, family life keeps going.",
-    links: { privacy: "Privacy policy", terms: "Terms of use", cookie: "Cookie policy", refund: "Cancellation and refunds", excl: "Exclusions", faq: "FAQ" },
+    links: { privacy: "Privacy policy", terms: "Terms of use", cookie: "Cookie policy", refund: "Cancellation and refunds", excl: "Exclusions", faq: "FAQ", actuarial: "Pricing data", workbench: "Pricing workbench" },
     legalNav: "Legal",
     contact: "Contact: {email}",
     team: "Team INSUREGEN NEO · InsuNovate 2026",
