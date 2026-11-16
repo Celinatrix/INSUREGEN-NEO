@@ -531,3 +531,5 @@ input[type="range"]{min-height:44px;margin:0;cursor:pointer}
 .dev-data-toggle{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);z-index:90;display:flex;gap:2px;padding:3px;border-radius:999px;background:#e5e5e5;font:500 12px/1 system-ui,sans-serif;box-shadow:0 1px 3px rgb(0 0 0 / .2)}
 .dev-data-toggle a{padding:7px 10px;border-radius:999px;color:#333;text-decoration:none;white-space:nowrap}
 .dev-data-toggle a[aria-current="true"]{background:#fff;color:#000}
+.ledger li.expired span:first-child,.ledger li.expired .l-sub{color:var(--ink-3)}
+.ledger li.expired .minus{color:var(--ink-3);text-decoration:line-through}

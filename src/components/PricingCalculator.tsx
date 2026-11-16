@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import type { Dict, Locale } from "@/i18n";
 import type { IllustrationRow, Occupation, Quote, Underwriting } from "@/lib/pricing";
 import { affordability, type Affordability } from "@/lib/affordability";
+import { INCOME_MAX_MILLION, readIncomeMillion } from "@/lib/income";
 import { LifeSensitivity } from "./LifeSensitivity";
 
 type Props = {
@@ -105,10 +106,11 @@ export function PricingCalculator({ lang, t, sumLabel, termYears, adviserHref, b
 
   const validAges = [father, mother].every((a) => Number.isInteger(a) && a >= 25 && a <= 40);
   const u = t.uw;
-  // Thu nhập (triệu đồng/năm, dấu phẩy là thập phân) chỉ dùng trên trình duyệt.
-  const incomeNum = lang === "vi" ? income.replace(/\./g, "").replace(",", ".") : income.replace(/,/g, "");
-  const incomeVnd = Math.round(Number(incomeNum.replace(/[^\d.]/g, "")) * 1e6);
-  const incomeProvided = Number.isFinite(incomeVnd) && incomeVnd > 0;
+  // Thu nhập (triệu đồng/năm) chỉ dùng trên trình duyệt; đọc được cả "281,5" lẫn "281.5".
+  const incomeRead = readIncomeMillion(income);
+  const incomeVnd = incomeRead.kind === "ok" ? Math.round(incomeRead.million * 1e6) : 0;
+  const incomeProvided = incomeRead.kind === "ok";
+  const millionText = (m: number) => m.toLocaleString(lang === "vi" ? "vi-VN" : "en-US", { maximumFractionDigits: 1 });
   const a = q ? (incomeProvided ? affordability(q.totalLow, q.totalHigh, incomeVnd) : q.affordability) : undefined;
 
   return (
@@ -146,8 +148,14 @@ export function PricingCalculator({ lang, t, sumLabel, termYears, adviserHref, b
           </div>
           <div className="field">
             <label htmlFor="income">{t.incomeLabel}</label>
-            <input id="income" className="input" inputMode="numeric" placeholder={lang === "vi" ? "281,5" : "281.5"} value={income} onChange={(e) => setIncome(e.target.value)} />
-            <p className="fine">{t.incomeHelp}</p>
+            <input id="income" className="input" inputMode="decimal" placeholder={lang === "vi" ? "281,5" : "281.5"} value={income} onChange={(e) => setIncome(e.target.value)}
+              aria-invalid={incomeRead.kind === "invalid" || incomeRead.kind === "tooLarge" ? true : undefined} aria-describedby="income-read income-help" />
+            <p className="fine" id="income-read" aria-live="polite">
+              {incomeRead.kind === "ok" && t.incomeRead.replace("{m}", millionText(incomeRead.million))}
+            </p>
+            {incomeRead.kind === "invalid" && <p className="err">{t.incomeInvalid}</p>}
+            {incomeRead.kind === "tooLarge" && <p className="err">{t.incomeTooLarge.replace("{max}", millionText(INCOME_MAX_MILLION))}</p>}
+            <p className="fine" id="income-help">{t.incomeHelp}</p>
           </div>
           <p className="fine">{u.note}</p>
           <div className="field">

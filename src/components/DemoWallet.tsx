@@ -213,29 +213,51 @@ export function DemoWallet({ lang, t }: { lang: Locale; t: T }) {
     });
   }
 
+  const nf = lang === "vi" ? "vi-VN" : "en-US";
+  // Số ít/số nhiều theo ngôn ngữ: "1 hr", "2 hrs"; tiếng Việt không đổi.
+  const plural = useMemo(() => new Intl.PluralRules(nf), [nf]);
+  const unit = useCallback(
+    (n: number, kind: "hour" | "trip") =>
+      plural.select(n) === "one" ? t.units[kind] : kind === "hour" ? t.units.hours : t.units.trips,
+    [plural, t.units],
+  );
+  const date = useCallback(
+    (s: string) =>
+      new Date(s.length === 10 ? `${s}T00:00:00` : s).toLocaleDateString(nf, { day: "2-digit", month: "2-digit", year: "numeric" }),
+    [nf],
+  );
+  const [showAll, setShowAll] = useState(false);
+
   const history = useMemo(() => {
     if (!wallet) return [];
-    const items: { at: string; title: string; sub: string; delta: string; plus: boolean }[] = [];
+    const items: { at: string; title: string; sub: string; delta: string; plus: boolean; expired?: boolean }[] = [];
     for (const g of wallet.grants) {
       items.push({
         at: g.created_at,
         title: g.kind === "gift" || !g.parent ? d.gift : `${d.grant} · ${d.parents[g.parent]}`,
-        sub: `${g.services.map((s) => t.services[s]).join(", ")} · ${fill(d.expires, { d: g.expires_on })}`,
+        sub: [
+          g.services.map((s) => t.services[s]).join(", "),
+          fill(g.expired ? d.expired : d.expires, { d: date(g.expires_on) }),
+          g.remaining < g.hours ? fill(d.remaining, { r: g.remaining, h: g.hours, u: unit(g.hours, "hour") }) : "",
+        ]
+          .filter(Boolean)
+          .join(" · "),
         delta: `+${g.hours}`,
-        plus: true,
+        plus: !g.expired,
+        expired: g.expired,
       });
     }
     for (const b of wallet.bookings) {
       items.push({
         at: b.created_at,
         title: `${d.booking} · ${t.services[b.service]}`,
-        sub: `${b.service_date} · ${b.service_hours} ${SERVICE_UNIT[b.service] === "trip" ? t.units.trips : t.units.hours}`,
+        sub: `${date(b.service_date)} · ${b.service_hours} ${unit(b.service_hours, SERVICE_UNIT[b.service] === "trip" ? "trip" : "hour")}`,
         delta: `−${b.credits}`,
         plus: false,
       });
     }
     return items.sort((a, b) => b.at.localeCompare(a.at));
-  }, [wallet, d, t]);
+  }, [wallet, d, t, date, unit]);
 
   if (loadError && !wallet) return <p className="notice warn">{loadError}</p>;
   if (!wallet) return <p className="notice">{d.loading}</p>;
@@ -243,7 +265,6 @@ export function DemoWallet({ lang, t }: { lang: Locale; t: T }) {
   const band = childBandFor(wallet.youngestChildAge);
   const cost = serviceHours * CREDITS_PER_SERVICE_UNIT[service];
   const isTrip = SERVICE_UNIT[service] === "trip";
-  const nf = lang === "vi" ? "vi-VN" : "en-US";
 
   return (
     <div style={{ display: "grid", gap: 20 }}>
@@ -257,7 +278,7 @@ export function DemoWallet({ lang, t }: { lang: Locale; t: T }) {
         </nav>
       )}
       <div className="kpis">
-        <div className="kpi"><span>{d.balance}</span><b>{wallet.balance} {t.units.hours}</b></div>
+        <div className="kpi"><span>{d.balance}</span><b>{wallet.balance} {unit(wallet.balance, "hour")}</b></div>
         <div className="kpi"><span>{d.cashPaid}</span><b>{money(lang, wallet.cashPaid)}</b></div>
         <div className="kpi">
           <span>{d.limitLeft}</span>
@@ -385,6 +406,7 @@ export function DemoWallet({ lang, t }: { lang: Locale; t: T }) {
               <input id="sdate" type="date" className="input" value={serviceDate} onChange={(e) => setServiceDate(e.target.value)} />
             </div>
             <p className="fine">{fill(d.cost, { n: cost })}</p>
+            {cost > wallet.balance && <p className="notice warn">{fill(d.lowBalance, { n: wallet.balance, u: unit(wallet.balance, "hour") })}</p>}
             <button type="submit" className="btn btn-primary">{d.bookIt}</button>
             {bookMsg && <p className={`notice ${bookMsg.kind}`} role="status">{bookMsg.text}</p>}
           </form>
@@ -400,14 +422,19 @@ export function DemoWallet({ lang, t }: { lang: Locale; t: T }) {
             <p className="fine">{d.empty}</p>
           ) : (
             <ul className="ledger">
-              {history.map((h, i) => (
-                <li key={i}>
+              {(showAll ? history : history.slice(0, 10)).map((h, i) => (
+                <li key={i} className={h.expired ? "expired" : undefined}>
                   <span>{h.title}</span>
                   <span className={h.plus ? "plus" : "minus"}>{h.delta}</span>
                   <span className="l-sub">{h.sub}</span>
                 </li>
               ))}
             </ul>
+          )}
+          {history.length > 10 && (
+            <button type="button" className="btn btn-ghost btn-sm" aria-expanded={showAll} onClick={() => setShowAll((v) => !v)} style={{ justifySelf: "start" }}>
+              {showAll ? d.showLess : fill(d.showAll, { n: history.length })}
+            </button>
           )}
           <p className="fine">{fill(d.storageNote, { where: wallet.storage === "supabase" ? d.storageDb : d.storageMemory })}</p>
           <p className="fine" id="reset-help">{d.resetHelp} <Link href={`/${lang}/chinh-sach-bao-mat`}>{d.privacy}</Link></p>
