@@ -62,7 +62,7 @@ export function LifeSensitivity({ lang, t, fatherAge, motherAge }: Props) {
         </div>
         <div className="est-out" style={{ borderRadius: "var(--radius-lg)" }} aria-live="polite">
           <div className="est-per">{t.result}</div>
-          <div className="big-num" style={{ fontSize: "clamp(32px,4.4vw,46px)" }}>{money(custom)}</div>
+          <div className="big-num" style={{ fontSize: "clamp(30px,4.4vw,48px)" }}>{money(custom)}</div>
           <div className="est-per">{pct(custom / base - 1)} {t.vsBase} ({money(base)})</div>
           <p className="fine">{t.breakEven}</p>
         </div>

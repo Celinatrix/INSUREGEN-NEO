@@ -26,28 +26,77 @@ typography:
     fontWeight: 500
     lineHeight: 1.18
     letterSpacing: "-0.02em"
+  page-display:
+    fontFamily: "Fraunces Variable, Fraunces, Lora, Georgia, serif"
+    fontSize: "clamp(34px, 5vw, 56px)"
+    fontWeight: 500
+    lineHeight: 1.18
+    letterSpacing: "-0.02em"
   headline:
     fontFamily: "Fraunces Variable, Fraunces, Lora, Georgia, serif"
     fontSize: "clamp(30px, 4.4vw, 48px)"
     fontWeight: 500
     lineHeight: 1.18
     letterSpacing: "-0.01em"
-  title:
+  subhead:
     fontFamily: "Fraunces Variable, Fraunces, Lora, Georgia, serif"
-    fontSize: "21px"
+    fontSize: "clamp(26px, 3.4vw, 36px)"
     fontWeight: 500
     lineHeight: 1.18
+  statement:
+    fontFamily: "Fraunces Variable, Fraunces, Lora, Georgia, serif"
+    fontSize: "clamp(22px, 2.6vw, 30px)"
+    fontWeight: 500
+    lineHeight: 1.3
+  legal-heading:
+    fontFamily: "Fraunces Variable, Fraunces, Lora, Georgia, serif"
+    fontSize: "clamp(22px, 2.4vw, 26px)"
+    fontWeight: 500
+    lineHeight: 1.18
+  title-lg:
+    fontFamily: "Fraunces Variable, Fraunces, Lora, Georgia, serif"
+    fontSize: "26px"
+    fontWeight: 500
+    lineHeight: 1.18
+  title:
+    fontFamily: "Fraunces Variable, Fraunces, Lora, Georgia, serif"
+    fontSize: "22px"
+    fontWeight: 500
+    lineHeight: 1.18
+  figure-hero:
+    fontFamily: "Fraunces Variable, Fraunces, Lora, Georgia, serif"
+    fontSize: "clamp(52px, 7vw, 72px)"
+    fontWeight: 500
+    lineHeight: 1
+    fontFeature: "tnum"
+  figure-xl:
+    fontFamily: "Fraunces Variable, Fraunces, Lora, Georgia, serif"
+    fontSize: "52px"
+    fontWeight: 500
+    lineHeight: 1
+    fontFeature: "tnum"
   figure:
     fontFamily: "Fraunces Variable, Fraunces, Lora, Georgia, serif"
     fontSize: "30px"
     fontWeight: 500
     lineHeight: 1
     fontFeature: "tnum"
+  figure-sm:
+    fontFamily: "Fraunces Variable, Fraunces, Lora, Georgia, serif"
+    fontSize: "26px"
+    fontWeight: 500
+    lineHeight: 1
+    fontFeature: "tnum"
   lead:
     fontFamily: "Be Vietnam Pro, Segoe UI, system-ui, sans-serif"
-    fontSize: "clamp(17px, 1.6vw, 19px)"
+    fontSize: "clamp(18px, 1.6vw, 20px)"
     fontWeight: 400
     lineHeight: 1.6
+  item:
+    fontFamily: "Be Vietnam Pro, Segoe UI, system-ui, sans-serif"
+    fontSize: "18px"
+    fontWeight: 600
+    lineHeight: 1.4
   body:
     fontFamily: "Be Vietnam Pro, Segoe UI, system-ui, sans-serif"
     fontSize: "16px"
@@ -58,6 +107,32 @@ typography:
     fontSize: "14px"
     fontWeight: 500
     lineHeight: 1.4
+  micro:
+    fontFamily: "Be Vietnam Pro, Segoe UI, system-ui, sans-serif"
+    fontSize: "12px"
+    fontWeight: 500
+    lineHeight: 1.4
+  phone-title:
+    fontFamily: "Be Vietnam Pro, Segoe UI, system-ui, sans-serif"
+    fontSize: "15px"
+    fontWeight: 600
+    lineHeight: 1.3
+  phone-body:
+    fontFamily: "Be Vietnam Pro, Segoe UI, system-ui, sans-serif"
+    fontSize: "13px"
+    fontWeight: 400
+    lineHeight: 1.45
+  phone-micro:
+    fontFamily: "Be Vietnam Pro, Segoe UI, system-ui, sans-serif"
+    fontSize: "11px"
+    fontWeight: 500
+    lineHeight: 1.4
+  phone-figure:
+    fontFamily: "Fraunces Variable, Fraunces, Lora, Georgia, serif"
+    fontSize: "40px"
+    fontWeight: 500
+    lineHeight: 1
+    fontFeature: "tnum"
 rounded:
   control: "12px"
   card: "14px"
@@ -175,18 +250,28 @@ Tên biến trong mã là di sản của bản cũ: `--coral*` thực chất là
 **Character:** Fraunces mềm và có hơi ấm của chữ in sách, cho tiêu đề nói như một lời trấn an. Be Vietnam Pro được vẽ cho tiếng Việt, dấu rõ và đều ở cỡ nhỏ, nên mọi chữ chạy, nhãn và form đều dùng nó.
 
 ### Hierarchy
-- **Display** (500, `clamp(38px, 6vw, 68px)`, 1.18): tiêu đề hero, một lần mỗi trang. Phần nhấn của câu đổi sang `gold-ink`, không in nghiêng.
-- **Headline** (500, `clamp(30px, 4.4vw, 48px)`, 1.18): tiêu đề mỗi phần. Tiêu đề trang con dùng `clamp(34px, 5vw, 56px)`.
-- **Title** (500, 19–24px, 1.18): tiêu đề thẻ, hộp, câu hỏi lớn. 21px là cỡ phổ biến.
-- **Figure** (Fraunces 500, 26–76px, line-height 1, `tabular-nums`): mọi con số là nhân vật chính: giờ trong Ví, khoảng phí, số giờ mỗi bậc, chỉ số thị trường.
-- **Lead** (400, `clamp(17px, 1.6vw, 19px)`, 1.6, tối đa 62ch): đoạn mở dưới tiêu đề, màu `ink-secondary`.
-- **Body** (400, 16px, 1.6): chữ chạy; 15px cho mô tả trong thẻ.
-- **Label** (500, 13–14px): nhãn mục, nhãn nhỏ, tiêu đề bảng. Viết hoa chữ đầu, không viết hoa toàn bộ, không giãn chữ.
+Một thang cố định; không thêm cỡ nằm giữa hai bậc.
+
+- **Display** (500, `clamp(38px, 6vw, 68px)`, 1.18): tiêu đề hero, một lần mỗi trang. Phần nhấn của câu đổi sang `gold-ink`, không in nghiêng. Trang con dùng **Page display** `clamp(34px, 5vw, 56px)`.
+- **Headline** (500, `clamp(30px, 4.4vw, 48px)`, 1.18): tiêu đề mỗi phần và phần đăng ký cuối trang.
+- **Subhead** (500, `clamp(26px, 3.4vw, 36px)`): tiêu đề nhóm bên trong trang con (bảng minh họa, độ nhạy, cơ sở định phí). **Statement** `clamp(22px, 2.6vw, 30px)` cho câu kết của phần Vấn đề.
+- **Title** (500, 22px) và **Title large** (500, 26px): tiêu đề thẻ; 26px cho hộp lớn và thông báo thành công.
+- **Figures** (Fraunces 500, line-height 1, `tabular-nums`): 26 · 30 · 52px và `clamp(52px, 7vw, 72px)` cho con số chính của thẻ Ví và kết quả CIS.
+- **Lead** (400, `clamp(18px, 1.6vw, 20px)`, 1.6, tối đa 62ch): đoạn mở dưới tiêu đề, màu `ink-secondary`.
+- **Item** (600, 18px): tiêu đề hàng trong danh sách: câu hỏi FAQ, bước bồi thường, nút trong stepper.
+- **Body** (400, 16px, 1.6): mọi chữ chạy, kể cả bên trong thẻ và bảng.
+- **Label** (500, 14px): nhãn mục, nhãn nhỏ, tiêu đề bảng, chú thích, liên kết điều hướng và chân trang. Viết hoa chữ đầu, không giãn chữ.
+- **Micro** (500, 12px): trạng thái và ghi chú "Minh họa" trên vật thể.
+- **Phone** (11 · 13 · 15 · 40px): thang thu nhỏ chỉ dùng bên trong điện thoại minh họa.
+
+Chữ chạy dùng `text-wrap: pretty`, tiêu đề dùng `text-wrap: balance`.
 
 ### Named Rules
 **The Sentence Case Rule.** Không `text-transform: uppercase` và không `letter-spacing` dương trên nhãn. Chữ hiện đúng như người viết.
 
 **The 600 Ceiling Rule.** Trọng lượng chữ là 400, 500 và 600. Không dùng 700 trở lên; thứ bậc đến từ cỡ chữ, font và màu.
+
+**The Fixed Ramp Rule.** Cỡ chữ chỉ lấy từ thang trên. Cần nhấn mạnh hơn thì đổi vai trò, không thêm 1px.
 
 **The Numbers Are Figures Rule.** Số tiền, số giờ, số ngày luôn `tabular-nums` và theo một định dạng: `500.000đ` và `2 tỷ đồng` ở tiếng Việt, `VND 500,000` ở tiếng Anh.
 
@@ -227,7 +312,7 @@ Mềm và chắc chắn: to, dễ bấm, phản hồi lặng.
 - **Hover / Focus / Press:** hover làm nền nút chính đậm hơn (trộn 12% `ink`), ghost lên nền `surface`. Focus là viền vàng 3px cách 3px. Nhấn thu nhỏ còn 0.98. Không bóng màu, không nhấc nút lên.
 
 ### Tags and Status
-- **Tag:** viên thuốc nhỏ, chữ 13px trọng lượng 500, nền `gold-wash`, chữ `gold-ink`. Bản xanh `care-green-wash` / `care-green` cho "đang bảo vệ".
+- **Tag:** viên thuốc nhỏ, chữ 14px trọng lượng 500, nền `gold-wash`, chữ `gold-ink`. Bản xanh `care-green-wash` / `care-green` cho "đang bảo vệ".
 - **Status:** đã duyệt (xanh), đang xem xét (vàng), từ chối (trung tính). Không màu nào khác.
 
 ### Cards / Containers
@@ -244,9 +329,9 @@ Mềm và chắc chắn: to, dễ bấm, phản hồi lặng.
 - **Stepper, công tắc, nút chia đoạn:** cùng họ control 12–14px; công tắc bật màu `care-green`; nút chia đoạn được chọn nền navy.
 
 ### Navigation
-- Header dính, cao 68px, logo + tên sản phẩm trọng lượng 600, liên kết 15px màu `ink-secondary`, hover lên `ink` trên nền `surface`.
+- Header dính, cao 68px, logo + tên sản phẩm 18px trọng lượng 600, liên kết 14px màu `ink-secondary`, hover lên `ink` trên nền `surface`.
 - Trang hiện tại: chữ `ink` trên nền `surface`. Chuyển ngôn ngữ dạng hai nút, nút đang chọn nền navy.
-- Dưới 1400px các liên kết thu vào nút menu.
+- Dưới 1400px các liên kết thu vào nút menu. Từ 1401px liên kết "Tính phí" ẩn đi vì nút vàng "Tính phí" đã có sẵn; nó vẫn nằm trong menu thu gọn.
 
 ### Care Wallet (signature)
 Vật thể đặc trưng của sản phẩm: một tấm thẻ navy bo 24px, đệm 24px, bóng Object. Con số giờ còn lại bằng Fraunces lớn, thước giờ là dãy ô (một ô một giờ) với ô đã nạp màu `lamp-gold`, các dòng sự kiện trên nền trắng 8%, các dịch vụ là viên thuốc viền trắng 22%, và một dòng "Minh họa" ở cuối. Mọi số trên thẻ tính từ quy tắc sản phẩm, không gõ cứng.

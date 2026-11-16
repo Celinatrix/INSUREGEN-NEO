@@ -43,7 +43,7 @@ export default async function BasisPage({ params }: PageProps<"/[lang]/co-so-din
   const rates = rateTable().filter((r) => r.age >= 25);
 
   const h = (i: number, text: string) => (
-    <h2 id={IDS[i]} style={{ fontSize: "clamp(24px,3vw,32px)", scrollMarginTop: 90 }}>{text}</h2>
+    <h2 id={IDS[i]} style={{ fontSize: "clamp(26px,3.4vw,36px)", scrollMarginTop: 90 }}>{text}</h2>
   );
 
   return (

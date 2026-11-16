@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-11-16T15:06:56.659Z",
+  "generatedAt": "2026-11-16T15:17:16.382Z",
   "title": "Design System: Family Reconnect",
   "extensions": {
     "colorMeta": {
@@ -189,31 +189,87 @@
     "typographyMeta": {
       "display": {
         "displayName": "Display",
-        "purpose": "Hero headline, once per page; emphasis in gold-ink, never italic."
+        "purpose": "Hero headline, once per page."
+      },
+      "page-display": {
+        "displayName": "Page display",
+        "purpose": "Subpage h1."
       },
       "headline": {
         "displayName": "Headline",
         "purpose": "Section titles."
       },
+      "subhead": {
+        "displayName": "Subhead",
+        "purpose": "Group titles inside subpages."
+      },
+      "statement": {
+        "displayName": "Statement",
+        "purpose": "Closing line of the problem section."
+      },
+      "legal-heading": {
+        "displayName": "Legal heading",
+        "purpose": "Legal page section titles."
+      },
+      "title-lg": {
+        "displayName": "Title large",
+        "purpose": "Box titles, success message."
+      },
       "title": {
         "displayName": "Title",
-        "purpose": "Card, box and large question titles."
+        "purpose": "Card titles."
+      },
+      "figure-hero": {
+        "displayName": "Figure hero",
+        "purpose": "Care Wallet hours, CIS result."
+      },
+      "figure-xl": {
+        "displayName": "Figure XL",
+        "purpose": "Everyday benefit numbers."
       },
       "figure": {
         "displayName": "Figure",
-        "purpose": "Hours, money and market figures that lead their block; tabular numbers."
+        "purpose": "Ladder hours, KPI and stat figures."
+      },
+      "figure-sm": {
+        "displayName": "Figure small",
+        "purpose": "Long money figures, range outputs."
       },
       "lead": {
         "displayName": "Lead",
-        "purpose": "Opening paragraph under a headline, max 62ch, ink-secondary."
+        "purpose": "Opening paragraph, max 62ch."
+      },
+      "item": {
+        "displayName": "Item",
+        "purpose": "FAQ questions, claim steps, stepper value."
       },
       "body": {
         "displayName": "Body",
-        "purpose": "Running text; 15px inside cards."
+        "purpose": "All running text, including cards and tables."
       },
       "label": {
         "displayName": "Label",
-        "purpose": "Eyebrows, tags, table heads; sentence case, no tracking."
+        "purpose": "Eyebrows, tags, table heads, nav and footer links."
+      },
+      "micro": {
+        "displayName": "Micro",
+        "purpose": "Status pills and Illustration notes."
+      },
+      "phone-title": {
+        "displayName": "Phone title",
+        "purpose": "Claims phone mock only."
+      },
+      "phone-body": {
+        "displayName": "Phone body",
+        "purpose": "Claims phone mock only."
+      },
+      "phone-micro": {
+        "displayName": "Phone micro",
+        "purpose": "Claims phone mock only."
+      },
+      "phone-figure": {
+        "displayName": "Phone figure",
+        "purpose": "Claims phone mock only."
       }
     },
     "shadows": [
@@ -360,6 +416,11 @@
       {
         "name": "The 600 Ceiling Rule",
         "body": "Trọng lượng chữ là 400, 500 và 600. Không dùng 700 trở lên; thứ bậc đến từ cỡ chữ, font và màu.",
+        "section": "typography"
+      },
+      {
+        "name": "The Fixed Ramp Rule",
+        "body": "Cỡ chữ chỉ lấy từ thang trên. Cần nhấn mạnh hơn thì đổi vai trò, không thêm 1px.",
         "section": "typography"
       },
       {
