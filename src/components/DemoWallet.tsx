@@ -6,6 +6,9 @@ import { useSearchParams } from "next/navigation";
 import type { Dict, Locale } from "@/i18n";
 import { ACTIVITIES, CHILD_BANDS, CREDITS_PER_SERVICE_UNIT, SERVICE_UNIT, SERVICES, childBandFor, type ChildBand, type Service, type Severity } from "@/lib/product";
 import type { Ratings } from "@/lib/rules";
+import { WALLET_FIXTURES, walletFixture, type WalletFixture } from "@/dev/walletFixtures";
+
+const DEV = process.env.NODE_ENV !== "production";
 
 type T = {
   demo: Dict["demo"];
@@ -62,8 +65,15 @@ export function DemoWallet({ lang, t }: { lang: Locale; t: T }) {
   const sp = useSearchParams();
   const qBand = sp.get("band") as ChildBand | null;
   const qRatings = decodeRatings(sp.get("r"));
+  // Chỉ khi phát triển: ?data=worst|empty|one|huge thay dữ liệu ví ở ranh giới API.
+  const qData = sp.get("data") as WalletFixture | null;
+  const fixture = DEV && qData && qData !== "demo" && WALLET_FIXTURES.includes(qData) ? qData : null;
 
-  const [wallet, setWallet] = useState<Wallet | null>(null);
+  const [apiWallet, setWallet] = useState<Wallet | null>(null);
+  const wallet = useMemo<Wallet | null>(
+    () => (apiWallet && fixture ? (walletFixture(fixture, apiWallet.id) as Wallet) : apiWallet),
+    [apiWallet, fixture],
+  );
   const [loadError, setLoadError] = useState("");
   const [parent, setParent] = useState<"father" | "mother">("father");
   const [pathway, setPathway] = useState<"A" | "B">(sp.get("pathway") === "B" ? "B" : "A");
@@ -237,6 +247,15 @@ export function DemoWallet({ lang, t }: { lang: Locale; t: T }) {
 
   return (
     <div style={{ display: "grid", gap: 20 }}>
+      {DEV && (
+        <nav className="dev-data-toggle" aria-label="Dev data">
+          {WALLET_FIXTURES.map((f) => (
+            <Link key={f} href={`?data=${f}`} replace scroll={false} aria-current={(fixture ?? "demo") === f ? "true" : undefined}>
+              {{ demo: "Demo data", worst: "Worst case", empty: "Empty", one: "One", huge: "241 rows" }[f]}
+            </Link>
+          ))}
+        </nav>
+      )}
       <div className="kpis">
         <div className="kpi"><span>{d.balance}</span><b>{wallet.balance} {t.units.hours}</b></div>
         <div className="kpi"><span>{d.cashPaid}</span><b>{money(lang, wallet.cashPaid)}</b></div>
