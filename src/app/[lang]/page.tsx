@@ -1,4 +1,6 @@
+import { headers } from "next/headers";
 import { notFound } from "next/navigation";
+import { homeJsonLd, jsonLdScript } from "@/lib/agent/jsonld";
 import { commonVars, getDict, hasLocale, vnd } from "@/i18n";
 import { Hero, Problem, WalletSection, Services, Why, Trust, Faq } from "@/components/landing/Static";
 import { Continuum } from "@/components/landing/Continuum";
@@ -12,6 +14,12 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
   if (!hasLocale(lang)) notFound();
   const d = getDict(lang);
   const vars = commonVars(lang);
+  // JSON-LD cho agent và công cụ tìm kiếm; origin lấy từ request để đúng cả khi chưa đặt NEXT_PUBLIC_SITE_URL.
+  const h = await headers();
+  const host = h.get("x-forwarded-host") ?? h.get("host") ?? "localhost:3000";
+  const proto = h.get("x-forwarded-proto") ?? (host.startsWith("localhost") ? "http" : "https");
+  const origin = process.env.NEXT_PUBLIC_SITE_URL ?? `${proto}://${host}`;
+  const nonce = h.get("x-nonce") ?? undefined;
   // Bảng 3.4: bố nằm viện 8 ngày → 40 Giờ chăm sóc và 4.000.000đ; dùng 30 giờ trông trẻ + 5 chuyến đưa đón.
   const storyDays = 8;
   const story = {
@@ -25,6 +33,7 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
 
   return (
     <>
+      <script type="application/ld+json" nonce={nonce} dangerouslySetInnerHTML={{ __html: jsonLdScript(homeJsonLd(lang, origin)) }} />
       <Hero lang={lang} d={d} />
       <Problem lang={lang} d={d} />
       <Continuum c={d.continuum} vars={vars} />

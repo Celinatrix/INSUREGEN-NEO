@@ -1,5 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { pageCsp } from "@/lib/security";
+import { prefersMarkdown } from "@/lib/agent/negotiate";
 
 const LOCALES = ["vi", "en"];
 
@@ -19,6 +20,14 @@ export function proxy(request: NextRequest) {
     return NextResponse.redirect(request.nextUrl);
   }
 
+  // Agent xin Markdown (Accept: text/markdown): trả bản Markdown của chính trang này, cùng URL.
+  if (prefersMarkdown(request.headers.get("accept"))) {
+    // Đường dẫn gốc đi qua header nội bộ: route đích không thấy query của URL rewrite.
+    const forwarded = new Headers(request.headers);
+    forwarded.set("x-markdown-path", pathname);
+    return NextResponse.rewrite(new URL("/api/markdown", request.url), { request: { headers: forwarded } });
+  }
+
   // Mỗi lượt tải trang có một nonce mới; Next.js tự gắn nonce vào script của nó.
   const nonce = Buffer.from(crypto.randomUUID()).toString("base64");
   const csp = pageCsp(nonce, process.env.NODE_ENV === "development");
@@ -27,6 +36,8 @@ export function proxy(request: NextRequest) {
   requestHeaders.set("Content-Security-Policy", csp);
   const response = NextResponse.next({ request: { headers: requestHeaders } });
   response.headers.set("Content-Security-Policy", csp);
+  // Cùng URL trả HTML hoặc Markdown tùy Accept, nên bộ nhớ đệm phải phân biệt theo Accept.
+  response.headers.append("Vary", "Accept");
   return response;
 }
 

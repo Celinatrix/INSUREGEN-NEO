@@ -7,6 +7,9 @@ const nextConfig: NextConfig = {
   async headers() {
     return [
       { source: "/:path*", headers: BASE_HEADERS },
+      // Trang trả HTML hoặc Markdown tùy Accept (xem src/proxy.ts), nên bộ nhớ đệm phải phân biệt theo Accept.
+      { source: "/:lang(vi|en)/:path*", headers: [{ key: "Vary", value: "Accept" }] },
+      { source: "/:lang(vi|en)", headers: [{ key: "Vary", value: "Accept" }] },
       { source: "/api/:path*", headers: [{ key: "Content-Security-Policy", value: API_CSP }] },
     ];
   },
