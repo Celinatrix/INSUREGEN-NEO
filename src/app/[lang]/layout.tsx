@@ -33,26 +33,17 @@ export async function generateMetadata({ params }: LayoutProps<"/[lang]">): Prom
 
 export const viewport: Viewport = {
   viewportFit: "cover",
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#F7F8FA" },
-    { media: "(prefers-color-scheme: dark)", color: "#0D1525" },
-  ],
+  themeColor: "#F7F8FA",
 };
-
-// Áp dụng giao diện sáng/tối đã lưu trước khi trang hiển thị, tránh nháy màu.
-const themeScript = `try{var t=localStorage.getItem('fr-theme');if(t==='dark'||t==='light')document.documentElement.dataset.theme=t}catch(e){}`;
 
 export default async function RootLayout({ children, params }: LayoutProps<"/[lang]">) {
   const { lang } = await params;
   if (!hasLocale(lang)) notFound();
   const d = getDict(lang);
-  // Nonce do proxy tạo cho lượt tải này (xem src/proxy.ts); đọc header khiến trang render theo từng request.
-  const nonce = (await headers()).get("x-nonce") ?? undefined;
+  // Đọc header khiến trang render theo từng request, để Next.js gắn nonce CSP (xem src/proxy.ts) vào script của nó.
+  await headers();
   return (
-    <html lang={lang} suppressHydrationWarning>
-      <head>
-        <script nonce={nonce} dangerouslySetInnerHTML={{ __html: themeScript }} />
-      </head>
+    <html lang={lang}>
       <body>
         <a className="skip" href="#main">{d.nav.skip}</a>
         <Header lang={lang} nav={d.nav} />

@@ -19,7 +19,6 @@ const vi = {
     faq: "Hỏi đáp",
     cta: "Tính phí",
     menu: "Mở menu",
-    theme: "Đổi giao diện sáng/tối",
     language: "Ngôn ngữ",
   },
   units: { hours: "giờ", days: "ngày", perDay: "/ngày", years: "năm", million: "triệu", trips: "chuyến" },

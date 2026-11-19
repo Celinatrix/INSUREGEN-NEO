@@ -159,7 +159,7 @@ const vi: Record<LegalSlug, LegalPage> = {
   },
   cookie: {
     title: "Chính sách cookie",
-    description: "Family Reconnect chỉ dùng một cookie ghi nhớ ngôn ngữ và bộ nhớ trình duyệt cho chế độ sáng/tối và ví dùng thử.",
+    description: "Family Reconnect chỉ dùng một cookie ghi nhớ ngôn ngữ và bộ nhớ trình duyệt cho ví dùng thử.",
     intro: "Trang chỉ dùng những gì cần để trang hoạt động. Không có cookie phân tích, quảng cáo hay của bên thứ ba.",
     sections: [
       {
@@ -169,7 +169,6 @@ const vi: Record<LegalSlug, LegalPage> = {
             table: [
               ["Tên", "Loại", "Mục đích", "Thời hạn"],
               ["fr-lang", "Cookie của trang", "Ghi nhớ ngôn ngữ bạn chọn (vi/en)", "1 năm"],
-              ["fr-theme", "Bộ nhớ trình duyệt (localStorage)", "Ghi nhớ chế độ sáng/tối", "Đến khi bạn xóa"],
               ["fr-wallet", "Bộ nhớ trình duyệt (localStorage)", "Mở lại ví dùng thử của bạn", "Đến khi bạn xóa ví hoặc xóa dữ liệu trình duyệt"],
             ],
           },
@@ -178,13 +177,13 @@ const vi: Record<LegalSlug, LegalPage> = {
       {
         h: "2. Vì sao không có banner cookie",
         body: [
-          "Các mục trên đều là chức năng thiết yếu bạn tự kích hoạt (chọn ngôn ngữ, đổi giao diện, dùng ví), không theo dõi bạn và không chia sẻ cho ai. Vì không có gì để chặn, trang không hiện banner xin phép.",
+          "Các mục trên đều là chức năng thiết yếu bạn tự kích hoạt (chọn ngôn ngữ, dùng ví), không theo dõi bạn và không chia sẻ cho ai. Vì không có gì để chặn, trang không hiện banner xin phép.",
           "Nếu sau này trang thêm công cụ phân tích hoặc quảng cáo, chúng tôi sẽ hiện banner và chỉ bật chúng sau khi bạn đồng ý.",
         ],
       },
       {
         h: "3. Cách xóa",
-        body: ["Bạn có thể xóa cookie và dữ liệu trang trong phần cài đặt quyền riêng tư của trình duyệt. Trang vẫn dùng được, chỉ quay về ngôn ngữ và giao diện mặc định."],
+        body: ["Bạn có thể xóa cookie và dữ liệu trang trong phần cài đặt quyền riêng tư của trình duyệt. Trang vẫn dùng được, chỉ quay về ngôn ngữ mặc định."],
       },
     ],
   },
@@ -373,7 +372,7 @@ const en: Record<LegalSlug, LegalPage> = {
   },
   cookie: {
     title: "Cookie policy",
-    description: "Family Reconnect uses one cookie for your language and browser storage for the theme and the demo wallet.",
+    description: "Family Reconnect uses one cookie for your language and browser storage for the demo wallet.",
     intro: "The site only uses what it needs to work. There are no analytics, advertising or third-party cookies.",
     sections: [
       {
@@ -383,7 +382,6 @@ const en: Record<LegalSlug, LegalPage> = {
             table: [
               ["Name", "Type", "Purpose", "Lifetime"],
               ["fr-lang", "First-party cookie", "Remembers your language (vi/en)", "1 year"],
-              ["fr-theme", "Browser storage (localStorage)", "Remembers light/dark mode", "Until you clear it"],
               ["fr-wallet", "Browser storage (localStorage)", "Reopens your demo wallet", "Until you delete the wallet or clear site data"],
             ],
           },
@@ -392,11 +390,11 @@ const en: Record<LegalSlug, LegalPage> = {
       {
         h: "2. Why there's no cookie banner",
         body: [
-          "Everything above is essential functionality you trigger yourself (choosing a language, switching theme, using the wallet). None of it tracks you or is shared. With nothing to block, the site shows no consent banner.",
+          "Everything above is essential functionality you trigger yourself (choosing a language, using the wallet). None of it tracks you or is shared. With nothing to block, the site shows no consent banner.",
           "If we ever add analytics or advertising, we'll show a banner and only turn them on after you agree.",
         ],
       },
-      { h: "3. How to clear them", body: ["Clear cookies and site data in your browser's privacy settings. The site keeps working and returns to the default language and theme."] },
+      { h: "3. How to clear them", body: ["Clear cookies and site data in your browser's privacy settings. The site keeps working and returns to the default language."] },
     ],
   },
   "hoan-phi": {

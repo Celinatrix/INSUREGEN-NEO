@@ -11,7 +11,7 @@
    Section numbers follow that file. Components use these classes directly. */
 
 /* =========================================================
-   0. DESIGN TOKENS — light (default), dark (system + toggle)
+   0. DESIGN TOKENS — light only
    ========================================================= */
 :root{
   --bg:#F7F8FA; --surface:#FFFFFF; --surface-2:#EFF1F5; --line:#E2E5EC;
@@ -29,30 +29,6 @@
   --maxw:1200px;
   --phone-bg:#FAF6F0; --phone-ink:#14223D; --phone-line:#E3D8C8; --phone-card:#FFFFFF; --phone-muted:#5B6580; --phone-accent:#C9982E; --phone-on-accent:#14223D;
   color-scheme:light;
-}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --bg:#0D1525; --surface:#141F35; --surface-2:#18243D; --line:#2A3A5A;
-    --ink:#F4EEE6; --ink-2:#BAC3D3; --ink-3:#A2ADC0;
-    --navy:#20345C; --navy-ink:#F4EEE6; --navy-ink-2:#C0CAE0;
-    --coral:#E3B94A; --on-coral:#0D1525; --coral-soft:#B98E2F; --coral-tint:#3A331C; --coral-ink:#F0CB6F;
-    --ok:#62CC99; --ok-tint:#143428;
-    --focus:#F0CB6F;
-    --shadow:0 1px 2px rgb(0 0 0 / .3), 0 10px 30px rgb(0 0 0 / .3);
-    --phone-bg:#101A2E; --phone-ink:#F4EEE6; --phone-line:#2A3A5A; --phone-card:#18243D; --phone-muted:#A2ADC0; --phone-accent:#E3B94A; --phone-on-accent:#0D1525;
-    color-scheme:dark;
-  }
-}
-:root[data-theme="dark"]{
-  --bg:#0D1525; --surface:#141F35; --surface-2:#18243D; --line:#2A3A5A;
-  --ink:#F4EEE6; --ink-2:#BAC3D3; --ink-3:#A2ADC0;
-  --navy:#20345C; --navy-ink:#F4EEE6; --navy-ink-2:#C0CAE0;
-  --coral:#E3B94A; --on-coral:#0D1525; --coral-soft:#B98E2F; --coral-tint:#3A331C; --coral-ink:#F0CB6F;
-  --ok:#62CC99; --ok-tint:#143428;
-  --focus:#F0CB6F;
-  --shadow:0 1px 2px rgb(0 0 0 / .3), 0 10px 30px rgb(0 0 0 / .3);
-  --phone-bg:#101A2E; --phone-ink:#F4EEE6; --phone-line:#2A3A5A; --phone-card:#18243D; --phone-muted:#A2ADC0; --phone-accent:#E3B94A; --phone-on-accent:#0D1525;
-  color-scheme:dark;
 }
 
 /* =========================================================
@@ -163,8 +139,6 @@ section{padding-block:clamp(64px, 9vw, 120px);scroll-margin-top:72px}
 .wallet-events{list-style:none;margin:0;padding:0;display:grid;gap:8px}
 .wallet-event span.num{color:var(--navy-ink-2);white-space:nowrap}
 .wallet-status svg{width:14px;height:14px}
-:root[data-theme="dark"] .wallet{box-shadow:none;border:1px solid rgb(255 255 255 / .08)}
-@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .wallet{box-shadow:none;border:1px solid rgb(255 255 255 / .08)} }
 
 .wallet{position:relative;width:min(100%,420px);background:var(--navy);color:var(--navy-ink);border-radius:24px;padding:24px;box-shadow:0 24px 60px rgb(20 34 61 / .28);display:grid;gap:18px}
 .wallet-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
