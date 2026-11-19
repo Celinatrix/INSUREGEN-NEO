@@ -20,7 +20,6 @@ const en: Dict = {
     faq: "FAQ",
     cta: "Get a price",
     menu: "Open menu",
-    theme: "Toggle light/dark theme",
     language: "Language",
   },
   units: { hours: "hrs", days: "days", perDay: "/day", years: "years", million: "million", trips: "trips" },

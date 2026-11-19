@@ -19,7 +19,6 @@ colors:
   ink: "#14223D"
   ink-secondary: "#44506A"
   ink-muted: "#5B6580"
-  night-page: "#0D1525"
   approved-ink: "#16603F"
   brand-red: "#C22938"
   phone-frame: "#0E1626"
@@ -236,7 +235,7 @@ Navy là buổi tối của một gia đình đang có chuyện: mẹ nằm vi�
 
 Giao diện ấm, bình tĩnh và đáng tin hơn là náo nhiệt. Mật độ vừa phải, nhiều khoảng thở, tiêu đề serif Fraunces nói như người thật, chữ thường Be Vietnam Pro đọc dễ ở tiếng Việt có dấu. Bề mặt phẳng, phân lớp bằng nền và đường viền mảnh; chỉ những vật thể "cầm được" như thẻ Ví Chăm sóc và điện thoại minh họa mới nổi lên khỏi trang.
 
-Trang có giao diện sáng mặc định và giao diện tối đầy đủ (theo hệ thống hoặc nút chuyển). Ở giao diện tối, buổi tối trở thành nền trang và ngọn đèn sáng hơn một bậc.
+Trang chỉ có giao diện sáng, không theo chế độ tối của hệ thống và không có nút chuyển.
 
 **Key Characteristics:**
 - Navy cho những khoảnh khắc nặng ký (Ví, kết quả tính phí, phần đăng ký cuối trang), vàng cho hành động chính và con số quan trọng
@@ -268,8 +267,7 @@ Tên biến trong mã là di sản của bản cũ: `--coral*` thực chất là
 - **Ink / Ink Secondary / Ink Muted** (`ink`, `ink-secondary`, `ink-muted`): ba vai trò chữ: chính, phụ (đoạn mô tả), mờ (chú thích, nhãn nhỏ). Không thêm vai trò thứ tư.
 
 ### Fixed-purpose colours
-- **Night Page** (`night-page`): nền trang ở giao diện tối và `theme-color` của trình duyệt khi tối.
-- **Approved Ink** (`approved-ink`): chữ của viên thuốc "Đã duyệt" trên thẻ Ví và điện thoại, trên nền `care-green-wash`. Hai nhãn này giữ nguyên ở cả hai giao diện.
+- **Approved Ink** (`approved-ink`): chữ của viên thuốc "Đã duyệt" trên thẻ Ví và điện thoại, trên nền `care-green-wash`.
 - **Brand Red** (`brand-red`): chỉ trong dấu logo (`BrandMark`). Không dùng ở chỗ nào khác trên giao diện.
 - **Phone Frame / Phone Paper / Phone Line / Phone Map** (`phone-*`): chỉ bên trong điện thoại minh họa: khung máy, nền giấy ấm, viền thẻ, nền bản đồ.
 
@@ -338,7 +336,6 @@ Phẳng mặc định. Chiều sâu đến từ bậc nền (`page` → `surface
 ### Named Rules
 **The Flat-By-Default Rule.** Bề mặt phẳng khi nghỉ. Bóng chỉ xuất hiện khi một thứ được chọn, hoặc khi nó là vật thể thật.
 
-**The Night Has No Shadows Rule.** Ở giao diện tối, bỏ bóng; vật thể nổi dùng viền trắng 8% thay cho bóng.
 
 ## Shapes
 

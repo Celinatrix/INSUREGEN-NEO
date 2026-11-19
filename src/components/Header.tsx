@@ -33,16 +33,6 @@ export function Header({ lang, nav }: { lang: Locale; nav: Dict["nav"] }) {
   ];
   const switchHref = (l: Locale) => pathname.replace(/^\/(vi|en)(?=\/|$)/, `/${l}`);
 
-  function toggleTheme() {
-    const root = document.documentElement;
-    const cur = root.dataset.theme || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
-    const next = cur === "dark" ? "light" : "dark";
-    root.dataset.theme = next;
-    try {
-      localStorage.setItem("fr-theme", next);
-    } catch {}
-  }
-
   return (
     <header className="site-header">
       <nav className="wrap nav" aria-label={nav.protection}>
@@ -83,11 +73,6 @@ export function Header({ lang, nav }: { lang: Locale; nav: Dict["nav"] }) {
               </Link>
             ))}
           </div>
-          <button type="button" className="icon-btn" onClick={toggleTheme} aria-label={nav.theme}>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
-              <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z" />
-            </svg>
-          </button>
           <button
             type="button"
             className="icon-btn menu-btn"
